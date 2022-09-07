@@ -7,8 +7,9 @@ pygame.init()
 display_width = 800
 display_height = 600
 
+
 gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption('A bit Racey')
+
 
 # black = (0, 0, 0)
 white = (255, 255, 255)
@@ -17,6 +18,8 @@ clock = pygame.time.Clock()
 crashed = False
 carImg = pygame.image.load('New Piskel.png')
 jump = pygame.image.load('New Piskel-5.png.png')
+background = pygame.image.load('back.png')
+rect =  pygame.Rect(130, 500, 200, 50)
 
 
 def get_image(sheet, width, heigth, frame, scale):
@@ -24,6 +27,7 @@ def get_image(sheet, width, heigth, frame, scale):
     image.blit(sheet, (0, 0), ((frame * width), 0, width, heigth))
     image = pygame.transform.scale(image, (width * scale, heigth * scale))
     image.set_colorkey((0, 0, 0))
+
 
     return image
 
@@ -33,11 +37,11 @@ def car(x, y, fr, scale, image):
 
 
 # frame = get_image(carImg, 32, 32,1, 10)
-x = 800/2
-y = 600/2
+x = 0
+y = 470
 i = 0
 speed = 1
-scale=10
+scale=3
 fps =1
 move=0
 doImoveR = False
@@ -90,10 +94,10 @@ while not crashed:
         else:
             y+=5
         time.sleep(0.001)
-        if y==600/2-50:
+        if y==470-50:
             flag = 1
 
-        if y==600/2 and flag:
+        if y==470 and flag:
             up = False
             img = carImg
             flag = 0
@@ -120,9 +124,16 @@ while not crashed:
             print(move)
 
 
-    gameDisplay.fill(white)
+    gameDisplay.blit(background, (0,0))
     car(move, y, i, scale, img)
 
+    pygame.draw.rect(gameDisplay, (255,0,0), rect)
+    #TODO
+    '''
+    make a collison class - a class with collisons that can be replicated
+    make a object class - playable character 
+    make bigger chrackter - form edge to edge
+    '''
     pygame.display.update()
     clock.tick(60) #fps
 
