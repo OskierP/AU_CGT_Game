@@ -20,6 +20,7 @@ carImg = pygame.image.load('New Piskel.png')
 jump = pygame.image.load('New Piskel-5.png.png')
 background = pygame.image.load('back.png')
 rect =  pygame.Rect(130, 500, 200, 50)
+dog  =pygame.image.load('dog anim.png')
 
 
 def get_image(sheet, width, heigth, frame, scale):
@@ -33,7 +34,7 @@ def get_image(sheet, width, heigth, frame, scale):
 
 
 def car(x, y, fr, scale, image):
-    gameDisplay.blit(get_image(image, 32, 32, fr, scale), (x, y))
+    gameDisplay.blit(get_image(image, 33, 50, fr, scale), (x, y))
 
 
 # frame = get_image(carImg, 32, 32,1, 10)
@@ -104,7 +105,7 @@ while not crashed:
 
     if doImoveR:
         move+=10
-        time.sleep(0.05)
+        time.sleep(0.1)
         if not up:
             img = pygame.image.load('New Piskel.png')
             i += 1
@@ -125,7 +126,7 @@ while not crashed:
 
 
     gameDisplay.blit(background, (0,0))
-    car(move, y, i, scale, img)
+    car(move, y, i, scale, dog)
 
     pygame.draw.rect(gameDisplay, (255,0,0), rect)
     #TODO
