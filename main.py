@@ -25,13 +25,17 @@ alien1 = pygame.image.load('alien1.png')
 dog = sprite.PlayableSprite('dog anim 3.png', 5)
 # dog.loadImage()
 mars = sprite.Sprite('marsDemo.png').loadImage()
+earth = sprite.Sprite('earth.png').loadImage()
+cosmo = sprite.Sprite('cosmo.png')
+cosmo.loadImage()
+
 
 
 
 
 # frame = get_image(carImg, 32, 32,1, 10)
 x = 0
-y = 400
+y = 450
 i = 0
 j=0
 k=0
@@ -88,8 +92,10 @@ while not crashed:
         if k ==4:
             k=0
 
-    gameDisplay.blit(mars, (0,0))
+    gameDisplay.blit(earth, (0,0))
     gameDisplay.blit(dog.getFrame(40,40,i,scale), (move,y))
+    gameDisplay.blit(cosmo.getFrame(50,71,0,4), (300, 310))
+
     # car(move, y, i, scale, img, 40, 40)
     #
     # car(-60+j, 350, k, 4, alien1, 20, 50)

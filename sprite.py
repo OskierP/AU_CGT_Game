@@ -21,6 +21,7 @@ class Sprite:
         return frame
 
 
+
 class PlayableSprite(Sprite):
 
     def __init__(self, image, frames):
