@@ -2,14 +2,15 @@ import time
 
 import pygame
 
+import physics
 import sprite
 
 import DisplayGame
 
 pygame.init()
 
-display_width = 800
-display_height = 600
+display_width = 1200
+display_height = 900
 
 # gameDisplay = pygame.display.set_mode((display_width, display_height))
 gameDisplay = DisplayGame.GameDisplay(display_width, display_height).displayGame()
@@ -19,18 +20,17 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-rect = pygame.Rect(130, 500, 200, 50)
-alien1 = pygame.image.load('alien1.png')
-
+rect = pygame.Rect(500, 500, 200, 50)
+# alien1 = pygame.image.load('alien1.png')
+r2 = pygame.Rect(50,50,50,50)
+r3 = pygame.Rect(200,200,200,200)
 dog = sprite.PlayableSprite('dog anim 3.png', 5)
-# dog.loadImage()
-mars = sprite.Sprite('marsDemo.png').loadImage()
-earth = sprite.Sprite('earth.png').loadImage()
-cosmo = sprite.Sprite('cosmo.png')
-cosmo.loadImage()
+spaceShip = sprite.Sprite('spaceship.png').loadImage()
+r1 = sprite.Obsticales(100, 100, 500, 500)
+floor = sprite.Obsticales(1200, 20, 0, 750)
+celling = sprite.Obsticales(1200, 20, 0,10)
 
-
-
+collision_objects_list = [r1, floor, celling]
 
 
 # frame = get_image(carImg, 32, 32,1, 10)
@@ -49,29 +49,28 @@ img = dog
 up = False
 flag = 0
 doImoveL = False
+doImoveD = False
+doImoveU = False
+
+print(r3.left)
+
 while not crashed:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
 
         if event.type == pygame.KEYDOWN:
-
-            if event.key == pygame.K_UP:
-                dog.amIJumping = True
-            if event.key == pygame.K_q:
-                scale += 1
-            if event.key == pygame.K_a:
-                scale -= 1
-            if event.key == pygame.K_z:
-                fps += 1
-                print(fps)
-            if event.key == pygame.K_x:
-                fps -= 1
-                print(fps)
+            # if event.key == pygame.K_UP:
+            #     # dog.amIJumping = True
             if event.key == pygame.K_RIGHT:
                 doImoveR = True
             if event.key == pygame.K_LEFT:
                 doImoveL = True
+            if event.key == pygame.K_DOWN:
+                doImoveD = True
+            if event.key == pygame.K_UP:
+                doImoveU = True
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 doImoveR = False
@@ -79,33 +78,47 @@ while not crashed:
             if event.key == pygame.K_LEFT:
                 doImoveL = False
                 i = 0
+            if event.key == pygame.K_DOWN:
+                doImoveD = False
+            if event.key == pygame.K_UP:
+                doImoveU = False
 
-    if dog.amIJumping:
-        y, i = dog.jump(y, 2)
+    # if dog.amIJumping:
+    #     i = dog.jump(2)
+
+
+    if doImoveL:
+        i = dog.moveLeft(i)
+
 
     if doImoveR:
-        move, i = dog.moveRight(move, i)
+        i = dog.moveRight(i)
 
-    if move> 100 and j<1000:
-        j+=10
-        k+=1
-        if k ==4:
-            k=0
 
-    gameDisplay.blit(earth, (0,0))
-    gameDisplay.blit(dog.getFrame(40,40,i,scale), (move,y))
-    gameDisplay.blit(cosmo.getFrame(50,71,0,4), (300, 310))
+    if doImoveD:
+        dog.moveDown()
 
-    # car(move, y, i, scale, img, 40, 40)
-    #
-    # car(-60+j, 350, k, 4, alien1, 20, 50)
-    # car(-80+j, 350, k, 4, alien1, 20, 50)
-    # car(-100+j, 350,k, 4, alien1, 20, 50)
-    # car(-120+j, 350, k, 4, alien1, 20, 50)
-    # car(-140+j, 350, k, 4, alien1, 20, 50)
-    # car(-160+j, 350, k, 4, alien1, 20, 50)
-    # car(-180+j, 350, k, 4, alien1, 20, 50)
-    # car(-200+j, 350, k, 4, alien1, 20, 50)
+    if doImoveU:
+        dog.moveUp()
+
+
+
+
+
+    # r1.set_color(gameDisplay, (255,255, 0))
+
+    # print(dog.rect)
+    gameDisplay.blit(spaceShip, (0,0))
+    # pygame.draw.rect(gameDisplay, (255, 0, 0), dog.rect)
+    # pygame.draw.rect(gameDisplay, (255,0,255), r2)
+    collisions = physics.collision_test(dog.rect, collision_objects_list)
+    physics.collison(dog, collisions)
+    gameDisplay.blit(dog.getFrame(40,40,i,scale), (dog.x, dog.y))
+    pygame.draw.rect(gameDisplay, (255,255,0), celling)
+
+    pygame.draw.rect(gameDisplay, (255, 255, 0), r1)
+    pygame.draw.rect(gameDisplay, (255, 255, 0), r3)
+    # r1.set_color(gameDisplay, (255, 0,0))
 
 
 
@@ -113,7 +126,7 @@ while not crashed:
     '''
     make a collison class - a class with collisons that can be replicated
     make a object class - playable character 
-    make bigger chrackter - form edge to edge
+    make bigger chracter - form edge to edge
     '''
     pygame.display.update()
     clock.tick(60)  # fps
