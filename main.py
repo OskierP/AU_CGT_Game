@@ -2,7 +2,7 @@ import time
 
 import pygame
 
-import physics
+import collisions
 import sprite
 
 import DisplayGame
@@ -10,7 +10,7 @@ import DisplayGame
 pygame.init()
 
 display_width = 1200
-display_height = 900
+display_height = 800
 
 # gameDisplay = pygame.display.set_mode((display_width, display_height))
 gameDisplay = DisplayGame.GameDisplay(display_width, display_height).displayGame()
@@ -55,6 +55,7 @@ doImoveU = False
 print(r3.left)
 
 while not crashed:
+    dt = clock.tick(60) * .001 * 60
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
@@ -69,7 +70,8 @@ while not crashed:
             if event.key == pygame.K_DOWN:
                 doImoveD = True
             if event.key == pygame.K_UP:
-                doImoveU = True
+                # doImoveU = True
+                 dog.j()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
@@ -80,8 +82,11 @@ while not crashed:
                 i = 0
             if event.key == pygame.K_DOWN:
                 doImoveD = False
-            if event.key == pygame.K_UP:
-                doImoveU = False
+            # if event.key == pygame.K_UP:
+            #     if dog.amIJumping:
+            #         dog.y*=0.1
+            #         dog.amIJumping = False
+                # doImoveU = False
 
     # if dog.amIJumping:
     #     i = dog.jump(2)
@@ -98,8 +103,8 @@ while not crashed:
     if doImoveD:
         dog.moveDown()
 
-    if doImoveU:
-        dog.moveUp()
+    # if doImoveU:
+    #     dog.moveUp()
 
 
 
@@ -111,13 +116,16 @@ while not crashed:
     gameDisplay.blit(spaceShip, (0,0))
     # pygame.draw.rect(gameDisplay, (255, 0, 0), dog.rect)
     # pygame.draw.rect(gameDisplay, (255,0,255), r2)
-    collisions = physics.collision_test(dog.rect, collision_objects_list)
-    physics.collison(dog, collisions)
+    dog.collisions = collisions.collision_test(dog.rect, collision_objects_list)
+    collisions.collison(dog, dog.collisions)
     gameDisplay.blit(dog.getFrame(40,40,i,scale), (dog.x, dog.y))
     pygame.draw.rect(gameDisplay, (255,255,0), celling)
+    pygame.draw.rect(gameDisplay, (255,0,0), floor)
 
     pygame.draw.rect(gameDisplay, (255, 255, 0), r1)
     pygame.draw.rect(gameDisplay, (255, 255, 0), r3)
+    dog.update()
+    print(dog.onGround)
     # r1.set_color(gameDisplay, (255, 0,0))
 
 

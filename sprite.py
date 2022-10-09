@@ -12,6 +12,7 @@ class Sprite:
         self.y = y
         self.width = 0
         self.heigth= 0
+        self.gravity = 4
 
     def loadImage(self):
         return pygame.image.load(self.image)
@@ -37,6 +38,9 @@ class PlayableSprite(Sprite):
         self.amIJumping = False
         self.amIFalling = False
         self.rect = pygame.Rect(self.x, self.y,40*3, 40*3)
+        self.collisions = []
+        self.onGround = False
+        self.jumpHeight = self.y
 
     def updateRect(self):
         self.rect = pygame.Rect(self.x, self.y, 40*3, 40*3)
@@ -44,9 +48,9 @@ class PlayableSprite(Sprite):
 
     def moveRight(self, frame):
         self.x += 5
-        time.sleep(0.065)  # fps
+        time.sleep(0.04)  # fps
 
-        if not self.amIJumping:
+        if self.onGround:
             frame += 1
             if frame == self.frames:
                 frame = 0
@@ -58,7 +62,7 @@ class PlayableSprite(Sprite):
 
         self.x -= 5
 
-        time.sleep(0.065)  # fps
+        # time.sleep(0.065)  # fps
 
         if not self.amIJumping:
             frame += 1
@@ -79,6 +83,7 @@ class PlayableSprite(Sprite):
         self.y-= 5
         # time.sleep(0.065)
         self.updateRect()
+        self.update()
 
     def jump(self, frame,):
         if not self.amIFalling:
@@ -94,6 +99,35 @@ class PlayableSprite(Sprite):
             frame = 0
         return frame
 
+    def vertical(self):
+        if not self.onGround:
+            self.y += self.gravity
+        if self.amIJumping:
+            self.y -=10
+        if self.y <= self.jumpHeight or self.collisions:
+            self.amIJumping = False
+
+        self.updateRect()
+
+    def j(self):
+        if self.onGround:
+            self.amIJumping = True
+            self.onGround = False
+            self.jumpHeight = (self.y - 100)/self.gravity
+        self.update()
+
+        # if self.collisions:
+        #     for collison in self.collisions:
+        #         if abs(self.rect.bottom - collison.rect.top) < 10:
+        #             self.y = collison.rect.top - self.heigth
+
+
+
+    def update(self):
+        self.vertical()
+
+
+
 class Obsticales:
 
     def __init__(self, width, heigth, x, y):
@@ -102,6 +136,7 @@ class Obsticales:
         self.x = x
         self.y = y
         self.rect = pygame.Rect(self.x ,self.y, self.width, self.height)
+        self.gravity = .35
 
     def update_rect(self):
          pygame.Rect(self.x ,self.y, self.width, self.height) # use when level ready
