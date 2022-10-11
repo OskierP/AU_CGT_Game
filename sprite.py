@@ -28,6 +28,9 @@ class Sprite:
 
         return frame
 
+    def scale(self, width, height):
+        return pygame.image.load(pygame.transform.scale(self.image, (width, height)))
+
 
 
 class PlayableSprite(Sprite):
@@ -136,7 +139,6 @@ class Obsticales:
         self.x = x
         self.y = y
         self.rect = pygame.Rect(self.x ,self.y, self.width, self.height)
-        self.gravity = .35
 
     def update_rect(self):
          pygame.Rect(self.x ,self.y, self.width, self.height) # use when level ready
