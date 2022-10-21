@@ -139,6 +139,22 @@ class Obsticales:
         self.x = x
         self.y = y
         self.rect = pygame.Rect(self.x ,self.y, self.width, self.height)
+        self.collison = []
+        self.flag = False
 
     def update_rect(self):
-         pygame.Rect(self.x ,self.y, self.width, self.height) # use when level ready
+         self.rect = pygame.Rect(self.x ,self.y, self.width, self.height)
+         # print(f' WITDH: {self.width}')# use when level ready
+
+    def update_continous(self):
+        if self.collison:
+            self.flag = True
+        else:
+            self.flag = False
+
+    def update_press(self):
+        if self.collison:
+            self.flag = True
+
+
+

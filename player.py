@@ -20,7 +20,7 @@ class Sprite:
         frame = pygame.Surface((width, heigth))
         frame.blit(self.loadImage(), (0, 0), ((self.frame * width), 0, width, heigth))
         frame = pygame.transform.scale(frame, (width * scale, heigth * scale))
-        frame.set_colorkey((0, 0, 0))
+        # frame.set_colorkey((0, 0, 0))
         self.width = width * scale
         self.heigth = heigth * scale
         return frame
@@ -35,12 +35,12 @@ class Player(Sprite):
         self.position, self.velocity = pygame.math.Vector2(0, 0), pygame.math.Vector2(0, 0)
         self.acceleration = pygame.math.Vector2(0, self.gravity)
         self.frames = frames
-        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 3, 41 * 3)
+        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2, 41 * 2)
         self.collisions = []
-        self.obj = []
+        self.collison_with_box = []
 
     def updateRect(self):
-        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 3, 40 * 3)
+        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2.25, 40 * 2.25)
 
     def update(self, dt):
         self.horizontal_movement(dt)
@@ -68,33 +68,40 @@ class Player(Sprite):
         self.position.x += self.velocity.x * dt + (self.acceleration.x * .5) * (dt * dt)
         if self.collisions:
             collisions.collison(self, self.collisions)
-        if self.obj:
-            collisions.move_collision(self, self.obj)
+        if self.collison_with_box:
+            collisions.move_collision(self, self.collison_with_box)
+        print(f'dog spedd: {self.velocity.x}')
         self.rect.x = self.position.x
 
     def vertical_movement(self, dt):
-        print(f'1: {self.position.y}')
+        # print(f'1: {self.position.y}')
         self.velocity.y += self.acceleration.y * dt
         if self.velocity.y > 7: self.velocity.y = 7
         self.position.y += (self.velocity.y * dt + (self.acceleration.y * .5) * (dt * dt))
 
-        print(f'2: {self.position.y}')
+        # print(f'2: {self.position.y}')
         if self.collisions:
             collisions.collison(self, self.collisions)
             # self.on_ground = True
-            # self.velocity.y = 0
+            self.velocity.y = 0
         #     # self.position.y = 630
         self.rect.bottom = self.position.y
         print(self.rect.bottom)
 
     def limit_velocity(self, max_vel):
+        # min(-max_vel, max(self.velocity.x, max_vel))
+        # if abs(self.velocity.x) < .01: self.velocity.x = 0
+        max_vel_tmp = max_vel
         min(-max_vel, max(self.velocity.x, max_vel))
+        if self.gravity == 0:
+            if self.velocity.x < 0: max_vel_tmp = -max_vel
+            if abs(self.velocity.x) > max_vel: self.velocity.x = max_vel_tmp
         if abs(self.velocity.x) < .01: self.velocity.x = 0
 
     def jump(self):
         if self.on_ground:
             self.is_jumping = True
-            self.velocity.y -= 10
+            self.velocity.y -= 7
             self.on_ground = False
 
 
@@ -107,6 +114,7 @@ class Box(Sprite):
         self.acceleration = pygame.math.Vector2(0, self.gravity)
         self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.heigth)
         self.collisions = []
+        self.flag = False
 
     def updateRect(self):
         self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.heigth)
@@ -115,27 +123,32 @@ class Box(Sprite):
         self.horizontal_movement(dt)
         self.vertical_movement(dt)
         # collisions.collison(self, self.collisions)
+        # if self.collisions:
+        #     print(main2.placeBox)
         self.acceleration = pygame.math.Vector2(0, self.gravity)
         self.updateRect()
 
     def horizontal_movement(self, dt):
         self.acceleration.x = 0
+        # print(f'box spedd: {self.velocity.x}')
         self.acceleration.x += self.velocity.x * self.friction
         self.velocity.x += self.acceleration.x * dt
-        self.limit_velocity(4)
+        self.limit_velocity(5)
         self.position.x += self.velocity.x * dt + (self.acceleration.x * .5) * (dt * dt)
+
         if self.collisions:
+            print(self)
             collisions.collison(self, self.collisions)
 
         # self.rect.x = self.position.x
 
     def vertical_movement(self, dt):
-        print(f'1: {self.position.y}')
+        # print(f'1: {self.position.y}')
         self.velocity.y += self.acceleration.y * dt
         if self.velocity.y > 7: self.velocity.y = 7
         self.position.y += (self.velocity.y * dt + (self.acceleration.y * .5) * (dt * dt))
 
-        print(f'2: {self.position.y}')
+        # print(f'2: {self.position.y}')
         if self.collisions:
             collisions.collison(self, self.collisions)
             # self.on_ground = True
@@ -145,5 +158,9 @@ class Box(Sprite):
         # print(self.rect.bottom)
 
     def limit_velocity(self, max_vel):
+        max_vel_tmp = max_vel
         min(-max_vel, max(self.velocity.x, max_vel))
+        if self.gravity == 0:
+            if self.velocity.x < 0: max_vel_tmp = -max_vel
+            if abs(self.velocity.x) > max_vel: self.velocity.x = max_vel_tmp
         if abs(self.velocity.x) < .01: self.velocity.x = 0
