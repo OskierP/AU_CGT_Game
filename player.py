@@ -10,19 +10,19 @@ class Sprite:
         self.x = x
         self.y = y
         self.width = 0
-        self.heigth = 0
+        self.height = 0
         self.frame = 0
 
     def loadImage(self):
         return pygame.image.load(self.image)
 
-    def getFrame(self, width, heigth, scale):
-        frame = pygame.Surface((width, heigth))
-        frame.blit(self.loadImage(), (0, 0), ((self.frame * width), 0, width, heigth))
-        frame = pygame.transform.scale(frame, (width * scale, heigth * scale))
+    def getFrame(self, width, height, scale):
+        frame = pygame.Surface((width, height))
+        frame.blit(self.loadImage(), (0, 0), ((self.frame * width), 0, width, height))
+        frame = pygame.transform.scale(frame, (width * scale, height * scale))
         # frame.set_colorkey((0, 0, 0))
         self.width = width * scale
-        self.heigth = heigth * scale
+        self.height = height * scale
         return frame
 
 
@@ -37,7 +37,7 @@ class Player(Sprite):
         self.frames = frames
         self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2, 41 * 2)
         self.collisions = []
-        self.collison_with_box = []
+        self.collision_with_box = []
 
     def updateRect(self):
         self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2.25, 40 * 2.25)
@@ -66,11 +66,12 @@ class Player(Sprite):
         self.velocity.x += self.acceleration.x * dt
         self.limit_velocity(4)
         self.position.x += self.velocity.x * dt + (self.acceleration.x * .5) * (dt * dt)
+        if self.collision_with_box:
+            collisions.move_collision(self, self.collision_with_box)
         if self.collisions:
             collisions.collison(self, self.collisions)
-        if self.collison_with_box:
-            collisions.move_collision(self, self.collison_with_box)
-        print(f'dog spedd: {self.velocity.x}')
+
+        # print(f'dog speed: {self.velocity.x}')
         self.rect.x = self.position.x
 
     def vertical_movement(self, dt):
@@ -86,7 +87,7 @@ class Player(Sprite):
             self.velocity.y = 0
         #     # self.position.y = 630
         self.rect.bottom = self.position.y
-        print(self.rect.bottom)
+        # print(self.rect.bottom)
 
     def limit_velocity(self, max_vel):
         # min(-max_vel, max(self.velocity.x, max_vel))
@@ -112,12 +113,13 @@ class Box(Sprite):
         self.gravity, self.friction = gravity, friction
         self.position, self.velocity = pygame.math.Vector2(0, 0), pygame.math.Vector2(0, 0)
         self.acceleration = pygame.math.Vector2(0, self.gravity)
-        self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.heigth)
+        self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
         self.collisions = []
         self.flag = False
+        self.collision_with_box = []
 
     def updateRect(self):
-        self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.heigth)
+        self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
 
     def update(self, dt):
         self.horizontal_movement(dt)
@@ -135,12 +137,15 @@ class Box(Sprite):
         self.velocity.x += self.acceleration.x * dt
         self.limit_velocity(5)
         self.position.x += self.velocity.x * dt + (self.acceleration.x * .5) * (dt * dt)
+        if self.collision_with_box and self.velocity.x:
+            print(self)
+            collisions.move_collision(self, self.collision_with_box)
 
         if self.collisions:
-            print(self)
+            # print(self)
             collisions.collison(self, self.collisions)
 
-        # self.rect.x = self.position.x
+        self.rect.x = self.position.x
 
     def vertical_movement(self, dt):
         # print(f'1: {self.position.y}')
