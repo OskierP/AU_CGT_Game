@@ -2,6 +2,7 @@ import pygame.image
 import time
 
 import DisplayGame
+import movable_objects
 
 
 class Sprite:
@@ -141,38 +142,64 @@ class Obsticales:
 
 
 class ActionPlace(Sprite):
-    def __init__(self, image, x=0, y=0):
+    def __init__(self, image, x=0, y=0, width = 0, height=0):
         Sprite.__init__(self, image, x, y)
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.collision = []
-        self.flagBox = False
-        self.flagPlayer = False
+        self.flag = False
 
-    def update_continous(self):
+    def update_action_place(self):
         if self.collision:
-            self.flagBox = True
+            self.flag = True
         else:
-            self.flagBox = False
+            self.flag = False
 
-        print(self.flagBox)
+        # print(self.flagBox)
 
-    def update_press(self):
-        if self.collision:
-            self.flagPlayer = True
-        print(self.flagPlayer)
 
-    def updateRect(self):
+class ActionPlace_2(Obsticales):
+    def __init__(self, width, heigth, x, y):
+        Obsticales.__init__(self, width, heigth, x, y)
+
+    def update_action(self):
+        if self.collison:
+            self.flag = True
+
+
+
+
+class Platfrom(Sprite):
+    def __init__(self, x, y, width, height=20):
+        Sprite.__init__(self, 'assets/unmovable_obj/platform.png', x, y)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
+
+class Door(Sprite):
+    def __init__(self, x, y, width=30, height=180):
+        Sprite.__init__(self, 'assets/unmovable_obj/doors_4_1.png', x, y)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+    def update_rect(self):
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
 class Laser(Obsticales):
     def __init__(self, width, heigth, x, y):
         Obsticales.__init__(self, width, heigth, x, y)
 
-    def on_off_70_count(self, delay):
-        if delay == 70:
+    def on_off_odd_master(self, delay):
+        if delay == 100:
             if self.width == 0:
                 self.width = 5
 
@@ -180,10 +207,18 @@ class Laser(Obsticales):
                 self.width = 0
             return 0
         else:
-            return delay+1
+            return delay + 1
 
-    def on_off_40_count(self, delay):
-        if delay == 40:
+    def on_off_odd_slave(self, delay):
+        if delay == 100:
+            if self.width == 0:
+                self.width = 5
+
+            elif self.width == 5:
+                self.width = 0
+
+    def on_off_even_master(self, delay):
+        if delay == 50:
             if self.width == 0:
                 self.width = 5
 
@@ -191,6 +226,29 @@ class Laser(Obsticales):
                 self.width = 0
             return 0
         else:
-            return delay+1
+            return delay + 1
 
+    def on_off_even_slave(self, delay):
+        if delay == 50:
+            if self.width == 0:
+                self.width = 5
 
+            elif self.width == 5:
+                self.width = 0
+
+    def update_laser(self):
+        if self.collison:
+            for obj in self.collison:
+                if isinstance(obj, movable_objects.Player):
+                    print("died")
+                    return 0
+                if isinstance(obj, movable_objects.Box):
+                    print('box')
+
+class InfoPlate(Sprite):
+    def __init__(self,image, x, y, width, height):
+        Sprite.__init__(self, image, x, y)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height

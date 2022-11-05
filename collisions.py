@@ -28,7 +28,7 @@ def collison(rect, collisons):
         if abs(rect.rect.bottom - collison.rect.top) < 10:
             rect.frame = 0
             rect.on_ground = True
-            rect.position.y = collison.rect.top - rect.height
+            rect.position.y = collison.rect.top - rect.height+1
             # print(f'3: {rect.position.y}')
         if abs(rect.rect.top - collison.rect.bottom) < 10:
             rect.position.y = collison.rect.bottom

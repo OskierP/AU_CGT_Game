@@ -3,7 +3,7 @@ import math
 import collisions
 
 
-class Sprite:
+class Movable_obj:
 
     def __init__(self, image, x=0, y=0):
         self.image = image
@@ -12,35 +12,37 @@ class Sprite:
         self.width = 0
         self.height = 0
         self.frame = 0
+        self.scale = 0
 
     def loadImage(self):
         return pygame.image.load(self.image)
 
     def getFrame(self, width, height, scale):
+        self.scale = scale
         frame = pygame.Surface((width, height))
         frame.blit(self.loadImage(), (0, 0), ((self.frame * width), 0, width, height))
-        frame = pygame.transform.scale(frame, (width * scale, height * scale))
-        # frame.set_colorkey((0, 0, 0))
-        self.width = width * scale
-        self.height = height * scale
+        frame = pygame.transform.scale(frame, (width * self.scale, height * self.scale))
+        frame.set_colorkey((0, 0, 0))
+        self.width = width * self.scale
+        self.height = height * self.scale
         return frame
 
 
-class Player(Sprite):
+class Player(Movable_obj):
     def __init__(self, image, frames, gravity, friction):
-        Sprite.__init__(self, image, 100, 100)
+        Movable_obj.__init__(self, image)
         self.LEFT_KEY, self.RIGHT_KEY, self.FACING_LEFT = False, False, False
         self.is_jumping, self.on_ground = False, False
         self.gravity, self.friction = gravity, friction
-        self.position, self.velocity = pygame.math.Vector2(0, 0), pygame.math.Vector2(0, 0)
+        self.position, self.velocity = pygame.math.Vector2(900, 400), pygame.math.Vector2(0, 0)
         self.acceleration = pygame.math.Vector2(0, self.gravity)
         self.frames = frames
-        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2, 41 * 2)
+        self.rect = pygame.Rect(self.position.x, self.position.y, 30, 30)
         self.collisions = []
         self.collision_with_box = []
 
     def updateRect(self):
-        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2.25, 40 * 2.25)
+        self.rect = pygame.Rect(self.position.x, self.position.y, 40 * 2.25, 30 * 2.25)
 
     def update(self, dt):
         self.horizontal_movement(dt)
@@ -54,9 +56,11 @@ class Player(Sprite):
     def horizontal_movement(self, dt):
         self.acceleration.x = 0
         if self.LEFT_KEY:
+            self.image = "assets/player/dog_anim_left.png"
             self.acceleration.x -= .3
             self.frame += 1
         elif self.RIGHT_KEY:
+            self.image = "assets/player/dog_anim_right.png"
             self.acceleration.x += .3
             self.frame += 1
         if not self.on_ground:
@@ -106,9 +110,9 @@ class Player(Sprite):
             self.on_ground = False
 
 
-class Box(Sprite):
+class Box(Movable_obj):
     def __init__(self, image, gravity, friction):
-        Sprite.__init__(self, image, 100, 100)
+        Movable_obj.__init__(self, image, 100, 100)
         self.on_ground = False
         self.gravity, self.friction = gravity, friction
         self.position, self.velocity = pygame.math.Vector2(0, 0), pygame.math.Vector2(0, 0)
