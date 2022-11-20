@@ -1,6 +1,6 @@
 # AU_CGT_Game
 
-Game in development by students from AU Denmark
+Game in development by students from Aarhus University in Denmark
 
 Martian mission is an epic single player, story driven game, testing the wit and craftiness of X in a dangerous region of space. When players first start the game there will be an intro scene showing X and Cosmo battling aliens, who come from Venus, and getting separated. After this scene, the player will appear in a dark room inside the Alien captors base surrounded by enemies. Once the player spawns in the game, there will be instructions explaining the controls and X’s abilities.
 
