@@ -24,7 +24,7 @@ def restart():
 
     font = pygame.font.Font('freesansbold.ttf', 32)
 
-    text = font.render('X has been tased by laser', True, white, black)
+    text = font.render('X has died :,-(', True, white, black)
     text2 = font.render('Press R to restart level', True, white, black)
 
     textRect = text.get_rect()

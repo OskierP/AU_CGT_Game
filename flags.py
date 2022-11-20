@@ -13,4 +13,5 @@ class Flag:
 dog_dead_flag = Flag()
 next_lvl_1 = Flag()
 next_lvl_2 = Flag()
+next_lvl_3 = Flag()
 

@@ -27,7 +27,7 @@ def run_level(run):
     friction = 0
 
     font = pygame.font.Font('freesansbold.ttf', 22)
-    text = font.render('Press B to push the button', True, (0, 0, 0))
+    text = font.render('Press B to press the button', True, (0, 0, 0))
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITESHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).displayGame()
@@ -36,14 +36,13 @@ def run_level(run):
     scale = 2.25
 
     box = Box('assets/movable_obj/box.png', gravity, friction)
-    # box2 = Box('box.png', gravity, friction)
 
     ################################# OBSTICALES ####################################
     celing = sprite.Obsticales(1100, 20, 0, 0)
     obj11 = sprite.Platfrom(0, 200, 100)
-    obj12 = sprite.Platfrom(250, 200, 1100)  # sprite.Obsticales(1100, 15, 250, 200)
-    obj21 = sprite.Platfrom(0, 400, 500)  # sprite.Obsticales(500, 15, 0, 400)
-    obj22 = sprite.Platfrom(650, 400, 500)  # sprite.Obsticales(500, 15, 650, 400)
+    obj12 = sprite.Platfrom(250, 200, 1100)
+    obj21 = sprite.Platfrom(0, 400, 500)
+    obj22 = sprite.Platfrom(650, 400, 500)
     floor = sprite.Obsticales(1200, 20, 0, 570)
 
     obj_list = [obj11, obj12, obj21, obj22]
@@ -80,7 +79,7 @@ def run_level(run):
     collision_objects_player = [floor, wall_right, wall_left, box, celing, obj11, obj12, obj21, obj22, doors]
     collision_objects_box = [floor, box, wall_right, wall_left, obj11, obj12, obj21, obj22]
     collision_with_lasers = [box, dog]
-    # collision_objects_box_player = [box, box2]
+
     collision_interactive = [box, dog]
     #################################### LOAD THE LEVEL #######################################
     dog.position.x, dog.position.y = 900, 100
@@ -94,6 +93,7 @@ def run_level(run):
     while running:
         dt = clock.tick(60) * .001 * TARGET_FPS
         game_display.blit(space_ship, (0, 0))
+        dog.frame = 2
 
         ################################# CHECK PLAYER INPUT #################################
         for event in pygame.event.get():
@@ -111,19 +111,20 @@ def run_level(run):
                     dog.acceleration.y += .5
                 elif event.key == pygame.K_UP and not gravity and not friction:
                     dog.acceleration.y -= .5
-                elif event.key == pygame.K_j:
-                    if flag:
-                        gravity = 0.3
-                        friction = -.12
-                        flag = False
-                    else:
-                        gravity = 0
-                        friction = 0
-                        flag = True
-                    dog.gravity = gravity
-                    dog.friction = friction
-                    box.gravity = gravity
-                    box.friction = friction
+                # elif event.key == pygame.K_j:
+                #     if flag:
+                #         gravity = 0.3
+                #         friction = -.12
+                #         flag = False
+                #     else:
+                #         gravity = 0
+                #         friction = 0
+                #         flag = True
+                #     dog.gravity = gravity
+                #     dog.friction = friction
+                #     box.gravity = gravity
+                #     box.friction = friction
+
                 elif event.key == pygame.K_b and player_press.flag and insert_box.flag:
                     doors.width = 0
                     doors.update_rect()
@@ -174,7 +175,6 @@ def run_level(run):
             running = False
             flags.next_lvl_1.set_flag(True)
 
-
         game_display.blit(insert_box.getFrame(40, 40, scale), (insert_box.x, insert_box.y))
         game_display.blit(player_press.getFrame(40, 40, scale), (player_press.x, player_press.y))
         game_display.blit(doors.getFrame(doors.width, doors.height, 1), (doors.x, doors.y))
@@ -202,6 +202,4 @@ def run_level(run):
                 running = False
                 flags.dog_dead_flag.set_flag(True)
 
-
         pygame.display.update()
-

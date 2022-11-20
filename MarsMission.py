@@ -6,7 +6,7 @@ import level4_2
 
 run1 = True
 run2 = True
-
+run3 = True
 
 while not flags.next_lvl_1.get_flag():
     if not level4_1.run_level(run1):
@@ -22,15 +22,7 @@ while not flags.next_lvl_2.get_flag():
             run2 = True
             dog_dead_flag.set_flag(False)
 
-print('lvl3')
-# while not level4_1.get_next_lvl():
-#     if level4_1.run_level(variable, False):
-#
-#         variable = False
-#     print('lvl1')
-
-# if level4_2.run_level(variable) and not level4_2.get_next_lvl():
-#     Restart_page.restart()
-#     variable = False
+while not flags.next_lvl_2.get_flag():
+    print('lvl3')
 
 

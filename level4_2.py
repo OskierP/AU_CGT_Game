@@ -5,6 +5,7 @@ import collisions
 import flags
 import sprite
 from movable_objects import Player, Box
+
 next_level = False
 
 def run_level(run):
@@ -12,6 +13,7 @@ def run_level(run):
     pygame.init()
     display_width = 1100  # 1100
     display_height = 600  # 600
+    was_pressed = False
 
     running = run
     clock = pygame.time.Clock()
@@ -24,53 +26,67 @@ def run_level(run):
     friction = 0
 
     font = pygame.font.Font('freesansbold.ttf', 22)
-    text = font.render('Press B to push the button', True, (0, 0, 0))
+    text = font.render('Press B to press the button', True, (0, 0, 0))
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITESHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).displayGame()
     space_ship = sprite.Sprite('assets/background/lvl42.png').loadImage()
+
     dog = Player('assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
     box = Box('assets/movable_obj/box.png', gravity, friction)
-    # box2 = Box('box.png', gravity, friction)
+    box2 = Box('assets/movable_obj/box.png', gravity, friction)
+
+    move_arr = [dog, box, box2]
 
     ################################# OBSTICALES ####################################
-    celing = sprite.Obsticales(1100, 20, 0, 0)
-    # obj11 = sprite.Platfrom(0, 200, 100)
-    # obj12 = sprite.Platfrom(250, 200, 1100)
-    # obj21 = sprite.Platfrom(0, 400, 500)
-    # obj22 = sprite.Platfrom(650, 400, 500)
-    floor = sprite.Obsticales(1200, 20, 0, 570) # spikes
+    ceiling = sprite.Obsticales(1100, 20, 0, 0)
 
-    obj_list = [obj11, obj12, obj21, obj22]
+    floor = sprite.Obsticales(1200, 20, 0, 570)  # spikes
 
-    wall_left = sprite.Obsticales(20, 900, 1090, 0)
-    wall_right = sprite.Obsticales(10, 900, 0, 0)
+    top = sprite.Platfrom(990, 50, 150)
+    arr = []
+    for i in range(10):
+        arr.append(sprite.Platfrom(980, 50 + 20 * i, 20))
+    arrWall = sprite.Obsticales(20, 100, 980, 50)
 
+    wall_right = sprite.Obsticales(20, 900, 1090, 0)
+    wall_left = sprite.Obsticales(10, 900, 30, 0)
 
+    platform = sprite.Platfrom(0, 230, 340)
+    platform1 = sprite.Platfrom(850, 450, 300)
+    platform2 = sprite.Platfrom(450, 350, 300)
 
-    # insert_box = sprite.ActionPlace('assets/action_place/insertBox.png', 1010, 480, 40, 40)
-    # player_press = sprite.ActionPlace('assets/action_place/button.png', 1010, 300, 40, 40)
+    limitor1_1 = sprite.Platfrom(830, 430, 20)
+    limitor2_1 = sprite.Platfrom(450, 340, 20)
+    limitor2_2 = sprite.Platfrom(730, 340, 20)
+    limitor3_1 = sprite.Platfrom(320, 210, 20)
 
-    # doors = sprite.Door(0, 220)
-    # doors_action = sprite.ActionPlace_2(20, 180, 0, 220)
+    platformArr = [platform, platform1, platform2]
+    limitorArr = [limitor1_1, limitor2_1, limitor2_2, limitor3_1]
 
-    ##PLATES##
+    ##BUTTONS##
 
-    # bridge_plate = sprite.InfoPlate('assets/unmovable_obj/bridge.png', 950, 100, 50, 20)
-    # lvl2 = sprite.InfoPlate('assets/unmovable_obj/lvl2.png', 100, 300, 50, 20)
+    press_gravity = sprite.ActionPlace('assets/action_place/button.png', 1010, 100, 40, 40)
+    keyboard = sprite.ActionPlace('assets/action_place/keyboard.png', 50, 150, 40, 40)
+    spikes = sprite.ActionPlace_2(1200, 20, 0, 550)
+
     ########## COLLISIONS ##################
-    collision_objects_player = [floor, wall_right, wall_left, box, celing, obj11, obj12, obj21, obj22, doors]
-    collision_objects_box = [floor, box, wall_right, wall_left, obj11, obj12, obj21, obj22]
-    collision_with_lasers = [box, dog]
-    # collision_objects_box_player = [box, box2]
-    collision_interactive = [box, dog]
-    #################################### LOAD THE LEVEL #######################################
-    dog.position.x, dog.position.y = 100, 100
 
-    box.position.x, box.position.y = 200, 500
+    collision_objects_player = [spikes, floor, wall_right, wall_left, box, box2, ceiling, platform, platform1,
+                                platform2, limitor1_1, limitor2_1, limitor2_2, limitor3_1, top, arrWall]
+
+    collision_objects_box = [floor, wall_right, wall_left, platform1, platform2, limitor1_1, limitor2_1, limitor2_2]
+    collision_interactive = [dog]
+    #################################### LOAD THE LEVEL #######################################
+    dog.position.x, dog.position.y = 1000, 100
+
+    box.position.x, box.position.y = 600, 200
     box.width, box.height = 20, 20
+
+    box2.position.x, box2.position.y = 900, 200
+    box2.width, box2.height = 20, 20
 
     ################################# GAME LOOP ##########################
     flag = True
@@ -91,26 +107,34 @@ def run_level(run):
                     dog.RIGHT_KEY = True
                 elif event.key == pygame.K_SPACE:
                     dog.jump()
-                elif event.key == pygame.K_DOWN and not gravity and not friction:
-                    dog.acceleration.y += .5
+                # elif event.key == pygame.K_DOWN and not gravity and not friction:
+                #     dog.acceleration.y += .5
                 elif event.key == pygame.K_UP and not gravity and not friction:
                     dog.acceleration.y -= .5
-                elif event.key == pygame.K_j:
+                elif event.key == pygame.K_j:  # to delete
                     if flag:
-                        gravity = 0.3
+                        gravity = 0.21
                         friction = -.12
                         flag = False
+                        # was_pressed = True to change
                     else:
                         gravity = 0
                         friction = 0
                         flag = True
-                    dog.gravity = gravity
-                    dog.friction = friction
-                    box.gravity = gravity
-                    box.friction = friction
-                # elif event.key == pygame.K_b and player_press.flag and insert_box.flag:
-                #     doors.width = 0
-                #     doors.update_rect()
+                    for obj in move_arr:
+                        obj.gravity = gravity
+                        obj.friction = friction
+
+                elif event.key == pygame.K_b and press_gravity.flag and not was_pressed:
+                    gravity = 0.21
+                    friction = -.12
+                    was_pressed = True
+                    for obj in move_arr:
+                        obj.gravity = gravity
+                        obj.friction = friction
+                elif event.key == pygame.K_b and keyboard.flag:
+                    running = False
+                    flags.next_lvl_2.set_flag(False)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -126,64 +150,45 @@ def run_level(run):
 
         ################################# UPDATE WINDOW AND DISPLAY #################################
 
-        # delay_laser_odd = laser1_1.on_off_odd_master(delay_laser_odd)
-        # delay_laser_even = laser2_1.on_off_even_master(delay_laser_even)
-        #
-        # for laser in laser_list[2:]:
-        #     if laser_list.index(laser) % 2:
-        #         laser.on_off_even_slave(delay_laser_even)
-        #     else:
-        #         laser.on_off_odd_slave(delay_laser_odd)
-
-        # for laser in laser_list:
-        #     laser.update_rect()
-
-        for obj in obj_list:
-            game_display.blit(obj.getFrame(obj.width, obj.height, 1), (obj.x, obj.y))
-
         dog.collisions = collisions.collision_test(dog.rect, collision_objects_player)
-        dog.collision_with_box = collisions.collision_test(dog.rect, [box])
+        dog.collision_with_box = collisions.collision_test(dog.rect, [box, box2])
         box.collisions = collisions.collision_test(box.rect, collision_objects_box)
+        box2.collisions = collisions.collision_test(box2.rect, collision_objects_box)
 
-        # for laser in laser_list:
-        #     laser.collison = collisions.collision_test(laser.rect, collision_with_lasers)
+        game_display.blit(top.getFrame(top.width, top.height, 1), (top.x, top.y))
 
-        # insert_box.collision = collisions.collision_test(insert_box.rect, collision_interactive)
-        # player_press.collision = collisions.collision_test(player_press.rect, [dog])
-        # player_press.update_action_place()
-        # doors_action.collison = collisions.collision_test(doors_action.rect, [dog])
-        # doors_action.update_action()
-        #
-        # if doors_action.flag:
-        #     print('next level')  # TODO
-        #
-        # game_display.blit(insert_box.getFrame(40, 40, scale), (insert_box.x, insert_box.y))
-        # game_display.blit(player_press.getFrame(40, 40, scale), (player_press.x, player_press.y))
-        # game_display.blit(doors.getFrame(doors.width, doors.height, 1), (doors.x, doors.y))
-        #
-        # for laser in laser_list:
-        #     pygame.draw.rect(game_display, (0, 240, 0), laser)
-        #
-        # game_display.blit(lvl2.getFrame(lvl2.width, lvl2.height, 1), (lvl2.x, lvl2.y))
-        # game_display.blit(bridge_plate.getFrame(bridge_plate.width, bridge_plate.height, 1),
-        #                   (bridge_plate.x, bridge_plate.y))
+        for x in arr:
+            game_display.blit(x.getFrame(x.width, x.height, 1), (x.x, x.y))
+
+        for plat in platformArr:
+            game_display.blit(plat.getFrame(plat.width, plat.height, 1), (plat.x, plat.y))
+
+        for plat in limitorArr:
+            game_display.blit(plat.getFrame(plat.width, plat.height, 1), (plat.x, plat.y))
+
+        press_gravity.collision = collisions.collision_test(press_gravity.rect, [dog])
+        press_gravity.update_action_place()
+        keyboard.collision = collisions.collision_test(keyboard.rect, [dog])
+        keyboard.update_action_place()
+        spikes.collison = collisions.collision_test(spikes.rect, [dog])
+        spikes.update_action()
+
+        if spikes.flag:
+            running = False
+            flags.dog_dead_flag.set_flag(True)
+
+        game_display.blit(press_gravity.getFrame(40, 40, scale), (press_gravity.x, press_gravity.y))
+        game_display.blit(keyboard.getFrame(40, 20, scale), (keyboard.x, keyboard.y))
 
         game_display.blit(dog.getFrame(40, 30, scale), (dog.position.x, dog.position.y))
         game_display.blit(box.getFrame(20, 20, scale), (box.position.x, box.position.y))
-
-        # if player_press.flag:
-        #     game_display.blit(text, text_box)
+        game_display.blit(box2.getFrame(20, 20, scale), (box2.position.x, box2.position.y))
 
         dog.update(dt)
         box.update(dt)
+        box2.update(dt)
 
-        # insert_box.update_action_place()
-        #
-        # for laser in laser_list:
-        #     if laser.update_laser() == 1:
-        #         dog_died = True
-
+        if keyboard.flag or press_gravity.flag:
+            game_display.blit(text, text_box)
 
         pygame.display.update()
-
-
