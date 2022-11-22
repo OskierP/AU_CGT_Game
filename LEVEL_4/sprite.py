@@ -1,7 +1,5 @@
 import pygame.image
-import time
 
-import DisplayGame
 import movable_objects
 
 
