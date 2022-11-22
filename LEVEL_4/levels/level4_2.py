@@ -134,7 +134,7 @@ def run_level(run):
                         obj.friction = friction
                 elif event.key == pygame.K_b and keyboard.flag:
                     running = False
-                    flags.next_lvl_2.set_flag(False)
+                    flags.next_lvl_2.set_flag(True)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
