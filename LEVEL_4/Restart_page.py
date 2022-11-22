@@ -1,8 +1,8 @@
 
 import pygame
 
-import DisplayGame
-import sprite
+import LEVEL_4.DisplayGame as DisplayGame
+import LEVEL_4.sprite as sprite
 
 
 def restart():

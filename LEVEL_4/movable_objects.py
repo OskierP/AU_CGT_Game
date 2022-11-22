@@ -1,5 +1,5 @@
 import pygame
-import collisions
+import LEVEL_4.collisions as collisions
 
 
 class Movable_obj:
