@@ -4,7 +4,7 @@ import LEVEL_4.DisplayGame as DisplayGame
 import LEVEL_4.collisions as collisions
 import LEVEL_4.sprite as sprite
 from LEVEL_4.movable_objects import Player, Box
-import LEVEL_4.flags as flags
+import flags as flags
 
 
 next_level = False
@@ -100,7 +100,7 @@ def run_level(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                flags.next_lvl_1.set_flag(True)
+                flags.next_lvl_4_1.set_flag(True)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     dog.LEFT_KEY = True
@@ -174,7 +174,7 @@ def run_level(run):
 
         if doors_action.flag:
             running = False
-            flags.next_lvl_1.set_flag(True)
+            flags.next_lvl_4_1.set_flag(True)
 
         game_display.blit(insert_box.getFrame(40, 40, scale), (insert_box.x, insert_box.y))
         game_display.blit(player_press.getFrame(40, 40, scale), (player_press.x, player_press.y))
@@ -202,6 +202,6 @@ def run_level(run):
             laser.update_laser()
             if laser.update_laser() == 1:
                 running = False
-                flags.dog_dead_flag.set_flag(True)
+                flags.lvl4_dog_dead_flag.set_flag(True)
 
         pygame.display.update()

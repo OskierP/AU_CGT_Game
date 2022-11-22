@@ -4,7 +4,7 @@ import LEVEL_4.DisplayGame as DisplayGame
 import LEVEL_4.collisions as collisions
 import LEVEL_4.sprite as sprite
 from LEVEL_4.movable_objects import Player, Box
-import LEVEL_4.flags as flags
+import flags as flags
 
 next_level = False
 
@@ -99,7 +99,7 @@ def run_level(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                flags.next_lvl_2.set_flag(True)
+                flags.next_lvl_4_2.set_flag(True)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     dog.LEFT_KEY = True
@@ -134,7 +134,7 @@ def run_level(run):
                         obj.friction = friction
                 elif event.key == pygame.K_b and keyboard.flag:
                     running = False
-                    flags.next_lvl_2.set_flag(True)
+                    flags.next_lvl_4_2.set_flag(True)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -175,7 +175,7 @@ def run_level(run):
 
         if spikes.flag:
             running = False
-            flags.dog_dead_flag.set_flag(True)
+            flags.lvl4_dog_dead_flag.set_flag(True)
 
         game_display.blit(press_gravity.getFrame(40, 40, scale), (press_gravity.x, press_gravity.y))
         game_display.blit(keyboard.getFrame(40, 20, scale), (keyboard.x, keyboard.y))
