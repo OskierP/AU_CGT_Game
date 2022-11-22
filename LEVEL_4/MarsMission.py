@@ -1,8 +1,7 @@
-import flags
-from flags import dog_dead_flag
-import level4_1
-import Restart_page
-import level4_2
+import LEVEL_4.flags as flags
+from LEVEL_4.flags import dog_dead_flag
+from LEVEL_4.levels import level4_1, level4_2
+import LEVEL_4.Restart_page as Restart_page
 
 run1 = True
 run2 = True

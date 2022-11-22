@@ -1,10 +1,10 @@
 import pygame
 
-import DisplayGame
-import collisions
-import flags
-import sprite
-from movable_objects import Player, Box
+import LEVEL_4.DisplayGame as DisplayGame
+import LEVEL_4.collisions as collisions
+import LEVEL_4.sprite as sprite
+from LEVEL_4.movable_objects import Player, Box
+import LEVEL_4.flags as flags
 
 next_level = False
 
@@ -30,13 +30,13 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITESHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).displayGame()
-    space_ship = sprite.Sprite('assets/background/lvl42.png').loadImage()
+    space_ship = sprite.Sprite('LEVEL_4/assets/background/lvl42.png').loadImage()
 
-    dog = Player('assets/player/dog_anim_left.png', 5, gravity, friction)
+    dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
-    box = Box('assets/movable_obj/box.png', gravity, friction)
-    box2 = Box('assets/movable_obj/box.png', gravity, friction)
+    box = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
+    box2 = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
 
     move_arr = [dog, box, box2]
 
@@ -68,8 +68,8 @@ def run_level(run):
 
     ##BUTTONS##
 
-    press_gravity = sprite.ActionPlace('assets/action_place/button.png', 1010, 100, 40, 40)
-    keyboard = sprite.ActionPlace('assets/action_place/keyboard.png', 50, 150, 40, 40)
+    press_gravity = sprite.ActionPlace('LEVEL_4/assets/action_place/button.png', 1010, 100, 40, 40)
+    keyboard = sprite.ActionPlace('LEVEL_4/assets/action_place/keyboard.png', 50, 150, 40, 40)
     spikes = sprite.ActionPlace_2(1200, 20, 0, 550)
 
     ########## COLLISIONS ##################

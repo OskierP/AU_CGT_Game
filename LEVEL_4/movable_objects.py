@@ -55,11 +55,11 @@ class Player(Movable_obj):
     def horizontal_movement(self, dt):
         self.acceleration.x = 0
         if self.LEFT_KEY:
-            self.image = "assets/player/dog_anim_left.png"
+            self.image = "LEVEL_4/assets/player/dog_anim_left.png"
             self.acceleration.x -= .3
             self.frame += 1
         elif self.RIGHT_KEY:
-            self.image = "assets/player/dog_anim_right.png"
+            self.image = "LEVEL_4/assets/player/dog_anim_right.png"
             self.acceleration.x += .3
             self.frame += 1
         if not self.on_ground:

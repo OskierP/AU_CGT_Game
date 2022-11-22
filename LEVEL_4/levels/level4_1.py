@@ -1,10 +1,11 @@
 import pygame
 
-import DisplayGame
-import collisions
-import sprite
-from movable_objects import Player, Box
-import flags
+import LEVEL_4.DisplayGame as DisplayGame
+import LEVEL_4.collisions as collisions
+import LEVEL_4.sprite as sprite
+from LEVEL_4.movable_objects import Player, Box
+import LEVEL_4.flags as flags
+
 
 next_level = False
 dog_died = False
@@ -31,11 +32,11 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITESHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).displayGame()
-    space_ship = sprite.Sprite('assets/background/spaceship.png').loadImage()
-    dog = Player('assets/player/dog_anim_left.png', 5, gravity, friction)
+    space_ship = sprite.Sprite('LEVEL_4/assets/background/spaceship.png').loadImage()
+    dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
-    box = Box('assets/movable_obj/box.png', gravity, friction)
+    box = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
 
     ################################# OBSTICALES ####################################
     celing = sprite.Obsticales(1100, 20, 0, 0)
@@ -65,16 +66,16 @@ def run_level(run):
     laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser2_2, laser3_2, laser4_2, laser1_3, laser_0,
                   laser2_3]
 
-    insert_box = sprite.ActionPlace('assets/action_place/insertBox.png', 1010, 480, 40, 40)
-    player_press = sprite.ActionPlace('assets/action_place/button.png', 1010, 300, 40, 40)
+    insert_box = sprite.ActionPlace('LEVEL_4/assets/action_place/insertBox.png', 1010, 480, 40, 40)
+    player_press = sprite.ActionPlace('LEVEL_4/assets/action_place/button.png', 1010, 300, 40, 40)
 
     doors = sprite.Door(0, 220)
     doors_action = sprite.ActionPlace_2(20, 180, 0, 220)
 
     ##PLATES##
 
-    bridge_plate = sprite.InfoPlate('assets/unmovable_obj/bridge.png', 950, 100, 50, 20)
-    lvl2 = sprite.InfoPlate('assets/unmovable_obj/lvl2.png', 100, 300, 50, 20)
+    bridge_plate = sprite.InfoPlate('LEVEL_4/assets/unmovable_obj/bridge.png', 950, 100, 50, 20)
+    lvl2 = sprite.InfoPlate('LEVEL_4/assets/unmovable_obj/lvl2.png', 100, 300, 50, 20)
     ########## COLLISIONS ##################
     collision_objects_player = [floor, wall_right, wall_left, box, celing, obj11, obj12, obj21, obj22, doors]
     collision_objects_box = [floor, box, wall_right, wall_left, obj11, obj12, obj21, obj22]
@@ -198,6 +199,7 @@ def run_level(run):
         insert_box.update_action_place()
 
         for laser in laser_list:
+            laser.update_laser()
             if laser.update_laser() == 1:
                 running = False
                 flags.dog_dead_flag.set_flag(True)

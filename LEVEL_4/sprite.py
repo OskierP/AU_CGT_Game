@@ -1,6 +1,6 @@
 import pygame.image
 
-import movable_objects
+import LEVEL_4.movable_objects as movable_objects
 
 
 class Sprite:
@@ -78,7 +78,7 @@ class ActionPlace_2(Obsticales):
 
 class Platfrom(Sprite):
     def __init__(self, x, y, width, height=20):
-        Sprite.__init__(self, 'assets/unmovable_obj/platform.png', x, y)
+        Sprite.__init__(self, 'LEVEL_4/assets/unmovable_obj/platform.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -88,7 +88,7 @@ class Platfrom(Sprite):
 
 class Door(Sprite):
     def __init__(self, x, y, width=30, height=180):
-        Sprite.__init__(self, 'assets/unmovable_obj/doors_4_1.png', x, y)
+        Sprite.__init__(self, 'LEVEL_4/assets/unmovable_obj/doors_4_1.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -143,6 +143,7 @@ class Laser(Obsticales):
     def update_laser(self):
         if self.collison:
             for obj in self.collison:
+                print(isinstance(obj, movable_objects.Player))
                 if isinstance(obj, movable_objects.Player):
                     print("died")
                     return 1 #change to 1
