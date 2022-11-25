@@ -55,6 +55,7 @@ class ActionPlace(Sprite):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.collision = []
         self.flag = False
+        self.was_pressed = False
 
     def update_action_place(self):
         if self.collision:
