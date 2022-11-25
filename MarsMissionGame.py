@@ -1,16 +1,11 @@
+import LEVEL_4.Restart_page as Restart_page
 import flags as flags
-
-
-
-#### LEVEL 1 #####
-
-#### LEVEL 2 #####
-
-#### LEVEL 3 #####
-
 #### LEVEL 4 #####
 from LEVEL_4.levels import level4_1, level4_2
-import LEVEL_4.Restart_page as Restart_page
+
+#### LEVEL 1 #####
+#### LEVEL 2 #####
+#### LEVEL 3 #####
 
 run4_1 = True
 run4_2 = True
@@ -33,10 +28,8 @@ while not flags.next_lvl_4_2.get_flag():
 while not flags.next_lvl_4_3.get_flag():
     print('lvl3')
 
-
 #### LEVEL 5 #####
 
 #### LEVEL 6 #####
 
 #### LEVEL BONUS #####
-

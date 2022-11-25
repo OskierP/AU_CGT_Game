@@ -3,9 +3,8 @@ import pygame
 import LEVEL_4.DisplayGame as DisplayGame
 import LEVEL_4.collisions as collisions
 import LEVEL_4.sprite as sprite
-from LEVEL_4.movable_objects import Player, Box
 import flags as flags
-
+from LEVEL_4.movable_objects import Player, Box
 
 next_level = False
 dog_died = False
@@ -87,7 +86,7 @@ def run_level(run):
     #################################### LOAD THE LEVEL #######################################
     dog.position.x, dog.position.y = 900, 100
 
-    box.position.x, box.position.y = 2000,2000
+    box.position.x, box.position.y = 2000, 2000
     box.width, box.height = 20, 20
 
     ################################# GAME LOOP ##########################
@@ -131,9 +130,8 @@ def run_level(run):
                 elif event.key == pygame.K_b and player_press.flag and insert_box.flag:
                     doors.width = 0
                     doors.update_rect()
-                elif event.key==pygame.K_b and player_press_2.flag:
+                elif event.key == pygame.K_b and player_press_2.flag:
                     player_press_2.was_pressed = True
-
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -177,7 +175,7 @@ def run_level(run):
         insert_box.collision = collisions.collision_test(insert_box.rect, collision_interactive)
         player_press.collision = collisions.collision_test(player_press.rect, [dog])
         player_press.update_action_place()
-        player_press_2.collision=collisions.collision_test(player_press_2.rect, [dog])
+        player_press_2.collision = collisions.collision_test(player_press_2.rect, [dog])
         player_press_2.update_action_place()
         doors_action.collison = collisions.collision_test(doors_action.rect, [dog])
         doors_action.update_action()
@@ -188,7 +186,7 @@ def run_level(run):
 
         game_display.blit(insert_box.getFrame(40, 40, scale), (insert_box.x, insert_box.y))
         game_display.blit(player_press.getFrame(40, 40, scale), (player_press.x, player_press.y))
-        game_display.blit(player_press_2.getFrame(40,40,scale), (player_press_2.x, player_press_2.y))
+        game_display.blit(player_press_2.getFrame(40, 40, scale), (player_press_2.x, player_press_2.y))
         game_display.blit(doors.getFrame(doors.width, doors.height, 1), (doors.x, doors.y))
 
         for laser in laser_list:
@@ -202,7 +200,7 @@ def run_level(run):
         game_display.blit(box.getFrame(20, 20, scale), (box.position.x, box.position.y))
 
         if player_press_2.was_pressed and player_press_2.flag:
-            box.position.x,box.position.y = 200, 500
+            box.position.x, box.position.y = 200, 500
 
         if player_press.flag or player_press_2.flag:
             game_display.blit(text, text_box)

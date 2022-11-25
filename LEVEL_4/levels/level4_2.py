@@ -3,10 +3,11 @@ import pygame
 import LEVEL_4.DisplayGame as DisplayGame
 import LEVEL_4.collisions as collisions
 import LEVEL_4.sprite as sprite
-from LEVEL_4.movable_objects import Player, Box
 import flags as flags
+from LEVEL_4.movable_objects import Player, Box
 
 next_level = False
+
 
 def run_level(run):
     ################################# LOAD UP A BASIC WINDOW AND CLOCK #################################
