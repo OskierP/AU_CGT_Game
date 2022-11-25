@@ -10,7 +10,6 @@ class Flag:
         self.flag = new_flag
 
 
-
 #### FLAGS LEVEL 1 ####
 
 #### FLAGS LEVEL 2 ####

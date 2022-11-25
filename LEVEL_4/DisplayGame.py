@@ -1,4 +1,6 @@
 import pygame.display
+
+
 class GameDisplay():
 
     def __init__(self, width, height):

@@ -29,6 +29,7 @@ class Sprite:
     def scale(self, width, height):
         return pygame.image.load(pygame.transform.scale(self.image, (width, height)))
 
+
 class Obsticales:
 
     def __init__(self, width, height, x, y):
@@ -46,7 +47,7 @@ class Obsticales:
 
 
 class ActionPlace(Sprite):
-    def __init__(self, image, x=0, y=0, width = 0, height=0):
+    def __init__(self, image, x=0, y=0, width=0, height=0):
         Sprite.__init__(self, image, x, y)
         self.x = x
         self.y = y
@@ -55,6 +56,7 @@ class ActionPlace(Sprite):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.collision = []
         self.flag = False
+        self.was_pressed = False
 
     def update_action_place(self):
         if self.collision:
@@ -72,8 +74,6 @@ class ActionPlace_2(Obsticales):
     def update_action(self):
         if self.collison:
             self.flag = True
-
-
 
 
 class Platfrom(Sprite):
@@ -97,6 +97,7 @@ class Door(Sprite):
 
     def update_rect(self):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
 
 class Laser(Obsticales):
     def __init__(self, width, heigth, x, y):
@@ -146,12 +147,13 @@ class Laser(Obsticales):
                 print(isinstance(obj, movable_objects.Player))
                 if isinstance(obj, movable_objects.Player):
                     print("died")
-                    return 1 #change to 1
+                    return 1  # change to 1
                 if isinstance(obj, movable_objects.Box):
                     print('box')
 
+
 class InfoPlate(Sprite):
-    def __init__(self,image, x, y, width, height):
+    def __init__(self, image, x, y, width, height):
         Sprite.__init__(self, image, x, y)
         self.x = x
         self.y = y

@@ -1,8 +1,4 @@
-
 import pygame
-
-import LEVEL_4.DisplayGame as DisplayGame
-import LEVEL_4.sprite as sprite
 
 
 def restart():
@@ -13,7 +9,7 @@ def restart():
     white = (255, 255, 255)
     green = (0, 255, 0)
     blue = (0, 0, 128)
-    black =(0,0,0)
+    black = (0, 0, 0)
 
     X = 1100
     Y = 600
@@ -30,8 +26,8 @@ def restart():
     textRect = text.get_rect()
     textRect2 = text2.get_rect()
 
-    textRect.center = (X // 2, Y // 2 -100)
-    textRect2.center = (X // 2, Y // 2 -50)
+    textRect.center = (X // 2, Y // 2 - 100)
+    textRect2.center = (X // 2, Y // 2 - 50)
 
     while running:
 
@@ -52,5 +48,3 @@ def restart():
                 quit()
 
             pygame.display.update()
-
-

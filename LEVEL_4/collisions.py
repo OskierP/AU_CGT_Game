@@ -1,6 +1,3 @@
-import pygame
-
-
 def collision_test(rect, tiles):
     collisions = []
     for tile in tiles:
@@ -15,7 +12,7 @@ def collison(rect, collisons):
         # print(rect.rect.bottom - collison.rect.top)
         if abs(rect.rect.left - collison.rect.right) < 11:
             rect.position.x = collison.rect.right
-            rect.velocity.x=0
+            rect.velocity.x = 0
             # if not rect.collison_with_box:
             #     rect.velocity.x = 0
             # print('a')
@@ -28,28 +25,28 @@ def collison(rect, collisons):
         if abs(rect.rect.bottom - collison.rect.top) < 10:
             rect.frame = 0
             rect.on_ground = True
-            rect.position.y = collison.rect.top - rect.height+1
+            rect.position.y = collison.rect.top - rect.height + 1
             # print(f'3: {rect.position.y}')
         if abs(rect.rect.top - collison.rect.bottom) < 10:
             rect.position.y = collison.rect.bottom
             # print('c')
 
-def move_collision(player, boxes):
 
+def move_collision(player, boxes):
     for collison in boxes:
         if abs(player.rect.left - collison.rect.right) < 11:
             #  =
-            collison.position.x -=1
+            collison.position.x -= 1
             # player.position.x = collison.rect.right
             collison.velocity.x = player.velocity.x
             player.velocity.x = 0
             # print('what a')
         if abs(player.rect.right - collison.rect.left) < 11:
-            collison.position.x +=1
+            collison.position.x += 1
             #  =
             # player.position.x = collison.rect.left - player.width
             collison.velocity.x = player.velocity.x
-            player.velocity.x=0
+            player.velocity.x = 0
             # print('what b')
         # if abs(player.rect.bottom - collison.rect.top) < 10:
         #     # player.on_ground = True
@@ -57,6 +54,3 @@ def move_collision(player, boxes):
         # if abs(player.rect.top - collison.rect.bottom) < 11:
         #     # player.position.y = collison.rect.bottom
         #     print('c')
-
-
-
