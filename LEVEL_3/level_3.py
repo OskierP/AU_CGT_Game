@@ -199,7 +199,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        if points > 2000:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
+        if points > 2500:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
             run = False
             flags.next_lvl_3.set_flag(True)
 
