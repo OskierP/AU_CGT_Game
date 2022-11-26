@@ -18,10 +18,7 @@ def run_level(run):
 
     running = run
     clock = pygame.time.Clock()
-    tick = pygame.time.get_ticks()
-    TARGET_FPS = 60
-    delay_laser_odd = 0
-    delay_laser_even = 0
+    target_fps = 60
 
     gravity = 0
     friction = 0
@@ -29,9 +26,9 @@ def run_level(run):
     font = pygame.font.Font('freesansbold.ttf', 22)
     text = font.render('Press B to press the button', True, (0, 0, 0))
     text_box = text.get_rect()
-    ################################# LOAD PLAYER AND SPRITESHEET###################################
-    game_display = DisplayGame.GameDisplay(display_width, display_height).displayGame()
-    space_ship = sprite.Sprite('LEVEL_4/assets/background/lvl42.png').loadImage()
+    ################################# LOAD PLAYER AND SPRITE SHEET###################################
+    game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
+    space_ship = sprite.Sprite('LEVEL_4/assets/background/lvl42.png').load_image()
 
     dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
@@ -41,31 +38,31 @@ def run_level(run):
 
     move_arr = [dog, box, box2]
 
-    ################################# OBSTICALES ####################################
-    ceiling = sprite.Obsticales(1100, 20, 0, 0)
+    ################################# OBSTACLES ####################################
+    ceiling = sprite.Obstacles(1100, 20, 0, 0)
 
-    floor = sprite.Obsticales(1200, 20, 0, 570)  # spikes
+    floor = sprite.Obstacles(1200, 20, 0, 570)  # spikes
 
-    top = sprite.Platfrom(990, 50, 150)
+    top = sprite.Platform(990, 50, 150)
     arr = []
     for i in range(10):
-        arr.append(sprite.Platfrom(980, 50 + 20 * i, 20))
-    arrWall = sprite.Obsticales(20, 100, 980, 50)
+        arr.append(sprite.Platform(980, 50 + 20 * i, 20))
+    arr_wall = sprite.Obstacles(20, 100, 980, 50)
 
-    wall_right = sprite.Obsticales(20, 900, 1090, 0)
-    wall_left = sprite.Obsticales(10, 900, 30, 0)
+    wall_right = sprite.Obstacles(20, 900, 1090, 0)
+    wall_left = sprite.Obstacles(10, 900, 30, 0)
 
-    platform = sprite.Platfrom(0, 230, 340)
-    platform1 = sprite.Platfrom(850, 450, 300)
-    platform2 = sprite.Platfrom(450, 350, 300)
+    platform = sprite.Platform(0, 230, 340)
+    platform1 = sprite.Platform(850, 450, 300)
+    platform2 = sprite.Platform(450, 350, 300)
 
-    limitor1_1 = sprite.Platfrom(830, 430, 20)
-    limitor2_1 = sprite.Platfrom(450, 340, 20)
-    limitor2_2 = sprite.Platfrom(730, 340, 20)
-    limitor3_1 = sprite.Platfrom(320, 210, 20)
+    limitor1_1 = sprite.Platform(830, 430, 20)
+    limitor2_1 = sprite.Platform(450, 340, 20)
+    limitor2_2 = sprite.Platform(730, 340, 20)
+    limitor3_1 = sprite.Platform(320, 210, 20)
 
-    platformArr = [platform, platform1, platform2]
-    limitorArr = [limitor1_1, limitor2_1, limitor2_2, limitor3_1]
+    platform_arr = [platform, platform1, platform2]
+    limitor_arr = [limitor1_1, limitor2_1, limitor2_2, limitor3_1]
 
     ##BUTTONS##
 
@@ -76,10 +73,9 @@ def run_level(run):
     ########## COLLISIONS ##################
 
     collision_objects_player = [spikes, floor, wall_right, wall_left, box, box2, ceiling, platform, platform1,
-                                platform2, limitor1_1, limitor2_1, limitor2_2, limitor3_1, top, arrWall]
+                                platform2, limitor1_1, limitor2_1, limitor2_2, limitor3_1, top, arr_wall]
 
     collision_objects_box = [floor, wall_right, wall_left, platform1, platform2, limitor1_1, limitor2_1, limitor2_2]
-    collision_interactive = [dog]
     #################################### LOAD THE LEVEL #######################################
     dog.position.x, dog.position.y = 1000, 100
 
@@ -93,7 +89,7 @@ def run_level(run):
     flag = True
 
     while running:
-        dt = clock.tick(60) * .001 * TARGET_FPS
+        dt = clock.tick(60) * .001 * target_fps
         game_display.blit(space_ship, (0, 0))
 
         ################################# CHECK PLAYER INPUT #################################
@@ -156,34 +152,34 @@ def run_level(run):
         box.collisions = collisions.collision_test(box.rect, collision_objects_box)
         box2.collisions = collisions.collision_test(box2.rect, collision_objects_box)
 
-        game_display.blit(top.getFrame(top.width, top.height, 1), (top.x, top.y))
+        game_display.blit(top.get_frame(top.width, top.height, 1), (top.x, top.y))
 
         for x in arr:
-            game_display.blit(x.getFrame(x.width, x.height, 1), (x.x, x.y))
+            game_display.blit(x.get_frame(x.width, x.height, 1), (x.x, x.y))
 
-        for plat in platformArr:
-            game_display.blit(plat.getFrame(plat.width, plat.height, 1), (plat.x, plat.y))
+        for plat in platform_arr:
+            game_display.blit(plat.get_frame(plat.width, plat.height, 1), (plat.x, plat.y))
 
-        for plat in limitorArr:
-            game_display.blit(plat.getFrame(plat.width, plat.height, 1), (plat.x, plat.y))
+        for plat in limitor_arr:
+            game_display.blit(plat.get_frame(plat.width, plat.height, 1), (plat.x, plat.y))
 
         press_gravity.collision = collisions.collision_test(press_gravity.rect, [dog])
         press_gravity.update_action_place()
         keyboard.collision = collisions.collision_test(keyboard.rect, [dog])
         keyboard.update_action_place()
-        spikes.collison = collisions.collision_test(spikes.rect, [dog])
+        spikes.collision = collisions.collision_test(spikes.rect, [dog])
         spikes.update_action()
 
         if spikes.flag:
             running = False
             flags.lvl4_dog_dead_flag.set_flag(True)
 
-        game_display.blit(press_gravity.getFrame(40, 40, scale), (press_gravity.x, press_gravity.y))
-        game_display.blit(keyboard.getFrame(40, 20, scale), (keyboard.x, keyboard.y))
+        game_display.blit(press_gravity.get_frame(40, 40, scale), (press_gravity.x, press_gravity.y))
+        game_display.blit(keyboard.get_frame(40, 20, scale), (keyboard.x, keyboard.y))
 
-        game_display.blit(dog.getFrame(40, 30, scale), (dog.position.x, dog.position.y))
-        game_display.blit(box.getFrame(20, 20, scale), (box.position.x, box.position.y))
-        game_display.blit(box2.getFrame(20, 20, scale), (box2.position.x, box2.position.y))
+        game_display.blit(dog.get_frame(40, 30, scale), (dog.position.x, dog.position.y))
+        game_display.blit(box.get_frame(20, 20, scale), (box.position.x, box.position.y))
+        game_display.blit(box2.get_frame(20, 20, scale), (box2.position.x, box2.position.y))
 
         dog.update(dt)
         box.update(dt)

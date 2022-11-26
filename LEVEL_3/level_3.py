@@ -35,20 +35,6 @@ PLANET = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Other/Planet.png"))
 BG = SCREEN.fill((29, 17, 53))
 
 
-class Points():
-    def __init__(self):
-        self.points = 0
-
-    def set_score(self):
-        self.points += 1
-
-    def get_score(self):
-        return self.points
-
-
-POINTS = Points()
-
-
 class Rocket:
     X_POS = 80
     Y_POS = 310

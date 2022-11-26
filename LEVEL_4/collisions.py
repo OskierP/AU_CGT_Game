@@ -7,50 +7,31 @@ def collision_test(rect, tiles):
     return collisions
 
 
-def collison(rect, collisons):
-    for collison in collisons:
-        # print(rect.rect.bottom - collison.rect.top)
-        if abs(rect.rect.left - collison.rect.right) < 11:
-            rect.position.x = collison.rect.right
+def collision(rect, collisions):
+    for collision in collisions:
+        if abs(rect.rect.left - collision.rect.right) < 11:
+            rect.position.x = collision.rect.right
             rect.velocity.x = 0
-            # if not rect.collison_with_box:
-            #     rect.velocity.x = 0
-            # print('a')
-        if abs(rect.rect.right - collison.rect.left) < 11:
-            rect.position.x = collison.rect.left - rect.width
+
+        if abs(rect.rect.right - collision.rect.left) < 11:
+            rect.position.x = collision.rect.left - rect.width
             rect.velocity.x = 0
-            # if not rect.collison_with_box: # why did I add that ????
-            #     rect.velocity.x = 0
-            # print('b')
-        if abs(rect.rect.bottom - collison.rect.top) < 10:
+        if abs(rect.rect.bottom - collision.rect.top) < 10:
             rect.frame = 0
             rect.on_ground = True
-            rect.position.y = collison.rect.top - rect.height + 1
-            # print(f'3: {rect.position.y}')
-        if abs(rect.rect.top - collison.rect.bottom) < 10:
-            rect.position.y = collison.rect.bottom
-            # print('c')
+            rect.position.y = collision.rect.top - rect.height + 1
+        if abs(rect.rect.top - collision.rect.bottom) < 10:
+            rect.position.y = collision.rect.bottom
 
 
 def move_collision(player, boxes):
-    for collison in boxes:
-        if abs(player.rect.left - collison.rect.right) < 11:
-            #  =
-            collison.position.x -= 1
-            # player.position.x = collison.rect.right
-            collison.velocity.x = player.velocity.x
+    for collision in boxes:
+        if abs(player.rect.left - collision.rect.right) < 11:
+            collision.position.x -= 1
+            collision.velocity.x = player.velocity.x
             player.velocity.x = 0
-            # print('what a')
-        if abs(player.rect.right - collison.rect.left) < 11:
-            collison.position.x += 1
-            #  =
-            # player.position.x = collison.rect.left - player.width
-            collison.velocity.x = player.velocity.x
+        if abs(player.rect.right - collision.rect.left) < 11:
+            collision.position.x += 1
+
+            collision.velocity.x = player.velocity.x
             player.velocity.x = 0
-            # print('what b')
-        # if abs(player.rect.bottom - collison.rect.top) < 10:
-        #     # player.on_ground = True
-        #     # player.position.y = collison.rect.top - player.heigth
-        # if abs(player.rect.top - collison.rect.bottom) < 11:
-        #     # player.position.y = collison.rect.bottom
-        #     print('c')

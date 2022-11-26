@@ -13,12 +13,12 @@ class Sprite:
         self.height = 0
         self.gravity = 4
 
-    def loadImage(self):
+    def load_image(self):
         return pygame.image.load(self.image)
 
-    def getFrame(self, width, height, scale, frame_nr=0):
+    def get_frame(self, width, height, scale, frame_nr=0):
         frame = pygame.Surface((width, height))
-        frame.blit(self.loadImage(), (0, 0), ((frame_nr * width), 0, width, height))
+        frame.blit(self.load_image(), (0, 0), ((frame_nr * width), 0, width, height))
         frame = pygame.transform.scale(frame, (width * scale, height * scale))
         frame.set_colorkey((0, 0, 0))
         self.width = width * scale
@@ -30,7 +30,7 @@ class Sprite:
         return pygame.image.load(pygame.transform.scale(self.image, (width, height)))
 
 
-class Obsticales:
+class Obstacles:
 
     def __init__(self, width, height, x, y):
         self.width = width
@@ -38,12 +38,11 @@ class Obsticales:
         self.x = x
         self.y = y
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.collison = []
+        self.collision = []
         self.flag = False
 
     def update_rect(self):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        # print(f' WITDH: {self.width}')# use when level ready
 
 
 class ActionPlace(Sprite):
@@ -67,16 +66,16 @@ class ActionPlace(Sprite):
         # print(self.flagBox)
 
 
-class ActionPlace_2(Obsticales):
-    def __init__(self, width, heigth, x, y):
-        Obsticales.__init__(self, width, heigth, x, y)
+class ActionPlace_2(Obstacles):
+    def __init__(self, width, height, x, y):
+        Obstacles.__init__(self, width, height, x, y)
 
     def update_action(self):
-        if self.collison:
+        if self.collision:
             self.flag = True
 
 
-class Platfrom(Sprite):
+class Platform(Sprite):
     def __init__(self, x, y, width, height=20):
         Sprite.__init__(self, 'LEVEL_4/assets/unmovable_obj/platform.png', x, y)
         self.x = x
@@ -99,9 +98,9 @@ class Door(Sprite):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
 
-class Laser(Obsticales):
-    def __init__(self, width, heigth, x, y):
-        Obsticales.__init__(self, width, heigth, x, y)
+class Laser(Obstacles):
+    def __init__(self, width, height, x, y):
+        Obstacles.__init__(self, width, height, x, y)
 
     def on_off_odd_master(self, delay):
         if delay == 100:
@@ -142,8 +141,8 @@ class Laser(Obsticales):
                 self.width = 0
 
     def update_laser(self):
-        if self.collison:
-            for obj in self.collison:
+        if self.collision:
+            for obj in self.collision:
                 print(isinstance(obj, movable_objects.Player))
                 if isinstance(obj, movable_objects.Player):
                     print("died")
