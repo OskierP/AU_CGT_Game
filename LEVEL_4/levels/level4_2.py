@@ -56,7 +56,7 @@ def run_level(run):
     platform1 = sprite.Platform(850, 450, 300)
     platform2 = sprite.Platform(450, 350, 300)
 
-    limitor1_1 = sprite.Platform(830, 430, 20)
+    limitor1_1 = sprite.Platform(850, 430, 20)
     limitor2_1 = sprite.Platform(450, 340, 20)
     limitor2_2 = sprite.Platform(730, 340, 20)
     limitor3_1 = sprite.Platform(320, 210, 20)

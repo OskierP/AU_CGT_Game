@@ -55,14 +55,13 @@ def run_level(run):
     laser3_1 = sprite.Laser(0, 200, 500, 0)
     laser4_1 = sprite.Laser(0, 200, 350, 0)
     laser1_2 = sprite.Laser(0, 180, 800, 220)
-    laser2_2 = sprite.Laser(0, 180, 650, 220)
-    laser3_2 = sprite.Laser(0, 180, 490, 220)
-    laser4_2 = sprite.Laser(0, 180, 350, 220)
+    laser2_2 = sprite.Laser(0, 180, 490, 220)
+    laser3_2 = sprite.Laser(0, 180, 350, 220)
     laser1_3 = sprite.Laser(0, 180, 350, 420)
     laser_0 = sprite.Laser(0, 0, 0, 0)
     laser2_3 = sprite.Laser(0, 180, 700, 420)
 
-    laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser2_2, laser3_2, laser4_2, laser1_3, laser_0,
+    laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser_0, laser2_2, laser3_2, laser1_3, laser_0,
                   laser2_3]
 
     insert_box = sprite.ActionPlace('LEVEL_4/assets/action_place/insertBox.png', 1010, 480, 40, 40)
@@ -155,6 +154,8 @@ def run_level(run):
                     laser.on_off_even_slave(delay_laser_even)
                 else:
                     laser.on_off_odd_slave(delay_laser_odd)
+        if not player_press_2.was_pressed:
+            laser1_2.width = 5
 
         for laser in laser_list:
             laser.update_rect()
