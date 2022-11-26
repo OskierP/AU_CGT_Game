@@ -15,6 +15,7 @@ class Flag:
 #### FLAGS LEVEL 2 ####
 
 #### FLAGS LEVEL 3 ####
+next_lvl_3 = Flag()
 
 #### FLAGS LEVEL 4 ####
 lvl4_dog_dead_flag = Flag()

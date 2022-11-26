@@ -1,6 +1,10 @@
-import pygame
 import os
 import random
+
+import pygame
+
+import flags
+
 pygame.init()
 
 # Global Constants
@@ -9,26 +13,40 @@ SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 SCREEN.fill((29, 17, 53))
 
-FLYING = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket1.png")), 
-           pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket2.png")),
-           pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket3.png")),
-           pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket4.png"))]
-JUMPING = pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket4.png"))
-DUCKING = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket1.png")),
-           pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Rocket\Rocket2.png"))]
+FLYING = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket1.png")),
+          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket2.png")),
+          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket3.png")),
+          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket4.png"))]
+JUMPING = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket4.png"))
+DUCKING = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket1.png")),
+           pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket2.png"))]
 
-SMALL_ALIEN = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Alien\asteroid1.png")),
-                pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Alien\asteroid1.png")),
-                pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Alien\asteroid1.png"))]
-MILKYWAY = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Alien\milkyway.png" )),
-                pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Alien\milkyway2.png"))]
+SMALL_ALIEN = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png")),
+               pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png")),
+               pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png"))]
+MILKYWAY = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/milkyway.png")),
+            pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/milkyway2.png"))]
 
-UFO = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Spaceship\Spaceship1.png")),
-        pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Spaceship\Spaceship2.png"))]
+UFO = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Spaceship/Spaceship1.png")),
+       pygame.image.load(os.path.join(r"LEVEL_3/Assets/Spaceship/Spaceship2.png"))]
 
-PLANET = pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Other\Planet.png"))
+PLANET = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Other/Planet.png"))
 
 BG = SCREEN.fill((29, 17, 53))
+
+
+class Points():
+    def __init__(self):
+        self.points = 0
+
+    def set_score(self):
+        self.points += 1
+
+    def get_score(self):
+        return self.points
+
+
+POINTS = Points()
 
 
 class Rocket:
@@ -161,7 +179,7 @@ class Ufo(Obstacle):
     def draw(self, SCREEN):
         if self.index >= 9:
             self.index = 0
-        SCREEN.blit(self.image[self.index//5], self.rect)
+        SCREEN.blit(self.image[self.index // 5], self.rect)
         self.index += 1
 
 
@@ -194,6 +212,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+        if points > 2000:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
+            run = False
+            flags.next_lvl_3.set_flag(True)
 
         SCREEN.fill((29, 17, 53))
         userInput = pygame.key.get_pressed()
@@ -229,7 +251,12 @@ def main():
 def menu(death_count):
     global points
     run = True
+    print('hej1')
     while run:
+
+        if flags.next_lvl_3.get_flag():
+            run = False
+
         SCREEN.fill((29, 17, 53))
         font = pygame.font.Font('freesansbold.ttf', 30)
 
@@ -252,5 +279,4 @@ def menu(death_count):
             if event.type == pygame.KEYDOWN:
                 main()
 
-
-menu(death_count=0)
+# menu(death_count=0)
