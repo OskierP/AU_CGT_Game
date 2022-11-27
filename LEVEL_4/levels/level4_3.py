@@ -98,6 +98,7 @@ def run_level(run):
 
         if errors == 3:
             running = False
+            flags.lvl4_dog_dead_flag.set_flag(True)
 
         game_display.blit(text, text_box)
         game_display.blit(text2, text2_box)
@@ -130,7 +131,8 @@ def run_level(run):
             level += 1
             clicks = 0
             player_clicks.clear()
-            led_solution_num += 1
+            if level < 3:
+                led_solution_num += 1
 
         for error_index in range(errors):
             pygame.draw.rect(game_display, rect=error_arr[error_index], color='red')
