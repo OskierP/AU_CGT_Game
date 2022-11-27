@@ -31,7 +31,7 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    space_ship = sprite.Sprite('LEVEL_4/assets/background/spaceship.png').load_image()
+    level_4_1_background = sprite.Sprite('LEVEL_4/assets/background/level4_1.png').load_image()
     dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
@@ -90,7 +90,7 @@ def run_level(run):
     ################################# GAME LOOP ##########################
     while running:
         dt = clock.tick(60) * .001 * target_fps
-        game_display.blit(space_ship, (0, 0))
+        game_display.blit(level_4_1_background, (0, 0))
         dog.frame = 2
 
         ################################# CHECK PLAYER INPUT #################################
@@ -172,11 +172,11 @@ def run_level(run):
 
         insert_box.collision = collisions.collision_test(insert_box.rect, collision_interactive)
         player_press.collision = collisions.collision_test(player_press.rect, [dog])
-        player_press.update_action_place()
+        player_press.update()
         player_press_2.collision = collisions.collision_test(player_press_2.rect, [dog])
-        player_press_2.update_action_place()
+        player_press_2.update()
         doors_action.collision = collisions.collision_test(doors_action.rect, [dog])
-        doors_action.update_action()
+        doors_action.update()
 
         if doors_action.flag:
             running = False
@@ -206,7 +206,7 @@ def run_level(run):
         dog.update(dt)
         box.update(dt)
 
-        insert_box.update_action_place()
+        insert_box.update()
 
         for laser in laser_list:
             laser.update_laser()

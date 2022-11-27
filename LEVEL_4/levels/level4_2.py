@@ -28,7 +28,7 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    space_ship = sprite.Sprite('LEVEL_4/assets/background/lvl42.png').load_image()
+    level_4_2_background = sprite.Sprite('LEVEL_4/assets/background/level4_2.png').load_image()
 
     dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
@@ -90,7 +90,7 @@ def run_level(run):
 
     while running:
         dt = clock.tick(60) * .001 * target_fps
-        game_display.blit(space_ship, (0, 0))
+        game_display.blit(level_4_2_background, (0, 0))
 
         ################################# CHECK PLAYER INPUT #################################
         for event in pygame.event.get():
@@ -164,11 +164,11 @@ def run_level(run):
             game_display.blit(plat.get_frame(plat.width, plat.height, 1), (plat.x, plat.y))
 
         press_gravity.collision = collisions.collision_test(press_gravity.rect, [dog])
-        press_gravity.update_action_place()
+        press_gravity.update()
         keyboard.collision = collisions.collision_test(keyboard.rect, [dog])
-        keyboard.update_action_place()
+        keyboard.update()
         spikes.collision = collisions.collision_test(spikes.rect, [dog])
-        spikes.update_action()
+        spikes.update()
 
         if spikes.flag:
             running = False

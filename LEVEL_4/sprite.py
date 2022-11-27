@@ -57,7 +57,7 @@ class ActionPlace(Sprite):
         self.flag = False
         self.was_pressed = False
 
-    def update_action_place(self):
+    def update(self):
         if self.collision:
             self.flag = True
         else:
@@ -70,10 +70,24 @@ class ActionPlace_2(Obstacles):
     def __init__(self, width, height, x, y):
         Obstacles.__init__(self, width, height, x, y)
 
-    def update_action(self):
+    def update(self):
         if self.collision:
             self.flag = True
 
+
+class ActionPlacePuzzle(Obstacles):
+    def __init__(self, x, y, width, height, name=''):
+        Obstacles.__init__(self, width, height, x, y)
+        self.fingerprint = name
+    def update(self):
+        if self.collision:
+            self.flag = True
+        else:
+            self.flag = False
+
+
+    def get_fingerprint(self):
+        return self.fingerprint
 
 class Platform(Sprite):
     def __init__(self, x, y, width, height=20):
@@ -158,3 +172,12 @@ class InfoPlate(Sprite):
         self.y = y
         self.width = width
         self.height = height
+
+
+class Mouse(Obstacles):
+    def __init__(self, width, height):
+        Obstacles.__init__(self, width, height, 0, 0)
+
+    def update_rect(self):
+        self.x, self.y = pygame.mouse.get_pos()
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
