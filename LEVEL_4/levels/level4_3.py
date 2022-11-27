@@ -22,8 +22,16 @@ def run_level(run):
     mouse_position = pygame.math.Vector2(0, 0)
 
     font = pygame.font.Font('freesansbold.ttf', 22)
-    text = font.render('Press B to press the button', True, (0, 0, 0))
+    text = font.render('SPACE BAR:', True, (78, 150, 6))
     text_box = text.get_rect()
+    text2 = font.render('show sequence', True, (78, 150, 6))
+    text2_box=text2.get_rect()
+    text3 = font.render('and restart clicks', True, (78, 150, 6))
+    text3_box = text2.get_rect()
+
+    text_box.x, text_box.y = 870, 220
+    text2_box.x, text2_box.y = 870, 250
+    text3_box.x, text3_box.y = 870, 280
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
     level_4_3_background = sprite.Sprite('LEVEL_4/assets/background/level4_3.png').load_image()
@@ -96,7 +104,9 @@ def run_level(run):
         if errors == 3:
             running = False
 
-
+        game_display.blit(text,text_box)
+        game_display.blit(text2, text2_box)
+        game_display.blit(text3, text3_box)
 
         ################################ UPDATE WINDOW AND DISPLAY #################################
         # pygame.draw.rect(game_display, rect=red_led, color='red')
