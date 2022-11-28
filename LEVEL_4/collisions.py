@@ -12,12 +12,12 @@ def collision(rect, collisions):
         if abs(rect.rect.left - collision.rect.right) < 11:
             rect.position.x = collision.rect.right
             rect.velocity.x = 0
-
         if abs(rect.rect.right - collision.rect.left) < 11:
             rect.position.x = collision.rect.left - rect.width
             rect.velocity.x = 0
         if abs(rect.rect.bottom - collision.rect.top) < 10:
-            rect.frame = 0
+            if not rect.on_ground:
+                rect.frame = 0
             rect.on_ground = True
             rect.position.y = collision.rect.top - rect.height + 1
         if abs(rect.rect.top - collision.rect.bottom) < 10:
@@ -32,6 +32,5 @@ def move_collision(player, boxes):
             player.velocity.x = 0
         if abs(player.rect.right - collision.rect.left) < 11:
             collision.position.x += 1
-
             collision.velocity.x = player.velocity.x
             player.velocity.x = 0

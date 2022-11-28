@@ -108,19 +108,19 @@ def run_level(run):
                 #     dog.acceleration.y += .5
                 elif event.key == pygame.K_UP and not gravity and not friction:
                     dog.acceleration.y -= .5
-                elif event.key == pygame.K_j:  # to delete
-                    if flag:
-                        gravity = 0.21
-                        friction = -.12
-                        flag = False
-                        # was_pressed = True to change
-                    else:
-                        gravity = 0
-                        friction = 0
-                        flag = True
-                    for obj in move_arr:
-                        obj.gravity = gravity
-                        obj.friction = friction
+                # elif event.key == pygame.K_j:  # to delete
+                #     if flag:
+                #         gravity = 0.21
+                #         friction = -.12
+                #         flag = False
+                #         # was_pressed = True to change
+                #     else:
+                #         gravity = 0
+                #         friction = 0
+                #         flag = True
+                #     for obj in move_arr:
+                #         obj.gravity = gravity
+                #         obj.friction = friction
 
                 elif event.key == pygame.K_b and press_gravity.flag and not was_pressed:
                     gravity = 0.21

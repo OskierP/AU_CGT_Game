@@ -91,7 +91,7 @@ def run_level(run):
     while running:
         dt = clock.tick(60) * .001 * target_fps
         game_display.blit(level_4_1_background, (0, 0))
-        dog.frame = 2
+        dog.frame = 10
 
         ################################# CHECK PLAYER INPUT #################################
         for event in pygame.event.get():
@@ -103,8 +103,6 @@ def run_level(run):
                     dog.LEFT_KEY = True
                 elif event.key == pygame.K_RIGHT:
                     dog.RIGHT_KEY = True
-                elif event.key == pygame.K_SPACE:
-                    dog.jump()
                 elif event.key == pygame.K_DOWN and not gravity and not friction:
                     dog.acceleration.y += .5
                 elif event.key == pygame.K_UP and not gravity and not friction:
@@ -136,10 +134,6 @@ def run_level(run):
                 elif event.key == pygame.K_RIGHT:
                     dog.RIGHT_KEY = False
                     dog.frame = 0
-                elif event.key == pygame.K_SPACE:
-                    if dog.is_jumping:
-                        dog.velocity.y *= .25
-                        dog.is_jumping = False
 
         ################################# UPDATE WINDOW AND DISPLAY #################################
 

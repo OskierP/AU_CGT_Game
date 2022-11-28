@@ -20,7 +20,7 @@ class Movable_obj:
     def get_frame(self, width, height, scale):
         self.scale = scale
         frame = pygame.Surface((width, height))
-        frame.blit(self.load_image(), (0, 0), ((self.frame * width), 0, width, height))
+        frame.blit(self.load_image(), (0, 0), (((self.frame // 5) * width), 0, width, height))
         frame = pygame.transform.scale(frame, (width * self.scale, height * self.scale))
         frame.set_colorkey((0, 0, 0))
         self.width = width * self.scale
@@ -50,11 +50,13 @@ class Player(Movable_obj):
         collisions.collision(self, self.collisions)
         self.update_rect()
         self.acceleration = pygame.math.Vector2(0, self.gravity)
-        if self.frame > self.frames - 1:
+        if self.frame > 20:
             self.frame = 0
 
     def horizontal_movement(self, dt):
         self.acceleration.x = 0
+        # if self.on_ground:
+        #     self.frame=0
         if self.LEFT_KEY:
             self.image = "LEVEL_4/assets/player/dog_anim_left.png"
             self.acceleration.x -= .3
@@ -64,7 +66,7 @@ class Player(Movable_obj):
             self.acceleration.x += .3
             self.frame += 1
         if not self.on_ground:
-            self.frame = 2
+            self.frame = 10
 
         self.acceleration.x += self.velocity.x * self.friction
         self.velocity.x += self.acceleration.x * dt
@@ -78,24 +80,17 @@ class Player(Movable_obj):
         self.rect.x = self.position.x
 
     def vertical_movement(self, dt):
-        # print(f'1: {self.position.y}')
         self.velocity.y += self.acceleration.y * dt
         if self.velocity.y > 7:
             self.velocity.y = 7
         self.position.y += (self.velocity.y * dt + (self.acceleration.y * .5) * (dt * dt))
 
-        # print(f'2: {self.position.y}')
         if self.collisions:
             collisions.collision(self, self.collisions)
-            # self.on_ground = True
             self.velocity.y = 0
-        #     # self.position.y = 630
         self.rect.bottom = self.position.y
-        # print(self.rect.bottom)
 
     def limit_velocity(self, max_vel):
-        # min(-max_vel, max(self.velocity.x, max_vel))
-        # if abs(self.velocity.x) < .01: self.velocity.x = 0
         max_vel_tmp = max_vel
         min(-max_vel, max(self.velocity.x, max_vel))
         if self.gravity == 0:
