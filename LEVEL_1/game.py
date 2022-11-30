@@ -1,4 +1,4 @@
-import dog
+import LEVEL_1.dog as dog
 import pygame
 import random
 
@@ -15,7 +15,7 @@ class World:
         self.tile_list = []
 
     def create_list(self, ):
-        img = pygame.image.load("assets/tile.png")
+        img = pygame.image.load("LEVEL_1/assets/tile.png")
 
         img_rect = img.get_rect()
         img_rect.x = 7037

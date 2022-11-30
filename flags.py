@@ -11,7 +11,7 @@ class Flag:
 
 
 #### FLAGS LEVEL 1 ####
-
+next_lvl_1 = Flag()
 #### FLAGS LEVEL 2 ####
 
 #### FLAGS LEVEL 3 ####

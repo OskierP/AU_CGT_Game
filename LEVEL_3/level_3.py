@@ -237,7 +237,6 @@ def main():
 def menu(death_count):
     global points
     run = True
-    print('hej1')
     while run:
 
         if flags.next_lvl_3.get_flag():
