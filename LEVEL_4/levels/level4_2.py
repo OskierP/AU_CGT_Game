@@ -1,3 +1,5 @@
+import time
+
 import pygame
 
 import LEVEL_4.DisplayGame as DisplayGame
@@ -16,6 +18,12 @@ def run_level(run):
     display_height = 600  # 600
     was_pressed = False
 
+    pygame.mixer.music.load('LEVEL_4/assets/sound/deep_space_music.mp3')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.2)
+    button_click = pygame.mixer.Sound('LEVEL_4/assets/sound/button_click_effect.wav')
+    jump_sound = pygame.mixer.Sound('LEVEL_4/assets/sound/audio_jump.wav')
+
     running = run
     clock = pygame.time.Clock()
     target_fps = 60
@@ -28,13 +36,13 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    level_4_2_background = sprite.Sprite('LEVEL_4/assets/background/level4_2.png').load_image()
+    level_4_2_background = sprite.Sprite('LEVEL_4/assets/sprites/background/level4_2.png').load_image()
 
-    dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
+    dog = Player('LEVEL_4/assets/sprites/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
-    box = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
-    box2 = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
+    box = Box('LEVEL_4/assets/sprites/movable_obj/box.png', gravity, friction)
+    box2 = Box('LEVEL_4/assets/sprites/movable_obj/box.png', gravity, friction)
 
     move_arr = [dog, box, box2]
 
@@ -66,8 +74,8 @@ def run_level(run):
 
     ##BUTTONS##
 
-    press_gravity = sprite.ActionPlace('LEVEL_4/assets/action_place/button.png', 1010, 100, 40, 40)
-    keyboard = sprite.ActionPlace('LEVEL_4/assets/action_place/keyboard.png', 50, 150, 40, 40)
+    press_gravity = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/button.png', 1010, 100, 40, 40)
+    keyboard = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/keyboard.png', 50, 150, 40, 40)
     spikes = sprite.ActionPlace_2(1200, 20, 0, 550)
 
     ########## COLLISIONS ##################
@@ -104,8 +112,8 @@ def run_level(run):
                     dog.RIGHT_KEY = True
                 elif event.key == pygame.K_SPACE:
                     dog.jump()
-                # elif event.key == pygame.K_DOWN and not gravity and not friction:
-                #     dog.acceleration.y += .5
+                    jump_sound.play()
+                    jump_sound.set_volume(0.5)
                 elif event.key == pygame.K_UP and not gravity and not friction:
                     dog.acceleration.y -= .5
                 # elif event.key == pygame.K_j:  # to delete
@@ -123,6 +131,8 @@ def run_level(run):
                 #         obj.friction = friction
 
                 elif event.key == pygame.K_b and press_gravity.flag and not was_pressed:
+                    button_click.play()
+                    button_click.set_volume(0.5)
                     gravity = 0.21
                     friction = -.12
                     was_pressed = True
@@ -130,6 +140,9 @@ def run_level(run):
                         obj.gravity = gravity
                         obj.friction = friction
                 elif event.key == pygame.K_b and keyboard.flag:
+                    button_click.play()
+                    button_click.set_volume(0.5)
+                    time.sleep(1)
                     running = False
                     flags.next_lvl_4_2.set_flag(True)
 

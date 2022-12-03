@@ -1,3 +1,5 @@
+import time
+
 import pygame
 
 import LEVEL_4.DisplayGame as DisplayGame
@@ -17,6 +19,12 @@ def run_level(run):
     display_width = 1100  # 1100
     display_height = 600  # 600
 
+    pygame.mixer.init()
+    pygame.mixer.music.load('LEVEL_4/assets/sound/deep_space_music.mp3')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.2)
+    button_click = pygame.mixer.Sound('LEVEL_4/assets/sound/button_click_effect.wav')
+
     running = run
     clock = pygame.time.Clock()
     target_fps = 60
@@ -31,11 +39,11 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    level_4_1_background = sprite.Sprite('LEVEL_4/assets/background/level4_1.png').load_image()
-    dog = Player('LEVEL_4/assets/player/dog_anim_left.png', 5, gravity, friction)
+    level_4_1_background = sprite.Sprite('LEVEL_4/assets/sprites/background/level4_1.png').load_image()
+    dog = Player('LEVEL_4/assets/sprites/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
-    box = Box('LEVEL_4/assets/movable_obj/box.png', gravity, friction)
+    box = Box('LEVEL_4/assets/sprites/movable_obj/box.png', gravity, friction)
 
     ################################# OBSTACLES ####################################
     ceiling = sprite.Obstacles(1100, 20, 0, 0)
@@ -64,17 +72,17 @@ def run_level(run):
     laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser_0, laser2_2, laser3_2, laser1_3, laser_0,
                   laser2_3]
 
-    insert_box = sprite.ActionPlace('LEVEL_4/assets/action_place/insertBox.png', 1010, 480, 40, 40)
-    player_press = sprite.ActionPlace('LEVEL_4/assets/action_place/button.png', 1010, 300, 40, 40)
-    player_press_2 = sprite.ActionPlace('LEVEL_4/assets/action_place/button-left.png', 0, 470, 40, 40)
+    insert_box = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/insertBox.png', 1010, 480, 40, 40)
+    player_press = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/button.png', 1010, 300, 40, 40)
+    player_press_2 = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/button-left.png', 0, 470, 40, 40)
 
     doors = sprite.Door(0, 220)
     doors_action = sprite.ActionPlace_2(20, 180, 0, 220)
 
     ##PLATES##
 
-    bridge_plate = sprite.InfoPlate('LEVEL_4/assets/unmovable_obj/bridge.png', 950, 100, 50, 20)
-    lvl2 = sprite.InfoPlate('LEVEL_4/assets/unmovable_obj/lvl2.png', 100, 300, 50, 20)
+    bridge_plate = sprite.InfoPlate('LEVEL_4/assets/sprites/unmovable_obj/bridge.png', 950, 100, 50, 20)
+    lvl2 = sprite.InfoPlate('LEVEL_4/assets/sprites/unmovable_obj/lvl2.png', 100, 300, 50, 20)
     ########## COLLISIONS ##################
     collision_objects_player = [floor, wall_right, wall_left, box, ceiling, obj11, obj12, obj21, obj22, doors]
     collision_objects_box = [floor, box, wall_right, wall_left, obj11, obj12, obj21, obj22]
@@ -122,9 +130,15 @@ def run_level(run):
                 #     box.friction = friction
 
                 elif event.key == pygame.K_b and player_press.flag and insert_box.flag:
+                    button_click.play()
+                    button_click.set_volume(0.5)
+                    time.sleep(1)
                     doors.width = 0
                     doors.update_rect()
                 elif event.key == pygame.K_b and player_press_2.flag:
+                    button_click.play()
+                    button_click.set_volume(0.5)
+                    time.sleep(1)
                     player_press_2.was_pressed = True
 
             if event.type == pygame.KEYUP:
@@ -143,6 +157,8 @@ def run_level(run):
         for laser in laser_list[2:]:
             if player_press_2.was_pressed:
                 laser.width = 0
+                laser2_1.width = 0
+                laser1_1.width = 0
             else:
                 if laser_list.index(laser) % 2:
                     laser.on_off_even_slave(delay_laser_even)
@@ -150,6 +166,7 @@ def run_level(run):
                     laser.on_off_odd_slave(delay_laser_odd)
         if not player_press_2.was_pressed:
             laser1_2.width = 5
+            laser1_2.sound_fx = 0
 
         for laser in laser_list:
             laser.update_rect()
