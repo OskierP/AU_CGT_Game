@@ -79,19 +79,20 @@ class ActionPlacePuzzle(Obstacles):
     def __init__(self, x, y, width, height, name=''):
         Obstacles.__init__(self, width, height, x, y)
         self.fingerprint = name
+
     def update(self):
         if self.collision:
             self.flag = True
         else:
             self.flag = False
 
-
     def get_fingerprint(self):
         return self.fingerprint
 
+
 class Platform(Sprite):
     def __init__(self, x, y, width, height=20):
-        Sprite.__init__(self, 'LEVEL_4/assets/unmovable_obj/platform.png', x, y)
+        Sprite.__init__(self, 'LEVEL_4/assets/sprites/unmovable_obj/platform.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -101,7 +102,7 @@ class Platform(Sprite):
 
 class Door(Sprite):
     def __init__(self, x, y, width=30, height=180):
-        Sprite.__init__(self, 'LEVEL_4/assets/unmovable_obj/doors_4_1.png', x, y)
+        Sprite.__init__(self, 'LEVEL_4/assets/sprites/unmovable_obj/doors_4_1.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -115,15 +116,22 @@ class Door(Sprite):
 class Laser(Obstacles):
     def __init__(self, width, height, x, y):
         Obstacles.__init__(self, width, height, x, y)
+        # # pygame.mixer.init()
+        # pygame.mixer.music.load('LEVEL_4/assets/sound/laser_sound.mp3')
+        # pygame.mixer.Sound.set_volume(1)
+        self.sound_fx = pygame.mixer.Sound('LEVEL_4/assets/sound/laser_sound_effect.wav')
 
     def on_off_odd_master(self, delay):
         if delay == 100:
             if self.width == 0:
                 self.width = 5
+                # self.sound_fx.play()
 
             elif self.width == 5:
                 self.width = 0
+                # self.sound_fx.stop()
             return 0
+
         else:
             return delay + 1
 
@@ -155,6 +163,8 @@ class Laser(Obstacles):
                 self.width = 0
 
     def update_laser(self):
+        if self.sound_fx:
+            self.sound()
         if self.collision:
             for obj in self.collision:
                 print(isinstance(obj, movable_objects.Player))
@@ -163,6 +173,13 @@ class Laser(Obstacles):
                     return 1  # change to 1
                 if isinstance(obj, movable_objects.Box):
                     print('box')
+
+    def sound(self):
+        if self.width:
+            self.sound_fx.play()
+            self.sound_fx.set_volume(0.01)
+        else:
+            self.sound_fx.stop()
 
 
 class InfoPlate(Sprite):

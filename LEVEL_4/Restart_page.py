@@ -3,6 +3,7 @@ import pygame
 
 def restart():
     pygame.init()
+    pygame.mixer.stop()
 
     running = True
 
@@ -42,13 +43,14 @@ def restart():
 
             if event.type == pygame.QUIT:
                 pygame.quit()
-
                 quit()
 
             pygame.display.update()
 
+
 def restart_lvl_3():
     pygame.init()
+    pygame.mixer.stop()
 
     running = True
 
