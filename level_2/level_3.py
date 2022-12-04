@@ -34,8 +34,11 @@ BG = SCREEN.fill((29, 17, 53))
 class Rocket:
     X_POS = 80
     Y_POS = 310
-    Y_POS_DUCK = 340
+    #Y_POS = [300,310,320,340]
+    #Y_POS = 310 # this is y-position of the rocket
+    Y_POS_DUCK = 340 # this is the y-position of the rocket when ducking
     JUMP_VEL = 8.5
+    DUCK_VEL = -8.5
 
     def __init__(self):
         self.duck_img = DUCKING
@@ -48,10 +51,12 @@ class Rocket:
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
+        self.duck_vel = self.DUCK_VEL
         self.image = self.run_img[0]
         self.rocket_rect = self.image.get_rect()
         self.rocket_rect.x = self.X_POS
         self.rocket_rect.y = self.Y_POS
+        #self.rocket_rect.y = self.Y_POS
 
     def update(self, userInput):
         if self.rocket_duck:
@@ -79,17 +84,36 @@ class Rocket:
 
     def duck(self):
         self.image = self.duck_img[self.step_index // 5]
-        self.rocket_rect = self.image.get_rect()
-        self.rocket_rect.x = self.X_POS
-        self.rocket_rect.y = self.Y_POS_DUCK
-        self.step_index += 1
+        if self.rocket_duck:
+            self.rocket_rect.y += self.jump_vel * 4
+            self.jump_vel += 0.8
+        if self.jump_vel < - self.JUMP_VEL:
+            self.rocket_duck = False
+            self.jump_vel = self.JUMP_VEL
+        #self.image = self.duck_img[self.step_index // 5]
+        #self.rocket_rect = self.image.get_rect()
+        #self.rocket_rect.x = self.X_POS
+        #self.rocket_rect.y = self.Y_POS_DUCK
+        #self.step_index += 1
 
     def run(self):
         self.image = self.run_img[self.step_index // 5]
-        self.rocket_rect = self.image.get_rect()
-        self.rocket_rect.x = self.X_POS
-        self.rocket_rect.y = self.Y_POS
+        if self.rocket_run:
+            self.rocket_rect.y -= self.jump_vel
+            self.jump_vel -= 0.4
+        if self.jump_vel < - self.JUMP_VEL:
+            self.rocket_jump = False
+            self.jump_vel = self.JUMP_VEL
         self.step_index += 1
+        
+        #self.image = self.run_img[self.step_index // 5]
+        #self.rocket_rect = self.image.get_rect()
+        #self.rocket_rect.x = self.X_POS
+        #self.rocket_rect.y = self.Y_POS
+        #self.step_index += 1
+        ##self.rocket_rect.y = self.jump_vel
+        ##self.rocket_rect.y = self.rocket_rect.move_ip(0,1)
+        
 
     def jump(self):
         self.image = self.jump_img
@@ -254,3 +278,12 @@ def menu(death_count):
 
 
 menu(death_count=0)
+
+
+# It jumps whilst running, don't make it look like a jump so much (or make the jumps smaller)
+# Ducks goes wayyy to far off screen & is sudden from the current position 
+# Implement collisions so things blow up when you touch them
+# Would be cool to have stuff flying toward me 
+
+pygame.display.quit()
+pygame.quit()
