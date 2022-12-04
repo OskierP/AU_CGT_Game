@@ -80,7 +80,7 @@ def run_level(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                flags.next_lvl_4_2.set_flag(True)
+                flags.next_lvl_4_3.set_flag(True)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.mixer.Sound('LEVEL_4/assets/sound/click_sound_effect.mp3').play()

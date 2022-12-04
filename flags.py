@@ -24,7 +24,7 @@ next_lvl_4_2 = Flag()
 next_lvl_4_3 = Flag()
 
 #### FLAGS LEVEL 5 ####
-
+next_lvl_5 = Flag()
 #### FLAGS LEVEL 6 ####
 
 #### FLAGS LEVEL BONUS ####

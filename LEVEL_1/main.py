@@ -158,3 +158,5 @@ def level_1():
 
         pygame.display.update()
         print(game.player.jumpingVelocity)
+
+level_1()
