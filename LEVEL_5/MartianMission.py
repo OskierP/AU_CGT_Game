@@ -7,6 +7,9 @@ import LEVEL_5.button as button
 from PIL import Image
 from pygame.locals import *
 
+import flags
+
+
 def main():
     mixer.init()
     pygame.init()
@@ -771,6 +774,7 @@ def main():
             #quit game
             if event.type == pygame.QUIT:
                 run = False
+                flags.next_lvl_5.set_flag(True)
             #keyboard presses
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
