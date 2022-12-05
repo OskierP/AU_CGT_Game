@@ -9,13 +9,13 @@ from LEVEL_4.levels import level4_1, level4_2, level4_3
 
 #### LEVEL 1 #####
 
-# while not flags.next_lvl_1.get_flag():
-#     LEVEL_1.main.level_1()
-#### LEVEL 2 #####
-#### LEVEL 3 #####
-#
-# while not flags.next_lvl_3.get_flag():
-#     LEVEL_3.level_3.menu(death_count=0)
+while not flags.next_lvl_1.get_flag():
+    LEVEL_1.main.level_1()
+### LEVEL 2 #####
+### LEVEL 3 #####
+
+while not flags.next_lvl_3.get_flag():
+    LEVEL_3.level_3.menu(death_count=0)
 
 #### LEVEL 4 #####
 run_level_4_1 = True
