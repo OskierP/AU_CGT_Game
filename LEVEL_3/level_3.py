@@ -34,12 +34,16 @@ PLANET = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Other/Planet.png"))
 
 BG = SCREEN.fill((29, 17, 53))
 
+# The base classes of this code come from the following source. Alterations were made for the purpose of Martian Mission.
+# codewmax (2020) chrome-dinosaur main.py (Version unknown) [Source code]. https://github.com/codewmax/chrome-dinosaur
 
 class Rocket:
     X_POS = 80
     Y_POS = 310
-    Y_POS_DUCK = 340
+    #Y_POS = 310 # this is y-position of the rocket
+    Y_POS_DUCK = 350 # this is the y-position of the rocket when ducking
     JUMP_VEL = 8.5
+    DUCK_VEL = 7.0
 
     def __init__(self):
         self.duck_img = DUCKING
@@ -52,10 +56,12 @@ class Rocket:
 
         self.step_index = 0
         self.jump_vel = self.JUMP_VEL
+        self.duck_vel = self.DUCK_VEL
         self.image = self.run_img[0]
         self.rocket_rect = self.image.get_rect()
         self.rocket_rect.x = self.X_POS
         self.rocket_rect.y = self.Y_POS
+        #self.rocket_rect.y = self.Y_POS
 
     def update(self, userInput):
         if self.rocket_duck:
@@ -68,7 +74,7 @@ class Rocket:
         if self.step_index >= 10:
             self.step_index = 0
 
-        if userInput[pygame.K_UP] and not self.rocket_jump:
+        if userInput[pygame.K_UP] and not self.rocket_jump and self.rocket_jump < SCREEN_HEIGHT:
             self.rocket_duck = False
             self.rocket_run = False
             self.rocket_jump = True
@@ -81,26 +87,46 @@ class Rocket:
             self.rocket_run = True
             self.rocket_jump = False
 
+    # Duck currently goes up then down
     def duck(self):
         self.image = self.duck_img[self.step_index // 5]
-        self.rocket_rect = self.image.get_rect()
-        self.rocket_rect.x = self.X_POS
-        self.rocket_rect.y = self.Y_POS_DUCK
-        self.step_index += 1
+        if self.rocket_duck:
+            self.rocket_rect.y += self.duck_vel * 4
+            self.duck_vel += 0.2
+        if self.duck_vel < - self.DUCK_VEL:
+            self.rocket_duck = False
+            self.duck_vel = self.DUCK_VEL
+        #self.image = self.duck_img[self.step_index // 5]
+        #self.rocket_rect = self.image.get_rect()
+        #self.rocket_rect.x = self.X_POS
+        #self.rocket_rect.y = self.Y_POS_DUCK
+        #self.step_index += 1
 
     def run(self):
         self.image = self.run_img[self.step_index // 5]
-        self.rocket_rect = self.image.get_rect()
-        self.rocket_rect.x = self.X_POS
-        self.rocket_rect.y = self.Y_POS
+        if self.rocket_run:
+            self.rocket_rect.y -= self.jump_vel
+            self.jump_vel -= 0.6
+        if self.jump_vel < - self.JUMP_VEL:
+            self.rocket_jump = False
+            self.jump_vel = self.JUMP_VEL
         self.step_index += 1
+
+        #self.image = self.run_img[self.step_index // 5]
+        #self.rocket_rect = self.image.get_rect()
+        #self.rocket_rect.x = self.X_POS
+        #self.rocket_rect.y = self.Y_POS
+        #self.step_index += 1
+        #self.rocket_rect.y = self.jump_vel
+        #self.rocket_rect.y = self.rocket_rect.move_ip(0,1)
+
 
     def jump(self):
         self.image = self.jump_img
         if self.rocket_jump:
             self.rocket_rect.y -= self.jump_vel * 4
             self.jump_vel -= 0.8
-        if self.jump_vel < - self.JUMP_VEL:
+        if self.jump_vel < self.JUMP_VEL:
             self.rocket_jump = False
             self.jump_vel = self.JUMP_VEL
 
@@ -108,21 +134,21 @@ class Rocket:
         SCREEN.blit(self.image, (self.rocket_rect.x, self.rocket_rect.y))
 
 
-class Planet:
-    def __init__(self):
-        self.x = SCREEN_WIDTH + random.randint(800, 1000)
-        self.y = random.randint(50, 100)
-        self.image = PLANET
-        self.width = self.image.get_width()
+#class Planet:
+    #def __init__(self):
+        #self.x = SCREEN_WIDTH + random.randint(800, 1000)
+        #self.y = random.randint(50, 100)
+        #self.image = PLANET
+        #self.width = self.image.get_width()
 
-    def update(self):
-        self.x -= game_speed
-        if self.x < -self.width:
-            self.x = SCREEN_WIDTH + random.randint(2500, 3000)
-            self.y = random.randint(50, 100)
+    #def update(self):
+        #self.x -= game_speed
+        #if self.x < -self.width:
+            #self.x = SCREEN_WIDTH + random.randint(2500, 3000)
+            #self.y = random.randint(50, 100)
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.x, self.y))
+    #def draw(self, SCREEN):
+        #SCREEN.blit(self.image, (self.x, self.y))
 
 
 class Obstacle:
@@ -174,7 +200,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
     player = Rocket()
-    planet = Planet()
+    #planet = Planet()
     game_speed = 20
     x_pos_bg = 0
     y_pos_bg = 380
@@ -226,8 +252,8 @@ def main():
                 death_count += 1
                 menu(death_count)
 
-        planet.draw(SCREEN)
-        planet.update()
+        #planet.draw(SCREEN)
+        #planet.update()
 
         score()
 
@@ -245,6 +271,11 @@ def menu(death_count):
 
         SCREEN.fill((29, 17, 53))
         font = pygame.font.Font('freesansbold.ttf', 30)
+
+        #if points == 100:
+         #   pygame.time.delay(2000)
+          #  death_count += 1
+           # menu(death_count)
 
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (255, 255, 255))
@@ -265,4 +296,14 @@ def menu(death_count):
             if event.type == pygame.KEYDOWN:
                 main()
 
-# menu(death_count=0)
+
+menu(death_count=0)
+
+
+# It jumps whilst running, don't make it look like a jump so much (or make the jumps smaller)
+# Ducks goes wayyy to far off screen & is sudden from the current position
+# Implement collisions so things blow up when you touch them
+# Would be cool to have stuff flying toward me
+
+pygame.display.quit()
+pygame.quit()
