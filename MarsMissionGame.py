@@ -1,11 +1,11 @@
 import pygame
 
 import LEVEL_1.main
-import LEVEL_3.level_3
-import LEVEL_4.Restart_page
+import LEVEL_2.level_2
+import LEVEL_3n4.Restart_page
 import LEVEL_5.MartianMission
 import flags as flags
-from LEVEL_4.levels import level4_1, level4_2, level4_3
+from LEVEL_3n4.levels import level3_1, level3_2, level4
 
 #### LEVEL 1 #####
 while not flags.next_lvl_1.get_flag():
@@ -13,36 +13,32 @@ while not flags.next_lvl_1.get_flag():
 ### LEVEL 2 #####
 ### LEVEL 3 #####
 
-while not flags.next_lvl_3.get_flag():
-    LEVEL_3.level_3.menu(death_count=0)
+while not flags.next_lvl_2.get_flag():
+    LEVEL_2.level_2.menu(death_count=0)
 
 #### LEVEL 4 #####
-run_level_4_1 = True
+run_level_3_1 = True
 
-while not flags.next_lvl_4_1.get_flag():
-    if not level4_1.run_level(run_level_4_1):
-        if flags.lvl4_dog_dead_flag.get_flag():
-            LEVEL_4.Restart_page.restart()
-            run_level_4_1 = True
-            flags.lvl4_dog_dead_flag.set_flag(False)
+while not flags.next_lvl_3_1.get_flag():
+    if not level3_1.run_level(run_level_3_1):
+        if flags.lvl3_dog_dead_flag.get_flag():
+            LEVEL_3n4.Restart_page.restart()
+            run_level_3_1 = True
+            flags.lvl3_dog_dead_flag.set_flag(False)
 
-run_level_4_2 = True
+run_level_3_2 = True
 pygame.mixer.stop()
-while not flags.next_lvl_4_2.get_flag():
-    if not level4_2.run_level(run_level_4_2):
-        if flags.lvl4_dog_dead_flag.get_flag():
-            LEVEL_4.Restart_page.restart()
-            run_level_4_2 = True
-            flags.lvl4_dog_dead_flag.set_flag(False)
+while not flags.next_lvl_3_2.get_flag():
+    if not level3_2.run_level(run_level_3_2):
+        if flags.lvl3_dog_dead_flag.get_flag():
+            LEVEL_3n4.Restart_page.restart()
+            run_level_3_2 = True
+            flags.lvl3_dog_dead_flag.set_flag(False)
 pygame.mixer.music.stop()
 
-run_level_4_3 = True
-while not flags.next_lvl_4_3.get_flag():
-    if not level4_3.run_level(run_level_4_3):
-        if flags.lvl4_dog_dead_flag.get_flag():
-            LEVEL_4.Restart_page.restart_lvl_3()
-            run_level_4_3 = True
-            flags.lvl4_dog_dead_flag.set_flag(False)
+run_level_4 = True
+while not flags.next_lvl_4.get_flag():
+    level4.run_level(run_level_4)
 pygame.mixer.stop()
 
 #### LEVEL 5 #####

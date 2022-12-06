@@ -2,9 +2,9 @@ import time
 
 import pygame
 
-import LEVEL_4.DisplayGame as DisplayGame
-import LEVEL_4.collisions as collisions
-import LEVEL_4.sprite as sprite
+import LEVEL_3n4.DisplayGame as DisplayGame
+import LEVEL_3n4.collisions as collisions
+import LEVEL_3n4.sprite as sprite
 import flags as flags
 
 
@@ -33,7 +33,7 @@ def run_level(run):
     text3_box.x, text3_box.y = 870, 280
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    level_4_3_background = sprite.Sprite('LEVEL_4/assets/sprites/background/level4_3.png').load_image()
+    level_4_3_background = sprite.Sprite('LEVEL_3n4/assets/sprites/background/level4_3.png').load_image()
 
     ################################# MAIN LEDS ####################################
     red_led = sprite.ActionPlacePuzzle(347, 141, 159, 156, 'red')
@@ -80,17 +80,17 @@ def run_level(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                flags.next_lvl_4_3.set_flag(True)
+                flags.next_lvl_4.set_flag(True)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.mixer.Sound('LEVEL_4/assets/sound/click_sound_effect.mp3').play()
+                    pygame.mixer.Sound('LEVEL_3n4/assets/sound/click_sound_effect.mp3').play()
                     led_flag = True
                     player_clicks.clear()
                     clicks = 0
                 # if event.key == pygame.K_n:
                 #     led_solution_num+=1
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.mixer.Sound('LEVEL_4/assets/sound/click_sound_effect.mp3').play()
+                pygame.mixer.Sound('LEVEL_3n4/assets/sound/click_sound_effect.mp3').play()
                 for led in led_array:
                     if led.flag:
                         player_clicks.append(led)
@@ -98,11 +98,11 @@ def run_level(run):
 
         if level == len(level_solutions):
             running = False
-            flags.next_lvl_4_3.set_flag(True)
+            flags.next_lvl_4.set_flag(True)
 
         if errors == 3:
             running = False
-            flags.lvl4_dog_dead_flag.set_flag(True)
+            flags.lvl3_dog_dead_flag.set_flag(True)
 
         game_display.blit(text, text_box)
         game_display.blit(text2, text2_box)
@@ -135,7 +135,7 @@ def run_level(run):
                 player_clicks.clear()
 
         if clicks == len(level_solutions[led_solution_num]) - 1:
-            pygame.mixer.Sound('LEVEL_4/assets/sound/success_effect.wav').play()
+            pygame.mixer.Sound('LEVEL_3n4/assets/sound/success_effect.wav').play()
             level += 1
             clicks = 0
             player_clicks.clear()

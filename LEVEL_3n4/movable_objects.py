@@ -1,6 +1,6 @@
 import pygame
 
-import LEVEL_4.collisions as collisions
+import LEVEL_3n4.collisions as collisions
 
 
 class Movable_obj:
@@ -58,11 +58,11 @@ class Player(Movable_obj):
         # if self.on_ground:
         #     self.frame=0
         if self.LEFT_KEY:
-            self.image = "LEVEL_4/assets/sprites/player/dog_anim_left.png"
+            self.image = "LEVEL_3n4/assets/sprites/player/dog_anim_left.png"
             self.acceleration.x -= .3
             self.frame += 1
         elif self.RIGHT_KEY:
-            self.image = "LEVEL_4/assets/sprites/player/dog_anim_right.png"
+            self.image = "LEVEL_3n4/assets/sprites/player/dog_anim_right.png"
             self.acceleration.x += .3
             self.frame += 1
         if not self.on_ground:

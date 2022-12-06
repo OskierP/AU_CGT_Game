@@ -2,11 +2,11 @@ import time
 
 import pygame
 
-import LEVEL_4.DisplayGame as DisplayGame
-import LEVEL_4.collisions as collisions
-import LEVEL_4.sprite as sprite
+import LEVEL_3n4.DisplayGame as DisplayGame
+import LEVEL_3n4.collisions as collisions
+import LEVEL_3n4.sprite as sprite
 import flags as flags
-from LEVEL_4.movable_objects import Player, Box
+from LEVEL_3n4.movable_objects import Player, Box
 
 next_level = False
 dog_died = False
@@ -20,10 +20,10 @@ def run_level(run):
     display_height = 600  # 600
 
     pygame.mixer.init()
-    pygame.mixer.music.load('LEVEL_4/assets/sound/deep_space_music.mp3')
+    pygame.mixer.music.load('LEVEL_3n4/assets/sound/deep_space_music.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
-    button_click = pygame.mixer.Sound('LEVEL_4/assets/sound/button_click_effect.wav')
+    button_click = pygame.mixer.Sound('LEVEL_3n4/assets/sound/button_click_effect.wav')
 
     running = run
     clock = pygame.time.Clock()
@@ -39,11 +39,11 @@ def run_level(run):
     text_box = text.get_rect()
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
-    level_4_1_background = sprite.Sprite('LEVEL_4/assets/sprites/background/level4_1.png').load_image()
-    dog = Player('LEVEL_4/assets/sprites/player/dog_anim_left.png', 5, gravity, friction)
+    level_4_1_background = sprite.Sprite('LEVEL_3n4/assets/sprites/background/level4_1.png').load_image()
+    dog = Player('LEVEL_3n4/assets/sprites/player/dog_anim_left.png', 5, gravity, friction)
     scale = 2.25
 
-    box = Box('LEVEL_4/assets/sprites/movable_obj/box.png', gravity, friction)
+    box = Box('LEVEL_3n4/assets/sprites/movable_obj/box.png', gravity, friction)
 
     ################################# OBSTACLES ####################################
     ceiling = sprite.Obstacles(1100, 20, 0, 0)
@@ -72,17 +72,17 @@ def run_level(run):
     laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser_0, laser2_2, laser3_2, laser1_3, laser_0,
                   laser2_3]
 
-    insert_box = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/insertBox.png', 1010, 480, 40, 40)
-    player_press = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/button.png', 1010, 300, 40, 40)
-    player_press_2 = sprite.ActionPlace('LEVEL_4/assets/sprites/action_place/button-left.png', 0, 470, 40, 40)
+    insert_box = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/insertBox.png', 1010, 480, 40, 40)
+    player_press = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/button.png', 1010, 300, 40, 40)
+    player_press_2 = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/button-left.png', 0, 470, 40, 40)
 
     doors = sprite.Door(0, 220)
     doors_action = sprite.ActionPlace_2(20, 180, 0, 220)
 
     ##PLATES##
 
-    bridge_plate = sprite.InfoPlate('LEVEL_4/assets/sprites/unmovable_obj/bridge.png', 950, 100, 50, 20)
-    lvl2 = sprite.InfoPlate('LEVEL_4/assets/sprites/unmovable_obj/lvl2.png', 100, 300, 50, 20)
+    bridge_plate = sprite.InfoPlate('LEVEL_3n4/assets/sprites/unmovable_obj/bridge.png', 950, 100, 50, 20)
+    lvl2 = sprite.InfoPlate('LEVEL_3n4/assets/sprites/unmovable_obj/lvl2.png', 100, 300, 50, 20)
     ########## COLLISIONS ##################
     collision_objects_player = [floor, wall_right, wall_left, box, ceiling, obj11, obj12, obj21, obj22, doors]
     collision_objects_box = [floor, box, wall_right, wall_left, obj11, obj12, obj21, obj22]
@@ -105,7 +105,7 @@ def run_level(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                flags.next_lvl_4_1.set_flag(True)
+                flags.next_lvl_3_1.set_flag(True)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     dog.LEFT_KEY = True
@@ -191,7 +191,7 @@ def run_level(run):
 
         if doors_action.flag:
             running = False
-            flags.next_lvl_4_1.set_flag(True)
+            flags.next_lvl_3_1.set_flag(True)
 
         game_display.blit(insert_box.get_frame(40, 40, scale), (insert_box.x, insert_box.y))
         game_display.blit(player_press.get_frame(40, 40, scale), (player_press.x, player_press.y))
@@ -223,6 +223,6 @@ def run_level(run):
             laser.update_laser()
             if laser.update_laser() == 1:
                 running = False
-                flags.lvl4_dog_dead_flag.set_flag(True)
+                flags.lvl3_dog_dead_flag.set_flag(True)
 
         pygame.display.update()

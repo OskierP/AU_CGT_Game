@@ -13,15 +13,13 @@ class Flag:
 #### FLAGS LEVEL 1 ####
 next_lvl_1 = Flag()
 #### FLAGS LEVEL 2 ####
+next_lvl_2 = Flag()
 
-#### FLAGS LEVEL 3 ####
-next_lvl_3 = Flag()
-
-#### FLAGS LEVEL 4 ####
-lvl4_dog_dead_flag = Flag()
-next_lvl_4_1 = Flag()
-next_lvl_4_2 = Flag()
-next_lvl_4_3 = Flag()
+#### FLAGS LEVEL 3&4 ####
+lvl3_dog_dead_flag = Flag()
+next_lvl_3_1 = Flag()
+next_lvl_3_2 = Flag()
+next_lvl_4 = Flag()
 
 #### FLAGS LEVEL 5 ####
 next_lvl_5 = Flag()

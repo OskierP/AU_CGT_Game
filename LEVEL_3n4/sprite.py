@@ -1,6 +1,6 @@
 import pygame.image
 
-import LEVEL_4.movable_objects as movable_objects
+import LEVEL_3n4.movable_objects as movable_objects
 
 
 class Sprite:
@@ -92,7 +92,7 @@ class ActionPlacePuzzle(Obstacles):
 
 class Platform(Sprite):
     def __init__(self, x, y, width, height=20):
-        Sprite.__init__(self, 'LEVEL_4/assets/sprites/unmovable_obj/platform.png', x, y)
+        Sprite.__init__(self, 'LEVEL_3n4/assets/sprites/unmovable_obj/platform.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -102,7 +102,7 @@ class Platform(Sprite):
 
 class Door(Sprite):
     def __init__(self, x, y, width=30, height=180):
-        Sprite.__init__(self, 'LEVEL_4/assets/sprites/unmovable_obj/doors_4_1.png', x, y)
+        Sprite.__init__(self, 'LEVEL_3n4/assets/sprites/unmovable_obj/doors_4_1.png', x, y)
         self.x = x
         self.y = y
         self.width = width
@@ -117,9 +117,9 @@ class Laser(Obstacles):
     def __init__(self, width, height, x, y):
         Obstacles.__init__(self, width, height, x, y)
         # # pygame.mixer.init()
-        # pygame.mixer.music.load('LEVEL_4/assets/sound/laser_sound.mp3')
+        # pygame.mixer.music.load('LEVEL_3n4/assets/sound/laser_sound.mp3')
         # pygame.mixer.Sound.set_volume(1)
-        self.sound_fx = pygame.mixer.Sound('LEVEL_4/assets/sound/laser_sound_effect.wav')
+        self.sound_fx = pygame.mixer.Sound('LEVEL_3n4/assets/sound/laser_sound_effect.wav')
 
     def on_off_odd_master(self, delay):
         if delay == 100:

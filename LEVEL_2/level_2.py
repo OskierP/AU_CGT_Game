@@ -13,24 +13,24 @@ SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 SCREEN.fill((29, 17, 53))
 
-FLYING = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket1.png")),
-          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket2.png")),
-          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket3.png")),
-          pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket4.png"))]
-JUMPING = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket4.png"))
-DUCKING = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket1.png")),
-           pygame.image.load(os.path.join(r"LEVEL_3/Assets/Rocket/Rocket2.png"))]
+FLYING = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket1.png")),
+          pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket2.png")),
+          pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket3.png")),
+          pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket4.png"))]
+JUMPING = pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket4.png"))
+DUCKING = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket1.png")),
+           pygame.image.load(os.path.join(r"LEVEL_2/Assets/Rocket/Rocket2.png"))]
 
-SMALL_ALIEN = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png")),
-               pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png")),
-               pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/asteroid1.png"))]
-MILKYWAY = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/milkyway.png")),
-            pygame.image.load(os.path.join(r"LEVEL_3/Assets/Alien/milkyway2.png"))]
+SMALL_ALIEN = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/asteroid1.png")),
+               pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/asteroid1.png")),
+               pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/asteroid1.png"))]
+MILKYWAY = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/milkyway.png")),
+            pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/milkyway2.png"))]
 
-UFO = [pygame.image.load(os.path.join(r"LEVEL_3/Assets/Spaceship/Spaceship1.png")),
-       pygame.image.load(os.path.join(r"LEVEL_3/Assets/Spaceship/Spaceship2.png"))]
+UFO = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Spaceship/Spaceship1.png")),
+       pygame.image.load(os.path.join(r"LEVEL_2/Assets/Spaceship/Spaceship2.png"))]
 
-PLANET = pygame.image.load(os.path.join(r"LEVEL_3/Assets/Other/Planet.png"))
+PLANET = pygame.image.load(os.path.join(r"LEVEL_2/Assets/Other/Planet.png"))
 
 BG = SCREEN.fill((29, 17, 53))
 
@@ -224,11 +224,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                flags.next_lvl_3.set_flag(True)
+                flags.next_lvl_2.set_flag(True)
 
         if points > 2500:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
             run = False
-            flags.next_lvl_3.set_flag(True)
+            flags.next_lvl_2.set_flag(True)
 
         SCREEN.fill((29, 17, 53))
         userInput = pygame.key.get_pressed()
@@ -266,7 +266,7 @@ def menu(death_count):
     run = True
     while run:
 
-        if flags.next_lvl_3.get_flag():
+        if flags.next_lvl_2.get_flag():
             run = False
 
         SCREEN.fill((29, 17, 53))
