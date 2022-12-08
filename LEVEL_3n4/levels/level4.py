@@ -155,4 +155,6 @@ def run_level(run):
                 pygame.draw.rect(game_display, rect=led, color=led.get_fingerprint())
 
         mouse.update_rect()
+        if led_flag:
+            mouse.stop_rect()
         pygame.display.update()

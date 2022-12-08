@@ -7,6 +7,7 @@ import LEVEL_5.MartianMission
 import flags as flags
 from LEVEL_3n4.levels import level3_1, level3_2, level4
 
+#
 #### LEVEL 1 #####
 while not flags.next_lvl_1.get_flag():
     LEVEL_1.main.level_1()
@@ -38,7 +39,11 @@ pygame.mixer.music.stop()
 
 run_level_4 = True
 while not flags.next_lvl_4.get_flag():
-    level4.run_level(run_level_4)
+    if not level4.run_level(run_level_4):
+        if flags.lvl3_dog_dead_flag.get_flag():
+            LEVEL_3n4.Restart_page.restart_lvl_4()
+            run_level_4 = True
+            flags.lvl3_dog_dead_flag.set_flag(False)
 pygame.mixer.stop()
 
 #### LEVEL 5 #####

@@ -72,6 +72,20 @@ def run_level(run):
     laser_list = [laser1_1, laser2_1, laser3_1, laser4_1, laser1_2, laser_0, laser2_2, laser3_2, laser1_3, laser_0,
                   laser2_3]
 
+    laser1_1_indi = sprite.Laser(0, 200, 800, 0)
+    laser2_1_indi = sprite.Laser(0, 200, 650, 0)
+    laser3_1_indi = sprite.Laser(0, 200, 500, 0)
+    laser4_1_indi = sprite.Laser(0, 200, 350, 0)
+    laser1_2_indi = sprite.Laser(0, 180, 800, 220)
+    laser2_2_indi = sprite.Laser(0, 180, 490, 220)
+    laser3_2_indi = sprite.Laser(0, 180, 350, 220)
+    laser1_3_indi = sprite.Laser(0, 180, 350, 420)
+    laser2_3_indi = sprite.Laser(0, 180, 700, 420)
+
+    laser_indi_list = [laser1_1_indi, laser2_1_indi, laser3_1_indi, laser4_1_indi, laser1_2_indi, laser_0,
+                       laser2_2_indi, laser3_2_indi, laser1_3_indi, laser_0,
+                       laser2_3_indi]
+
     insert_box = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/insertBox.png', 1010, 480, 40, 40)
     player_press = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/button.png', 1010, 300, 40, 40)
     player_press_2 = sprite.ActionPlace('LEVEL_3n4/assets/sprites/action_place/button-left.png', 0, 470, 40, 40)
@@ -165,8 +179,21 @@ def run_level(run):
                 else:
                     laser.on_off_odd_slave(delay_laser_odd)
         if not player_press_2.was_pressed:
-            laser1_2.width = 5
             laser1_2.sound_fx = 0
+
+        for laser in laser_indi_list:
+            if player_press_2.was_pressed:
+                laser.width = 0
+            else:
+                if laser_indi_list.index(laser) % 2:
+                    laser.on_off_even_slave_indi(delay_laser_even)
+                else:
+                    laser.on_off_odd_slave_indi(delay_laser_odd)
+        if not player_press_2.was_pressed:
+            laser1_2_indi.sound_fx = 0
+
+        for laser in laser_indi_list:
+            laser.update_rect()
 
         for laser in laser_list:
             laser.update_rect()
@@ -197,6 +224,9 @@ def run_level(run):
         game_display.blit(player_press.get_frame(40, 40, scale), (player_press.x, player_press.y))
         game_display.blit(player_press_2.get_frame(40, 40, scale), (player_press_2.x, player_press_2.y))
         game_display.blit(doors.get_frame(doors.width, doors.height, 1), (doors.x, doors.y))
+
+        for laser in laser_indi_list:
+            pygame.draw.rect(game_display, (152,251,152), laser)
 
         for laser in laser_list:
             pygame.draw.rect(game_display, (0, 240, 0), laser)

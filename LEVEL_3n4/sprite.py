@@ -162,6 +162,22 @@ class Laser(Obstacles):
             elif self.width == 5:
                 self.width = 0
 
+    def on_off_even_slave_indi(self, delay):
+        if delay == 30:
+            if self.width == 0:
+                self.width = 5
+
+            elif self.width == 5:
+                self.width = 0
+
+    def on_off_odd_slave_indi(self, delay):
+        if delay == 80:
+            if self.width == 0:
+                self.width = 5
+
+            elif self.width == 5:
+                self.width = 0
+
     def update_laser(self):
         if self.sound_fx:
             self.sound()
@@ -198,3 +214,6 @@ class Mouse(Obstacles):
     def update_rect(self):
         self.x, self.y = pygame.mouse.get_pos()
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+    def stop_rect(self):
+        self.rect = pygame.Rect(0, self.y, self.width, self.height)
