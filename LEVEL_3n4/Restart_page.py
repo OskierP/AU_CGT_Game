@@ -48,7 +48,7 @@ def restart():
             pygame.display.update()
 
 
-def restart_lvl_3():
+def restart_lvl_4():
     pygame.init()
     pygame.mixer.stop()
 

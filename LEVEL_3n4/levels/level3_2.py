@@ -110,7 +110,7 @@ def run_level(run):
                     dog.LEFT_KEY = True
                 elif event.key == pygame.K_RIGHT:
                     dog.RIGHT_KEY = True
-                elif event.key == pygame.K_SPACE:
+                elif event.key == pygame.K_UP:
                     dog.jump()
                     jump_sound.play()
                     jump_sound.set_volume(0.5)
@@ -153,7 +153,7 @@ def run_level(run):
                 elif event.key == pygame.K_RIGHT:
                     dog.RIGHT_KEY = False
                     dog.frame = 0
-                elif event.key == pygame.K_SPACE:
+                elif event.key == pygame.K_UP:
                     if dog.is_jumping:
                         dog.velocity.y *= .25
                         dog.is_jumping = False
