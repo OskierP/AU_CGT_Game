@@ -264,10 +264,13 @@ def main():
 def menu(death_count):
     global points
     run = True
+
     while run:
 
         if flags.next_lvl_2.get_flag():
             run = False
+            # pygame.display.quit()
+            # pygame.quit()
 
         SCREEN.fill((29, 17, 53))
         font = pygame.font.Font('freesansbold.ttf', 30)
@@ -297,7 +300,7 @@ def menu(death_count):
                 main()
 
 
-menu(death_count=0)
+# menu(death_count=0)
 
 
 # It jumps whilst running, don't make it look like a jump so much (or make the jumps smaller)
@@ -305,5 +308,4 @@ menu(death_count=0)
 # Implement collisions so things blow up when you touch them
 # Would be cool to have stuff flying toward me
 
-pygame.display.quit()
-pygame.quit()
+

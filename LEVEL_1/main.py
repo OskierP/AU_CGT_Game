@@ -18,7 +18,7 @@ def level_1():
     game = Game.World()
 
     # Windows
-    pygame.display.set_caption("level1")
+    pygame.display.set_caption("x1")
     DISPLAY_W, DISPLAY_H = 1100, 600
     canvas = pygame.Surface((DISPLAY_W, DISPLAY_H))
     screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
@@ -158,5 +158,3 @@ def level_1():
 
         pygame.display.update()
         print(game.player.jumpingVelocity)
-
-level_1()

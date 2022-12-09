@@ -1,3 +1,5 @@
+# Collisions/Tiles/Physics - Pygame Tutorial: Making a Platformer ep. 3,
+# https://www.youtube.com/watch?v=abH2MSBdnWc
 def collision_test(rect, tiles):
     collisions = []
     for tile in tiles:
