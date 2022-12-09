@@ -65,6 +65,25 @@ class ActionPlace(Sprite):
 
         # print(self.flagBox)
 
+class MainMenu(Sprite):
+    def __init__(self, image, x=0, y=0, width=0, height=0):
+        Sprite.__init__(self, image, x, y)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.collision = []
+        self.flag = False
+
+    def update(self):
+        if self.collision:
+            self.flag = True
+        else:
+            self.flag = False
+
+
+
 
 class ActionPlace_2(Obstacles):
     def __init__(self, width, height, x, y):

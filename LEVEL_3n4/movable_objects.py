@@ -28,6 +28,8 @@ class Movable_obj:
         return frame
 
 
+# In-depth Pygame Physics Explanation
+# https://www.youtube.com/watch?v=a_YTklVVNoQ
 class Player(Movable_obj):
     def __init__(self, image, frames, gravity, friction):
         Movable_obj.__init__(self, image)

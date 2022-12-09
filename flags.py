@@ -10,6 +10,7 @@ class Flag:
         self.flag = new_flag
 
 
+menu_flag = Flag()
 #### FLAGS LEVEL 1 ####
 next_lvl_1 = Flag()
 #### FLAGS LEVEL 2 ####
@@ -26,3 +27,10 @@ next_lvl_5 = Flag()
 #### FLAGS LEVEL 6 ####
 
 #### FLAGS LEVEL BONUS ####
+
+### others ####
+lvl2_complete = Flag()
+lvl3_1_complete = Flag()
+lvl3_2_complete = Flag()
+lvl4_complete = Flag()
+lvl5_complete = Flag()

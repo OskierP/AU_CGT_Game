@@ -97,6 +97,7 @@ def run_level(run):
                         clicks += 1
 
         if level == len(level_solutions):
+            time.sleep(2)
             running = False
             flags.next_lvl_4.set_flag(True)
 
