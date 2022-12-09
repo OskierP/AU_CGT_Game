@@ -7,17 +7,15 @@ import LEVEL_5.MartianMission
 import flags as flags
 from LEVEL_3n4.levels import level3_1, level3_2, level4
 
-#
+
 #### LEVEL 1 #####
 while not flags.next_lvl_1.get_flag():
     LEVEL_1.main.level_1()
 ### LEVEL 2 #####
-### LEVEL 3 #####
-
 while not flags.next_lvl_2.get_flag():
     LEVEL_2.level_2.menu(death_count=0)
 
-#### LEVEL 4 #####
+#### LEVEL 3&4 #####
 run_level_3_1 = True
 
 while not flags.next_lvl_3_1.get_flag():
