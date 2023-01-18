@@ -14,6 +14,8 @@ flag_list = [flags.next_lvl_1, flags.next_lvl_2, flags.next_lvl_3_1, flags.next_
              flags.next_lvl_5]
 while True:
     main_menu.menu()
+
+    main_menu.splash_screen('main_story')
     for flag in flag_list:
         flag.set_flag(False)
     while flags.menu_flag.get_flag():

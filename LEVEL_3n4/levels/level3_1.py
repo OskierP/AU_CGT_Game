@@ -2,8 +2,8 @@ import time
 
 import pygame
 
-import LEVEL_3n4.display_game as DisplayGame
 import LEVEL_3n4.collisions as collisions
+import LEVEL_3n4.display_game as DisplayGame
 import LEVEL_3n4.sprite as sprite
 import flags as flags
 from LEVEL_3n4.movable_objects import Player, Box
@@ -35,8 +35,10 @@ def run_level(run):
     friction = 0
 
     font = pygame.font.Font('freesansbold.ttf', 22)
-    text = font.render('Press B to press the button', True, (0, 0, 0))
+    text = font.render('Press B to press the button', True, (255, 255, 255))
     text_box = text.get_rect()
+    text_box.center = (display_width // 2, display_height // 2)
+
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
     game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
     level_4_1_background = sprite.Sprite('LEVEL_3n4/assets/sprites/background/level4_1.png').load_image()
@@ -205,8 +207,8 @@ def run_level(run):
         dog.collision_with_box = collisions.collision_test(dog.rect, [box])
         box.collisions = collisions.collision_test(box.rect, collision_objects_box)
 
-        for laser in laser_list:
-            laser.collision = collisions.collision_test(laser.rect, collision_with_lasers)
+        # for laser in laser_list:
+        #     laser.collision = collisions.collision_test(laser.rect, collision_with_lasers)
 
         insert_box.collision = collisions.collision_test(insert_box.rect, collision_interactive)
         player_press.collision = collisions.collision_test(player_press.rect, [dog])
@@ -226,7 +228,7 @@ def run_level(run):
         game_display.blit(doors.get_frame(doors.width, doors.height, 1), (doors.x, doors.y))
 
         for laser in laser_indi_list:
-            pygame.draw.rect(game_display, (152,251,152), laser)
+            pygame.draw.rect(game_display, (152, 251, 152), laser)
 
         for laser in laser_list:
             pygame.draw.rect(game_display, (240, 0, 50), laser)
