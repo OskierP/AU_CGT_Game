@@ -229,7 +229,7 @@ def run_level(run):
             pygame.draw.rect(game_display, (152,251,152), laser)
 
         for laser in laser_list:
-            pygame.draw.rect(game_display, (0, 240, 0), laser)
+            pygame.draw.rect(game_display, (240, 0, 50), laser)
 
         game_display.blit(lvl2.get_frame(lvl2.width, lvl2.height, 1), (lvl2.x, lvl2.y))
         game_display.blit(bridge_plate.get_frame(bridge_plate.width, bridge_plate.height, 1),
