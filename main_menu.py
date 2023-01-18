@@ -21,7 +21,7 @@ def menu():
     display_surface = pygame.display.set_mode((x, y))
 
     # https://www.pixilart.com/art/mars-ac45cfbf1eb0827
-    menu_backgound = sprite.Sprite('Menu_assets/menu.png').load_image()
+    menu_background = sprite.Sprite('Menu_assets/menu.png').load_image()
 
     pygame.display.set_caption('Show Text')
 
@@ -41,7 +41,7 @@ def menu():
 
     while running:
         mouse_position.x, mouse_position.y = pygame.mouse.get_pos()
-        display_surface.blit(menu_backgound, (0, 0))
+        display_surface.blit(menu_background, (0, 0))
 
         display_surface.blit(text2, text_rect2)
 
@@ -79,7 +79,7 @@ def menu():
         pygame.display.update()
 
 
-def splash_screen():
+def splash_screen(path: str):
     pygame.init()
     pygame.mixer.stop()
 
@@ -92,23 +92,25 @@ def splash_screen():
     y = 600
 
     display_surface = pygame.display.set_mode((x, y))
+    background = sprite.Sprite(f'story/{path}.png').load_image()
 
     pygame.display.set_caption('Show Text')
 
     font = pygame.font.Font('freesansbold.ttf', 32)
 
-    text = font.render('Press spacebar', True, white, black)
-    text2 = font.render('to continue', True, white, black)
+    text = font.render('Press spacebar', True, white)
+    text2 = font.render('to continue', True, white)
 
     text_rect = text.get_rect()
     text_rect2 = text2.get_rect()
 
-    text_rect.center = (x // 2, y // 2 - 100)
-    text_rect2.center = (x // 2, y // 2 - 50)
+    text_rect.center = (x // 2, y // 2 + 120)
+    text_rect2.center = (x // 2, y // 2 + 170)
 
     while running:
 
-        display_surface.fill(black)
+        # display_surface.fill(black)
+        display_surface.blit(background, (0, 0))
 
         display_surface.blit(text, text_rect)
         display_surface.blit(text2, text_rect2)
@@ -147,7 +149,7 @@ def choose_level():
     exit_button_lvl = sprite.MainMenu('Menu_assets/exit_btn.png', 0, 0, 222, 99)
 
     level_list = [level1, level2, level3_1, level3_2, level4, level5, exit_button_lvl]
-    image_list = ['Level1.png','Level2.png','Level3_1.png','Level3_2.png','Level4.png','Level5.png']
+    image_list = ['Level1.png', 'Level2.png', 'Level3_1.png', 'Level3_2.png', 'Level4.png', 'Level5.png']
 
     level_progress = progress.save_progress.read_2_array()
     level_progress.append('nan')
@@ -190,7 +192,7 @@ def choose_level():
                     return 5
                 elif exit_button_lvl.flag:
                     menu_flag.set_flag(False)
-                    running=False
+                    running = False
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:

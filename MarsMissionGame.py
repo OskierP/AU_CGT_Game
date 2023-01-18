@@ -22,13 +22,14 @@ while True:
 
         if level == 1:
             #### LEVEL 1 #####
-            main_menu.splash_screen()
+            main_menu.splash_screen('lvl1')
             while not flags.next_lvl_1.get_flag():
                 LEVEL_1.main.level_1()
             flags.next_lvl_1.set_flag(False)
             progress.save_progress.update_progress('Level_2', True)
         ### LEVEL 2 #####
         if level == 2:
+            main_menu.splash_screen('lvl2')
             # while not flags.next_lvl_2.get_flag():
             LEVEL_2.level_2.menu(death_count=0)
             flags.next_lvl_2.set_flag(False)
@@ -36,7 +37,7 @@ while True:
 
         if level == "3_1":
             #### LEVEL 3&4 #####
-            main_menu.splash_screen()
+            main_menu.splash_screen('lvl3')
             run_level_3_1 = True
 
             while not flags.next_lvl_3_1.get_flag():
@@ -50,7 +51,7 @@ while True:
             progress.save_progress.update_progress('Level_3_2', True)
 
         if level == "3_2":
-            main_menu.splash_screen()
+            main_menu.splash_screen('lvl3')
             run_level_3_2 = True
             pygame.mixer.stop()
             while not flags.next_lvl_3_2.get_flag():
@@ -65,7 +66,7 @@ while True:
 
 
         if level == 4:
-            main_menu.splash_screen()
+            main_menu.splash_screen('lvl4')
             run_level_4 = True
             while not flags.next_lvl_4.get_flag():
                 if not level4.run_level(run_level_4):
@@ -81,6 +82,7 @@ while True:
 
         #### LEVEL 5 #####
         if level == 5:
+            main_menu.splash_screen('lvl5')
             while not flags.next_lvl_5.get_flag():
                 LEVEL_5.MartianMission.main()
             flags.next_lvl_5.set_flag(False)
