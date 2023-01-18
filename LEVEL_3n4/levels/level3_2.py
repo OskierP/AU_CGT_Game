@@ -3,7 +3,7 @@ import time
 import pygame
 
 import LEVEL_3n4.collisions as collisions
-import LEVEL_3n4.display_game as DisplayGame
+import LEVEL_3n4.display_game as display_game
 import LEVEL_3n4.sprite as sprite
 import flags as flags
 from LEVEL_3n4.movable_objects import Player, Box
@@ -32,11 +32,11 @@ def run_level(run):
     friction = 0
 
     font = pygame.font.Font('freesansbold.ttf', 22)
-    text = font.render('Press B to press the button', True, (0, 0, 0))
+    text = font.render('Press SPACEBAR to press the button', True, (0, 0, 0))
     text_box = text.get_rect()
     text_box.center = (display_width // 2, display_height // 2 - 150)
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
-    game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
+    game_display = display_game.GameDisplay(display_width, display_height).display_game()
     level_4_2_background = sprite.Sprite('LEVEL_3n4/assets/sprites/background/level4_2.png').load_image()
 
     dog = Player('LEVEL_3n4/assets/sprites/player/dog_anim_left.png', 5, gravity, friction)
@@ -131,7 +131,7 @@ def run_level(run):
                 #         obj.gravity = gravity
                 #         obj.friction = friction
 
-                elif event.key == pygame.K_b and press_gravity.flag and not was_pressed:
+                elif event.key == pygame.K_SPACE and press_gravity.flag and not was_pressed:
                     button_click.play()
                     button_click.set_volume(0.5)
                     gravity = 0.21
@@ -140,7 +140,7 @@ def run_level(run):
                     for obj in move_arr:
                         obj.gravity = gravity
                         obj.friction = friction
-                elif event.key == pygame.K_b and keyboard.flag:
+                elif event.key == pygame.K_SPACE and keyboard.flag:
                     button_click.play()
                     button_click.set_volume(0.5)
                     time.sleep(1)

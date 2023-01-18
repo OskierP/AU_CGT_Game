@@ -2,8 +2,8 @@ import time
 
 import pygame
 
-import LEVEL_3n4.display_game as DisplayGame
 import LEVEL_3n4.collisions as collisions
+import LEVEL_3n4.display_game as display_game
 import LEVEL_3n4.sprite as sprite
 import flags as flags
 
@@ -32,7 +32,7 @@ def run_level(run):
     text2_box.x, text2_box.y = 870, 250
     text3_box.x, text3_box.y = 870, 280
     ################################# LOAD PLAYER AND SPRITE SHEET###################################
-    game_display = DisplayGame.GameDisplay(display_width, display_height).display_game()
+    game_display = display_game.GameDisplay(display_width, display_height).display_game()
     level_4_3_background = sprite.Sprite('LEVEL_3n4/assets/sprites/background/level4_3.png').load_image()
 
     ################################# MAIN LEDS ####################################
