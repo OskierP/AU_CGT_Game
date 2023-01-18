@@ -207,8 +207,8 @@ def run_level(run):
         dog.collision_with_box = collisions.collision_test(dog.rect, [box])
         box.collisions = collisions.collision_test(box.rect, collision_objects_box)
 
-        # for laser in laser_list:
-        #     laser.collision = collisions.collision_test(laser.rect, collision_with_lasers)
+        for laser in laser_list:
+            laser.collision = collisions.collision_test(laser.rect, collision_with_lasers)
 
         insert_box.collision = collisions.collision_test(insert_box.rect, collision_interactive)
         player_press.collision = collisions.collision_test(player_press.rect, [dog])
