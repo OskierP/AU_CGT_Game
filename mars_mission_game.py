@@ -2,7 +2,7 @@ import pygame
 
 import LEVEL_1.main
 import LEVEL_2.level_2
-import LEVEL_3n4.Restart_page
+import LEVEL_3n4.restart_page
 import LEVEL_5.MartianMission
 import flags as flags
 from LEVEL_3n4.levels import level3_1, level3_2, level4

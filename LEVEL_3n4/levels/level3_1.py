@@ -2,7 +2,7 @@ import time
 
 import pygame
 
-import LEVEL_3n4.DisplayGame as DisplayGame
+import LEVEL_3n4.display_game as DisplayGame
 import LEVEL_3n4.collisions as collisions
 import LEVEL_3n4.sprite as sprite
 import flags as flags
