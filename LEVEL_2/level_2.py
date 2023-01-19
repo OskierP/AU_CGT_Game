@@ -24,6 +24,8 @@ milkyway_img1 = pygame.image.load('LEVEL_2/Assets/Alien/milkyway1.png')
 milkyway_img2 = pygame.image.load('LEVEL_2/Assets/Alien/milkyway2.png')
 spaceship_img1 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship1.png')
 spaceship_img2 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship2.png')
+firestar = pygame.image.load('LEVEL_2/Assets/Alien/firestar.png')
+firestar2 = pygame.image.load('LEVEL_2/Assets/Alien/firestar.png')
 planet_img = pygame.image.load('LEVEL_2/Assets/Other/Planet.png')
 
 # background image
@@ -41,6 +43,7 @@ DUCKING = [rocket_img1, rocket_img2]
 SMALL_ALIEN = [asteroid_img, asteroid_img, asteroid_img]
 MILKYWAY = [milkyway_img1, milkyway_img2]
 UFO = [spaceship_img1, spaceship_img2]
+FIRESTAR = [firestar, firestar2]
 PLANET = planet_img
 
 
@@ -114,7 +117,6 @@ class Rocket:
         if self.rocket_rect.top <= 0:
             self.rocket_rect.y = 0
 
-    # Duck currently goes up then down
     def duck(self):
         self.image = self.duck_img[self.step_index // 5]
         if self.rocket_duck:
@@ -165,17 +167,29 @@ class Obstacle:
 
 class SmallAlien(Obstacle):
     def __init__(self, image):
-        self.type = random.randint(0, 2)
+        self.type = random.randint(1, 2)
         super().__init__(image, self.type)
-        self.rect.y = 325
+        self.rect.y = 50
 
 
 class Milkway(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 1)
         super().__init__(image, self.type)
-        self.rect.y = 300
+        self.rect.y = 470
 
+class Firestar(Obstacle):
+    def __init__(self, image):
+        self.type = 0
+        super().__init__(image, self.type)
+        self.rect.y = 300
+        self.index = 0
+
+    def draw(self, SCREEN):
+        if self.index >= 9:
+            self.index = 0
+        SCREEN.blit(self.image[self.index // 5], self.rect)
+        self.index += 1
 
 class Ufo(Obstacle):
     def __init__(self, image):
@@ -189,7 +203,6 @@ class Ufo(Obstacle):
             self.index = 0
         SCREEN.blit(self.image[self.index // 5], self.rect)
         self.index += 1
-
 
 run = True
 
@@ -241,12 +254,14 @@ def main():
         player.update(userInput)
 
         if len(obstacles) == 0:
-            if random.randint(0, 2) == 0:
+            if random.randint(0, 3) == 0:
                 obstacles.append(SmallAlien(SMALL_ALIEN))
-            elif random.randint(0, 2) == 1:
+            elif random.randint(0, 3) == 1:
                 obstacles.append(Milkway(MILKYWAY))
-            elif random.randint(0, 2) == 2:
+            elif random.randint(0, 3) == 1:
                 obstacles.append(Ufo(UFO))
+            elif random.randint(0, 3) == 3:
+                obstacles.append(Firestar(FIRESTAR))
 
         for obstacle in obstacles:
             obstacle.draw(SCREEN)
