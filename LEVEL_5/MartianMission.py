@@ -6,7 +6,6 @@ import csv
 import LEVEL_5.button as button
 from PIL import Image
 from pygame.locals import *
-
 import flags
 
 
@@ -23,13 +22,13 @@ def main():
     pygame.display.set_caption('Martian Mission')
 
     #define game vars
-    GRAV = .45
+    GRAV = .49
     SCROLL_THRESH = 200
     ROWS = 15
     COLS = 150
     TILE_SIZE = int(screen_height // ROWS)
-    TILE_TYPES = 11
-    MAX_LEVELS = 2
+    TILE_TYPES = 12
+    MAX_LEVELS = 1
     screen_scroll = 0
     bg_scroll = 0
     level = 0
@@ -89,7 +88,7 @@ def main():
     item_drops = {'Health'  : health_drop_img,
                   'Ammo'    : energy_ammo_img,
                   'Special' : special_ammo_img
-                  }
+                 }
 
     #define colors
     BLUE = (0, 0, 255)
@@ -116,6 +115,7 @@ def main():
 
     def restart_lvl():
         enemy_group.empty()
+        sniper_group.empty()
         ebullet_group.empty()
         laser_group.empty()
         exp_group.empty()
@@ -142,6 +142,7 @@ def main():
             self.ammo = ammo
             self.start_ammo = ammo
             self.shoot_cooldown = 0
+            self.shotby = 0
             self.laser = laser
             self.health = 100
             self.max_health = self.health
@@ -158,7 +159,10 @@ def main():
             self.move_counter = 0
             self.idling = False
             self.idling_counter = 0
-            self.vision = pygame.Rect(0, 0, 200, 30)
+            if self.char_type == 'sniper':
+                self.vision = pygame.Rect(0, 0, 800, 30)
+            else:
+                self.vision = pygame.Rect(0, 0, 200, 30)
             self.wall = False
 
             #load player images
@@ -180,12 +184,13 @@ def main():
             self.width = self.image.get_width()
             self.height = self.image.get_height()
 
+        # def bool shotby(self, shooter):
+        #     self.shotbyp = shooter
 
         def update(self):
             self.update_animation()
             self.check_alive()
             if self.shoot_cooldown > 0:
-
                 self.shoot_cooldown -= 1
 
 
@@ -207,9 +212,9 @@ def main():
 
             #jump
             if self.jump == True and self.in_air == False:
-               self.vel_y = -11
-               self.jump = False
-               self.in_air = True
+                self.vel_y = -11
+                self.jump = False
+                self.in_air = True
 
             #apply gravity
             self.vel_y += GRAV
@@ -224,6 +229,9 @@ def main():
                     dx = 0
                     # turn around ai if it hits a wall
                     if self.char_type == 'enemy':
+                        self.direction *= -1
+                        self.move_counter = 0
+                    if self.char_type == 'sniper':
                         self.direction *= -1
                         self.move_counter = 0
 
@@ -246,6 +254,7 @@ def main():
             #check for collision with water
             if pygame.sprite.spritecollide(self, water_group, False):
                 self.health = 0
+                self.update_action(3)
 
             #check for collision with exit
             level_complete = False
@@ -274,10 +283,11 @@ def main():
                     screen_scroll = -dx
             return screen_scroll, level_complete
 
-        def shoot(self):
+        def shoot(self, shotby):
+            self.shotby = shotby
             if self.shoot_cooldown == 0 and self.ammo > 0:
                 self.shoot_cooldown = 20
-                ebullet = Bullet(self.rect.centerx + (0.96 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
+                ebullet = Bullet(self.rect.centerx + (0.96 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, self.shotby)
                 ebullet_group.add(ebullet)
                 #reduce ammo
                 self.ammo -= 1
@@ -297,8 +307,9 @@ def main():
                     # if self.wall == False:
                     #stop running and face player
                     self.update_action(0)# idle
-                    #shoot
-                    self.shoot()
+                    #shoot add enemy shoot is true here
+                    #self.shotbyp = False add function to set var to T or F
+                    self.shoot(1)
                 else:
                     if self.idling == False:
                         if self.direction == 1:
@@ -355,6 +366,7 @@ def main():
                 self.speed = 0
                 self.alive = False
                 self.update_action(3)
+                self.kill()
                 if player.health <= 0:
                     pygame.mixer.music.rewind()
             # if self.char_type == 'enemy' and self.alive == False:
@@ -396,6 +408,9 @@ def main():
                         elif tile == 5:#enemies
                             enemy = Dog('enemy', x * TILE_SIZE, y * TILE_SIZE, 1, 2, 20, 0)
                             enemy_group.add(enemy)
+                        elif tile == 11:#snipers
+                            sniper = Dog('sniper', x * TILE_SIZE, y * TILE_SIZE, 1, 2, 20, 0)
+                            sniper_group.add(sniper)
                         elif tile == 1:#health drop
                             item_drop = ItemDrop('Health', x * TILE_SIZE, y * TILE_SIZE)
                             item_drop_group.add(item_drop)
@@ -405,8 +420,6 @@ def main():
                         elif tile == 3:#special ammo drop
                             item_drop = ItemDrop('Special', x * TILE_SIZE, y * TILE_SIZE)
                             item_drop_group.add(item_drop)
-
-
             return player, health_bar
 
         def draw(self):
@@ -479,7 +492,8 @@ def main():
 
 
     class Bullet(pygame.sprite.Sprite):
-        def __init__(self, x, y, direction):
+        def __init__(self, x, y, direction, shotby):
+            self.shotby = shotby
             pygame.sprite.Sprite.__init__(self)
             self.speed = 10
             self.direction = direction
@@ -495,18 +509,23 @@ def main():
             #move bullet
             self.rect.x += (self.direction * self.speed) + screen_scroll
             #check if bullet has gone off screen
-            if self.rect.right < 0 or self.rect.left > screen_width:
-                self.kill()
+            # if self.rect.right < 0 or self.rect.left > screen_width:
+            #     self.kill()
 
             #check collision with characters
             if pygame.sprite.spritecollide(player, ebullet_group, False):
-                if player.alive:
+                if player.alive and self.shotby == 1:
                     player.health -= 10
                     self.kill()
             for enemy in enemy_group:
                 if pygame.sprite.spritecollide(enemy, ebullet_group, False):
-                    if enemy.alive:
+                    if enemy.alive and self.shotby == 0:
                         enemy.health -= 25
+                        self.kill()
+            for sniper in sniper_group:
+                if pygame.sprite.spritecollide(sniper, ebullet_group, False):
+                    if sniper.alive and self.shotby == 0:
+                        sniper.health -= 35
                         self.kill()
             #check for collision with tiles
             for tile in world.obstacle_list:
@@ -536,7 +555,7 @@ def main():
                 if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
                     self.direction *= -1
                     dx = self.direction * self.speed
-                 #collision in y direction
+                #collision in y direction
                 if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
                     self.speed = 0
                     #check if thrown up
@@ -562,13 +581,17 @@ def main():
                 exp_group.add(exp)
                 #do damage to players in radius
                 if abs(self.rect.centerx - player.rect.centerx) < TILE_SIZE * 2 and \
-                   abs(self.rect.centery - player.rect.centery) < TILE_SIZE * 2:
+                abs(self.rect.centery - player.rect.centery) < TILE_SIZE * 2:
                     player.health -= 50
                     #print(player.health)
                 for enemy in enemy_group:
                     if abs(self.rect.centerx - enemy.rect.centerx) < TILE_SIZE * 2 and \
-                       abs(self.rect.centery - enemy.rect.centery) < TILE_SIZE * 2:
+                    abs(self.rect.centery - enemy.rect.centery) < TILE_SIZE * 2:
                         enemy.health -= 50
+                for sniper in sniper_group:
+                    if abs(self.rect.centerx - sniper.rect.centerx) < TILE_SIZE * 2 and \
+                    abs(self.rect.centery - sniper.rect.centery) < TILE_SIZE * 2:
+                        sniper.health -= 50
 
 
 
@@ -618,7 +641,7 @@ def main():
                 pygame.draw.rect(screen, self.colour, (0 - self.fade_counter, 0, screen_width // 2, screen_height))
                 pygame.draw.rect(screen, self.colour, (screen_width // 2 + self.fade_counter, 0, screen_width, screen_height))
                 pygame.draw.rect(screen, self.colour, (0, 0 - self.fade_counter, screen_width, screen_height // 2))
-                pygame.draw.rect(screen, self.colour, (0, screen_height // 2 +self.fade_counter, screen_width, screen_height))
+                pygame.draw.rect(screen, self.colour, (0, screen_height // 2 + self.fade_counter, screen_width, screen_height))
             if self.direction == 2:#vertical screen fade down
                 pygame.draw.rect(screen, self.colour, (0, 0, screen_width, 0 + self.fade_counter))
             if self.fade_counter >= screen_width:
@@ -638,6 +661,7 @@ def main():
 
     #create sprite groups
     enemy_group = pygame.sprite.Group()
+    sniper_group = pygame.sprite.Group()
     ebullet_group = pygame.sprite.Group()
     laser_group = pygame.sprite.Group()
     exp_group = pygame.sprite.Group()
@@ -700,6 +724,11 @@ def main():
                 enemy.update()
                 enemy.draw()
 
+            for sniper in sniper_group:
+                sniper.ai()
+                sniper.update()
+                sniper.draw()
+
             #update and draw groups
             ebullet_group.update()
             laser_group.update()
@@ -724,10 +753,10 @@ def main():
             if player.alive:
                 #shoot bullets
                 if shoot:
-                    player.shoot()
+                    player.shoot(0)
                 elif laser and laser_thrown == False and player.laser > 0:
-                    laser = Laser(player.rect.centerx + (0.5 * player.rect.size[0] * player.direction), \
-                                  player.rect.top, player.direction)
+                    laser = Laser(player.rect.centerx + (0.5 * player.rect.size[0] * player.direction),
+                                player.rect.top, player.direction)
                     laser_group.add(laser)
                     #reduce laser
                     player.laser -= 1
@@ -741,6 +770,8 @@ def main():
                 screen_scroll, level_complete = player.move(movl, movr)
                 bg_scroll -= screen_scroll
                 if level_complete:
+                    if level == 1:
+                        run = False
                     level += 1
                     bg_scroll = 0
                     world_data = restart_lvl()
@@ -781,9 +812,9 @@ def main():
                     movl = True
                 if event.key == pygame.K_RIGHT:
                     movr = True
-                if event.key == pygame.K_LCTRL:
+                if event.key == pygame.K_c:
                     shoot = True
-                if event.key == pygame.K_LALT:
+                if event.key == pygame.K_z:
                     laser = True
                 if event.key == pygame.K_SPACE and player.alive:
                     player.jump = True
@@ -792,6 +823,7 @@ def main():
                         jump_fx.play()
                 if event.key == pygame.K_ESCAPE:
                     run = False
+                    flags.next_lvl_5.set_flag(True)
 
             # keyboard releases
             if event.type == pygame.KEYUP:
@@ -799,9 +831,9 @@ def main():
                     movl = False
                 if event.key == pygame.K_RIGHT:
                     movr = False
-                if event.key == pygame.K_LCTRL:
+                if event.key == pygame.K_c:
                     shoot = False
-                if event.key == pygame.K_LALT:
+                if event.key == pygame.K_z:
                     laser = False
                     laser_thrown = False
                 if event.key == pygame.K_SPACE:
@@ -810,3 +842,4 @@ def main():
         pygame.display.update()
 
     pygame.quit()
+
