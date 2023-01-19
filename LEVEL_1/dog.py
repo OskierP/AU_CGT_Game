@@ -4,15 +4,14 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        #self.sprite_sheet = pygame.image.load("LEVEL_1/assets/dog3.png")
         self.health = 3
         self.max_health = 3
         self.attack = 1
         self.velocity = 0
-        self.image = pygame.image.load("LEVEL_1/assets/sprite_dog1.png")
+        self.image = pygame.image.load("assets/sprite_dog1.png")
         self.rect = self.image.get_rect()
-        self.rect.x = 4500  # 2100
-        self.rect.y = 2985  # 2150
+        self.rect.x = 1580
+        self.rect.y = 2985
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 
@@ -27,11 +26,11 @@ class Player(pygame.sprite.Sprite):
         self.facingRight = True
         self.walkAnimationRight = False
         self.walkAnimationLeft = False
-        self.spritesWalkRight = [pygame.image.load('LEVEL_1/assets/sprite_dog1.png'),
-                                 pygame.image.load('LEVEL_1/assets/sprite_dog2.png'),
-                                 pygame.image.load('LEVEL_1/assets/sprite_dog_jump.png'),
-                                 pygame.image.load('LEVEL_1/assets/sprite_dog3.png'),
-                                 pygame.image.load('LEVEL_1/assets/sprite_dog4.png')]
+        self.spritesWalkRight = [pygame.image.load('assets/sprite_dog1.png'),
+                                 pygame.image.load('assets/sprite_dog2.png'),
+                                 pygame.image.load('assets/sprite_dog_jump.png'),
+                                 pygame.image.load('assets/sprite_dog3.png'),
+                                 pygame.image.load('assets/sprite_dog4.png')]
         self.spritesWalkLeft = [pygame.transform.flip(self.spritesWalkRight[0], True, False),
                                 pygame.transform.flip(self.spritesWalkRight[1], True, False),
                                 pygame.transform.flip(self.spritesWalkRight[2], True, False),
@@ -39,7 +38,7 @@ class Player(pygame.sprite.Sprite):
                                 pygame.transform.flip(self.spritesWalkRight[4], True, False)]
         self.walkFrame = 0
 
-        self.spritesJumpRight = pygame.image.load('LEVEL_1/assets/sprite_dog_jump.png')
+        self.spritesJumpRight = pygame.image.load('assets/sprite_dog_jump.png')
         self.spritesJumpLeft = pygame.transform.flip(self.spritesJumpRight, True, False)
 
     def jump(self):
