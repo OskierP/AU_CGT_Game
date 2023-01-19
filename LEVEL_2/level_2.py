@@ -17,24 +17,24 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 DARK_BLUE = (29, 17, 53)
 
 #load images
-rocket_img1 = pygame.image.load('Assets/Rocket/Rocket1.png')
-rocket_img2 = pygame.image.load('Assets/Rocket/Rocket2.png')
-rocket_img3 = pygame.image.load('Assets/Rocket/Rocket3.png')
-rocket_img4 = pygame.image.load('Assets/Rocket/Rocket4.png')
-asteroid_img = pygame.image.load('Assets/Alien/asteroid1.png')
-milkyway_img1 = pygame.image.load('Assets/Alien/milkyway1.png')
-milkyway_img2 = pygame.image.load('Assets/Alien/milkyway2.png')
-spaceship_img1 = pygame.image.load('Assets/Spaceship/Spaceship1.png')
-spaceship_img2 = pygame.image.load('Assets/Spaceship/Spaceship2.png')
-planet_img = pygame.image.load('Assets/Other/Planet.png')
+rocket_img1 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket1.png')
+rocket_img2 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket2.png')
+rocket_img3 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket3.png')
+rocket_img4 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket4.png')
+asteroid_img = pygame.image.load('LEVEL_2/Assets/Alien/asteroid1.png')
+milkyway_img1 = pygame.image.load('LEVEL_2/Assets/Alien/milkyway1.png')
+milkyway_img2 = pygame.image.load('LEVEL_2/Assets/Alien/milkyway2.png')
+spaceship_img1 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship1.png')
+spaceship_img2 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship2.png')
+planet_img = pygame.image.load('LEVEL_2/Assets/Other/Planet.png')
 
 #background image
-bg_img = pygame.image.load('Assets/Other/spacebg.png').convert_alpha()
+bg_img = pygame.image.load('LEVEL_2/Assets/Other/spacebg.png').convert_alpha()
 bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 #load music and sounds
 # source https://www.youtube.com/watch?v=9NcPvmk4vfo
-pygame.mixer.music.load('Assets/Other/space_ride_music.mp3')
+pygame.mixer.music.load('LEVEL_2/Assets/Other/space_ride_music.mp3')
 pygame.mixer.music.set_volume(.3)
 pygame.mixer.music.play(-1, 0.0, 5000)
 FLYING = [rocket_img1, rocket_img2, rocket_img3, rocket_img4]
@@ -192,9 +192,11 @@ class Ufo(Obstacle):
         SCREEN.blit(self.image[self.index // 5], self.rect)
         self.index += 1
 
+
+run = True
+ 
 def main():
-    global game_speed , x_pos_bg , y_pos_bg , points , obstacles
-    run = True
+    global game_speed , x_pos_bg , y_pos_bg , points , obstacles, run
     clock = pygame.time.Clock ()
     player = Rocket ()
     # planet = Planet()
@@ -221,8 +223,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            # elif event.key == pygame.K_ESC:
-            #     run = False
+            elif event.key == pygame.K_ESCAPE:
+                run = False
 
         if points > 2500:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
             run = False
@@ -260,9 +262,9 @@ def main():
 
 
 def menu(death_count):
-    global points
-    run = True
+    global points, run
     while run:
+        death_count = 0
         SCREEN.fill((DARK_BLUE))
         font = pygame.font.Font('freesansbold.ttf', 30)
 
