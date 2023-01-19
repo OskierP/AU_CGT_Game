@@ -48,6 +48,7 @@ def menu():
                 if exit_button.flag:
                     running = False
                     pygame.quit()
+                    quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
