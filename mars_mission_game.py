@@ -35,7 +35,7 @@ while True:
             # while not flags.next_lvl_2.get_flag():
             LEVEL_2.level_2.menu(death_count=0)
             flags.next_lvl_2.set_flag(False)
-            progress.save_progress.update_progress('Level_3_1', True)
+            pygame.mixer.music.stop()
 
         if level == "3_1":
             #### LEVEL 3&4 #####

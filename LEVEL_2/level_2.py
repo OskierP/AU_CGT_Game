@@ -1,9 +1,7 @@
 
-import os
-import pygame
-from pygame import mixer
 import random
-
+import progress.save_progress
+import pygame
 
 pygame.init()
 
@@ -16,7 +14,7 @@ SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 DARK_BLUE = (29, 17, 53)
 
-#load images
+# load images
 rocket_img1 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket1.png')
 rocket_img2 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket2.png')
 rocket_img3 = pygame.image.load('LEVEL_2/Assets/Rocket/Rocket3.png')
@@ -28,15 +26,15 @@ spaceship_img1 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship1.png')
 spaceship_img2 = pygame.image.load('LEVEL_2/Assets/Spaceship/Spaceship2.png')
 planet_img = pygame.image.load('LEVEL_2/Assets/Other/Planet.png')
 
-#background image
+# background image
 bg_img = pygame.image.load('LEVEL_2/Assets/Other/spacebg.png').convert_alpha()
 bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-#load music and sounds
+# load music and sounds
 # source https://www.youtube.com/watch?v=9NcPvmk4vfo
 pygame.mixer.music.load('LEVEL_2/Assets/Other/space_ride_music.mp3')
 pygame.mixer.music.set_volume(.3)
-pygame.mixer.music.play(-1, 0.0, 5000)
+# pygame.mixer.music.play(-1, 0.0, 5000)
 FLYING = [rocket_img1, rocket_img2, rocket_img3, rocket_img4]
 JUMPING = rocket_img4
 DUCKING = [rocket_img1, rocket_img2]
@@ -45,11 +43,13 @@ MILKYWAY = [milkyway_img1, milkyway_img2]
 UFO = [spaceship_img1, spaceship_img2]
 PLANET = planet_img
 
+
 def draw_bg():
     SCREEN.fill(DARK_BLUE)
     width = bg_img.get_width()
     for x in range(10):
         SCREEN.blit(bg_img, ((x * width), 0))
+
 
 # The base classes of this code come from the following source. Alterations were made for the purpose of Martian Mission.
 # codewmax (2020) chrome-dinosaur main.py (Version unknown) [Source code]. https://github.com/codewmax/chrome-dinosaur
@@ -57,7 +57,7 @@ def draw_bg():
 class Rocket:
     Y_POS = SCREEN_HEIGHT / 2
     X_POS = 80
-    #Y_POS = 310 # this is y-position of the rocket
+    # Y_POS = 310 # this is y-position of the rocket
     JUMP_VEL = 5.0
     DUCK_VEL = 5.0
 
@@ -77,7 +77,7 @@ class Rocket:
         self.rocket_rect = self.image.get_rect()
         self.rocket_rect.x = self.X_POS
         self.rocket_rect.y = self.Y_POS
-        #self.rocket_rect.y = self.Y_POS
+        # self.rocket_rect.y = self.Y_POS
 
     def update(self, userInput):
         dy = self.rocket_rect.y
@@ -114,8 +114,7 @@ class Rocket:
         if self.rocket_rect.top <= 0:
             self.rocket_rect.y = 0
 
-
-    #Duck currently goes up then down
+    # Duck currently goes up then down
     def duck(self):
         self.image = self.duck_img[self.step_index // 5]
         if self.rocket_duck:
@@ -134,7 +133,6 @@ class Rocket:
             self.rocket_jump = False
             self.jump_vel = self.JUMP_VEL
         self.step_index += 1
-
 
     def jump(self):
         self.image = self.jump_img
@@ -194,22 +192,24 @@ class Ufo(Obstacle):
 
 
 run = True
- 
+
+
 def main():
-    global game_speed , x_pos_bg , y_pos_bg , points , obstacles, run
-    clock = pygame.time.Clock ()
-    player = Rocket ()
+    pygame.mixer.music.play(-1, 0.0, 5000)
+    global game_speed, x_pos_bg, y_pos_bg, points, obstacles, run
+    clock = pygame.time.Clock()
+    player = Rocket()
     # planet = Planet()
     game_speed = 15
     x_pos_bg = 0
     y_pos_bg = 380
     points = 0
-    font = pygame.font.Font('freesansbold.ttf' , 20)
+    font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
 
     def score():
-        global points , game_speed
+        global points, game_speed
         points += 1
         if points % 100 == 0:
             game_speed += 1
@@ -222,11 +222,15 @@ def main():
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.mixer.music.stop()
                 run = False
-            elif event.key == pygame.K_ESCAPE:
-                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
 
-        if points > 2500:  #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
+        if points > 2500:
+            pygame.mixer.music.stop()
+            progress.save_progress.update_progress('Level_3_1', True) #### TO DO: Around 2000 points Mars could move to sight and then level would end. Cutscene and new level
             run = False
 
         SCREEN.fill((29, 17, 53))
@@ -252,8 +256,8 @@ def main():
                 death_count += 1
                 menu(death_count)
 
-        #planet.draw(SCREEN)
-        #planet.update()
+        # planet.draw(SCREEN)
+        # planet.update()
 
         score()
 
@@ -263,27 +267,33 @@ def main():
 
 def menu(death_count):
     global points, run
+    points = 0
+    run = True
     while run:
-        death_count = 0
-        SCREEN.fill((DARK_BLUE))
+        SCREEN.fill(DARK_BLUE)
         font = pygame.font.Font('freesansbold.ttf', 30)
 
-        #if points == 100:
-         #   pygame.time.delay(2000)
-          #  death_count += 1
-           # menu(death_count)
+        # if points == 100:
+        #   pygame.time.delay(2000)
+        #  death_count += 1
+        # menu(death_count)
 
         if death_count == 0:
             text = font.render("Press any Key to Start", True, (255, 255, 255))
+            text1 = font.render("Objective: Travel 2500 km to reach Mars!", True, (255, 255, 255))
         elif death_count > 0:
             text = font.render("Press any Key to Restart", True, (255, 255, 255))
+            text1 = font.render("", True, (255, 255, 255))
             score = font.render("Kilometers travelled: " + str(points), True, (255, 255, 255))
             scoreRect = score.get_rect()
             scoreRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50)
             SCREEN.blit(score, scoreRect)
         textRect = text.get_rect()
+        textRect1 = text1.get_rect()
         textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        textRect1.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 +50)
         SCREEN.blit(text, textRect)
+        SCREEN.blit(text1, textRect1)
         SCREEN.blit(FLYING[0], (SCREEN_WIDTH // 2 - 20, SCREEN_HEIGHT // 2 - 140))
         pygame.display.update()
         for event in pygame.event.get():
@@ -292,8 +302,7 @@ def menu(death_count):
             if event.type == pygame.KEYDOWN:
                 main()
 
-
-menu(death_count=0)
+# menu(death_count=0)
 
 
 # It jumps whilst running, don't make it look like a jump so much (or make the jumps smaller)
@@ -301,5 +310,5 @@ menu(death_count=0)
 # Implement collisions so things blow up when you touch them
 # Would be cool to have stuff flying toward me
 
-pygame.display.quit()
-pygame.quit()
+# pygame.display.quit()
+# pygame.quit()
