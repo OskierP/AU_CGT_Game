@@ -1,3 +1,5 @@
+# Class inspired by the github user Graven
+
 import pygame
 vec = pygame.math.Vector2
 from abc import ABC, abstractmethod

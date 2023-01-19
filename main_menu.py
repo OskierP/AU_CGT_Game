@@ -23,7 +23,7 @@ def menu():
     # https://www.pixilart.com/art/mars-ac45cfbf1eb0827
     menu_background = sprite.Sprite('menu_assets/menu.png').load_image()
 
-    pygame.display.set_caption('Show Text')
+    pygame.display.set_caption('MARTIAN MISSION')
 
     # https://www.fontspace.com/n%C3%A9o-party-font-f25303
     title = sprite.Sprite(f'menu_assets/title.png').load_image()

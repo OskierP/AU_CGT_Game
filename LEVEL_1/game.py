@@ -1,5 +1,6 @@
 import LEVEL_1.dog as dog
 import pygame
+from LEVEL_1.star import Star
 import random
 
 
@@ -13,6 +14,7 @@ class World:
         }
 
         self.tile_list = []
+        self.all_star = pygame.sprite.Group()
 
     def create_list(self, ):
         img = pygame.image.load("LEVEL_1/assets/tile.png")
@@ -84,6 +86,16 @@ class World:
             img_rect.y = 1680
             tile = (img, img_rect)
             self.tile_list.append(tile)
+
+    def rain_star(self,x,y):
+        if random.randint(0, 7)%3 ==0:
+            self.all_star.add(Star(x-400,y-700))
+        else:
+            self.all_star.add(Star(x + 300*random.randint(1,6), y - 700))
+
+    def star_draw(self, screen, camera):
+        for star in self.all_star:
+            screen.blit(star.image, (star.rect.x - camera.offset.x, star.rect.y - camera.offset.y))
 
     def draw(self, screen, camera):
         for tile in self.tile_list:

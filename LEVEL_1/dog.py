@@ -4,15 +4,14 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        #self.sprite_sheet = pygame.image.load("LEVEL_1/assets/dog3.png")
         self.health = 3
         self.max_health = 3
         self.attack = 1
         self.velocity = 0
         self.image = pygame.image.load("LEVEL_1/assets/sprite_dog1.png")
         self.rect = self.image.get_rect()
-        self.rect.x = 4500  # 2100
-        self.rect.y = 2985  # 2150
+        self.rect.x = 1580
+        self.rect.y = 2985
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 

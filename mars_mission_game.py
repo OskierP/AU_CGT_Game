@@ -6,7 +6,6 @@ import LEVEL_3n4.restart_page
 import LEVEL_5.MartianMission
 import flags as flags
 import main_menu
-import progress.save_progress
 from LEVEL_3n4.levels import level3_1, level3_2, level4
 
 level = 0
@@ -26,9 +25,9 @@ while True:
             #### LEVEL 1 #####
             main_menu.splash_screen('lvl1')
             while not flags.next_lvl_1.get_flag():
-                LEVEL_1.main.level_1()
+                LEVEL_1.main.level1()
             flags.next_lvl_1.set_flag(False)
-            progress.save_progress.update_progress('Level_2', True)
+
         ### LEVEL 2 #####
         if level == 2:
             main_menu.splash_screen('lvl2')
