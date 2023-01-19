@@ -26,7 +26,14 @@ MILKYWAY = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Comp
 UFO = [pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Spaceship\Spaceship1.png")),
         pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Spaceship\Spaceship2.png"))]
 
+<<<<<<< Updated upstream:level_2/level_3.py
 PLANET = pygame.image.load(os.path.join(r"C:\Users\Anna-Sophia\Desktop\6_Computer_Games_Technology\MarsMission_Game\AU_CGT_Game\level_2\Assets\Other\Planet.png"))
+=======
+FIRESTAR = [pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/firestar.png")),
+            pygame.image.load(os.path.join(r"LEVEL_2/Assets/Alien/firestar.png"))]
+
+PLANET = pygame.image.load(os.path.join(r"LEVEL_2/Assets/Other/Planet.png"))
+>>>>>>> Stashed changes:LEVEL_2/level_2.py
 
 BG = SCREEN.fill((29, 17, 53))
 
@@ -129,24 +136,6 @@ class Rocket:
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.rocket_rect.x, self.rocket_rect.y))
 
-
-#class Planet:
-    #def __init__(self):
-        #self.x = SCREEN_WIDTH + random.randint(800, 1000)
-        #self.y = random.randint(50, 100)
-        #self.image = PLANET
-        #self.width = self.image.get_width()
-
-    #def update(self):
-        #self.x -= game_speed
-        #if self.x < -self.width:
-            #self.x = SCREEN_WIDTH + random.randint(2500, 3000)
-            #self.y = random.randint(50, 100)
-
-    #def draw(self, SCREEN):
-        #SCREEN.blit(self.image, (self.x, self.y))
-
-
 class Obstacle:
     def __init__(self, image, type):
         self.image = image
@@ -167,15 +156,27 @@ class SmallAlien(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = 325
+        self.rect.y = 120
 
 
 class Milkway(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 1)
         super().__init__(image, self.type)
-        self.rect.y = 300
+        self.rect.y = 400
 
+class Firestar(Obstacle):
+    def __init__(self, image):
+        self.type = 0
+        super().__init__(image, self.type)
+        self.rect.y = 300
+        self.index = 0
+
+    def draw(self, SCREEN):
+        if self.index >= 9:
+            self.index = 0
+        SCREEN.blit(self.image[self.index // 5], self.rect)
+        self.index += 1
 
 class Ufo(Obstacle):
     def __init__(self, image):
@@ -196,7 +197,6 @@ def main():
     run = True
     clock = pygame.time.Clock()
     player = Rocket()
-    #planet = Planet()
     game_speed = 20
     x_pos_bg = 0
     y_pos_bg = 380
@@ -228,12 +228,14 @@ def main():
         player.update(userInput)
 
         if len(obstacles) == 0:
-            if random.randint(0, 2) == 0:
+            if random.randint(0, 3) == 0:
                 obstacles.append(SmallAlien(SMALL_ALIEN))
-            elif random.randint(0, 2) == 1:
+            elif random.randint(0, 3) == 1:
                 obstacles.append(Milkway(MILKYWAY))
-            elif random.randint(0, 2) == 2:
+            elif random.randint(0, 3) == 2:
                 obstacles.append(Ufo(UFO))
+            elif random.randint(0, 3) == 3:
+                obstacles.append(Firestar(FIRESTAR))
 
         for obstacle in obstacles:
             obstacle.draw(SCREEN)
@@ -256,6 +258,13 @@ def menu(death_count):
     global points
     run = True
     while run:
+<<<<<<< Updated upstream:level_2/level_3.py
+=======
+
+        ###if flags.next_lvl_2.get_flag():
+            ###run = False
+
+>>>>>>> Stashed changes:LEVEL_2/level_2.py
         SCREEN.fill((29, 17, 53))
         font = pygame.font.Font('freesansbold.ttf', 30)
 
