@@ -6,9 +6,8 @@ import LEVEL_3n4.collisions as collisions
 import LEVEL_3n4.display_game as display_game
 import LEVEL_3n4.sprite as sprite
 import flags as flags
+import progress.save_progress
 from LEVEL_3n4.movable_objects import Player, Box
-
-next_level = False
 
 
 def run_level(run):
@@ -145,6 +144,7 @@ def run_level(run):
                     button_click.set_volume(0.5)
                     time.sleep(1)
                     running = False
+                    progress.save_progress.update_progress('Level_4', True)
                     flags.next_lvl_3_2.set_flag(True)
 
             if event.type == pygame.KEYUP:

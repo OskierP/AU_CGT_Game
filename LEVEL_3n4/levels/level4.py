@@ -6,6 +6,7 @@ import LEVEL_3n4.collisions as collisions
 import LEVEL_3n4.display_game as display_game
 import LEVEL_3n4.sprite as sprite
 import flags as flags
+import progress.save_progress
 
 
 def run_level(run):
@@ -99,6 +100,7 @@ def run_level(run):
         if level == len(level_solutions):
             time.sleep(2)
             running = False
+            progress.save_progress.update_progress('Level_5', True)
             flags.next_lvl_4.set_flag(True)
 
         if errors == 3:

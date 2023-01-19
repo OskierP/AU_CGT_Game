@@ -50,7 +50,6 @@ while True:
                         flags.lvl3_dog_dead_flag.set_flag(False)
             pygame.mixer.music.stop()
             flags.next_lvl_3_1.set_flag(False)
-            progress.save_progress.update_progress('Level_3_2', True)
 
         if level == "3_2":
             main_menu.splash_screen('lvl3')
@@ -64,8 +63,6 @@ while True:
                         flags.lvl3_dog_dead_flag.set_flag(False)
             pygame.mixer.music.stop()
             flags.next_lvl_3_2.set_flag(False)
-            progress.save_progress.update_progress('Level_4', True)
-
 
         if level == 4:
             main_menu.splash_screen('lvl4')
@@ -77,10 +74,7 @@ while True:
                         run_level_4 = True
                         flags.lvl3_dog_dead_flag.set_flag(False)
             pygame.mixer.stop()
-            progress.save_progress.update_progress('Level_5', True)
             flags.next_lvl_4.set_flag(False)
-
-
 
         #### LEVEL 5 #####
         if level == 5:

@@ -6,11 +6,8 @@ import LEVEL_3n4.collisions as collisions
 import LEVEL_3n4.display_game as display_game
 import LEVEL_3n4.sprite as sprite
 import flags as flags
+import progress.save_progress
 from LEVEL_3n4.movable_objects import Player, Box
-
-next_level = False
-dog_died = False
-another_flag = False
 
 
 def run_level(run):
@@ -111,6 +108,7 @@ def run_level(run):
     box.position.x, box.position.y = 2000, 2000
     box.width, box.height = 20, 20
 
+    button2_pressed_once = False
     ################################# GAME LOOP ##########################
     while running:
         dt = clock.tick(60) * .001 * target_fps
@@ -220,6 +218,7 @@ def run_level(run):
 
         if doors_action.flag:
             running = False
+            progress.save_progress.update_progress('Level_3_2', True)
             flags.next_lvl_3_1.set_flag(True)
 
         game_display.blit(insert_box.get_frame(40, 40, scale), (insert_box.x, insert_box.y))
@@ -240,8 +239,9 @@ def run_level(run):
         game_display.blit(dog.get_frame(40, 30, scale), (dog.position.x, dog.position.y))
         game_display.blit(box.get_frame(20, 20, scale), (box.position.x, box.position.y))
 
-        if player_press_2.was_pressed and player_press_2.flag:
+        if player_press_2.was_pressed and player_press_2.flag and not button2_pressed_once:
             box.position.x, box.position.y = 200, 500
+            button2_pressed_once = True
 
         if player_press.flag or player_press_2.flag:
             game_display.blit(text, text_box)
