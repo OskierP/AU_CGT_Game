@@ -123,7 +123,6 @@ def splash_screen(path: str):
 
             if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
 
         pygame.display.update()
 
