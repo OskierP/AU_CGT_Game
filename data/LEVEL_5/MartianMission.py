@@ -25,7 +25,7 @@ def main():
     ROWS = 15
     COLS = 150
     TILE_SIZE = int(screen_height // ROWS)
-    TILE_TYPES = 12
+    TILE_TYPES = 13
     MAX_LEVELS = 1
     screen_scroll = 0
     bg_scroll = 0
