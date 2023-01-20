@@ -31,7 +31,8 @@ def run_level(run):
     gravity = 0
     friction = 0
 
-    font = pygame.font.Font('freesansbold.ttf', 22)
+    font = pygame.font.SysFont('arial', 22)
+        # Font('freesansbold.ttf', 22)
     text = font.render('Press SPACEBAR to press the button', True, (255, 255, 255))
     text_box = text.get_rect()
     text_box.center = (display_width // 2, display_height // 2)

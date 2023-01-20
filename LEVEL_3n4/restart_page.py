@@ -17,7 +17,8 @@ def restart():
 
     pygame.display.set_caption('Show Text')
 
-    font = pygame.font.Font('freesansbold.ttf', 32)
+    font = pygame.font.SysFont('arial', 32)
+        # Font('freesansbold.ttf', 32)
 
     text = font.render('X has died :,-(', True, white, black)
     text2 = font.render('Press R to restart level', True, white, black)
@@ -64,7 +65,8 @@ def restart_lvl_4():
 
     pygame.display.set_caption('Show Text')
 
-    font = pygame.font.Font('freesansbold.ttf', 32)
+    font = pygame.font.SysFont('arial', 32)
+        # Font('freesansbold.ttf', 32)
 
     text = font.render('Oh no, ship has blown up!', True, white, black)
     text2 = font.render('Press R to restart level', True, white, black)

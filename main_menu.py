@@ -91,7 +91,8 @@ def splash_screen(path: str):
 
     pygame.display.set_caption('Show Text')
 
-    font = pygame.font.Font('freesansbold.ttf', 32)
+    font = pygame.font.SysFont('arial', 32)
+        # Font('freesansbold.ttf', 32)
 
     text = font.render('Press any key', True, white)
     text2 = font.render('to continue', True, white)

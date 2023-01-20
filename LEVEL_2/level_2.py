@@ -217,7 +217,8 @@ def main():
     x_pos_bg = 0
     y_pos_bg = 380
     points = 0
-    font = pygame.font.Font('freesansbold.ttf', 20)
+    font = pygame.font.SysFont('arial', 20)
+        # Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
 
@@ -286,7 +287,8 @@ def menu(death_count):
     run = True
     while run:
         SCREEN.fill(DARK_BLUE)
-        font = pygame.font.Font('freesansbold.ttf', 30)
+        font = pygame.font.SysFont('arial', 30)
+            # Font('freesansbold.ttf', 30)
 
         # if points == 100:
         #   pygame.time.delay(2000)

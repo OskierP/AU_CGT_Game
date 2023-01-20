@@ -21,7 +21,8 @@ def run_level(run):
 
     mouse_position = pygame.math.Vector2(0, 0)
 
-    font = pygame.font.Font('freesansbold.ttf', 22)
+    font = pygame.font.SysFont('arial', 22)
+        # Font('freesansbold.ttf', 22)
     text = font.render('SPACE BAR:', True, (78, 150, 6))
     text_box = text.get_rect()
     text2 = font.render('show sequence', True, (78, 150, 6))
