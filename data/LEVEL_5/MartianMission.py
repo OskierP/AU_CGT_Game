@@ -29,7 +29,7 @@ def main():
     MAX_LEVELS = 1
     screen_scroll = 0
     bg_scroll = 0
-    level = 1
+    level = 0
     start_game = True
     start_intro = True
 
