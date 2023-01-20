@@ -41,7 +41,7 @@ def main():
     laser_thrown = False
 
     #load music and sounds
-    pygame.mixer.music.load('data/LEVEL_5/music/audio_space1.mp3')
+    pygame.mixer.music.load('data/LEVEL_5/music/earth_song.mp3')
     pygame.mixer.music.set_volume(.3)
     pygame.mixer.music.play(-1, 0.0, 5000)
 
@@ -782,6 +782,11 @@ def main():
                                     world_data[x][y] = int ( tile )
                         world = World ()
                         player, health_bar = world.process_data (world_data)
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.unload()
+                    pygame.mixer.music.load('data/LEVEL_5/music/boss_music.mp3')
+                    pygame.mixer.music.set_volume(.3)
+                    pygame.mixer.music.play(-1, 0.0, 5000)
             else:
                 screen_scroll = 0
                 if death_fade.fade():
