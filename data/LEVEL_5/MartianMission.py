@@ -4,7 +4,7 @@ from pygame import mixer
 import random
 import csv
 import data.LEVEL_5.button as button
-from data import flags
+from data import flags, main_menu
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
     MAX_LEVELS = 1
     screen_scroll = 0
     bg_scroll = 0
-    level = 0
+    level = 1
     start_game = True
     start_intro = True
 
@@ -769,7 +769,10 @@ def main():
                 bg_scroll -= screen_scroll
                 if level_complete:
                     if level == 1:
+                        pygame.mixer.stop()
                         run = False
+                        flags.next_lvl_5.set_flag(True)
+                        main_menu.end_screen()
                     level += 1
                     bg_scroll = 0
                     world_data = restart_lvl()

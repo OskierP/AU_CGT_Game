@@ -17,7 +17,7 @@ def level1():
     game = game_module.World()
 
     # Windows
-    pygame.display.set_caption("MARTIAN MISSION- level 1")
+    pygame.display.set_caption("MARTIAN MISSION")
     DISPLAY_W, DISPLAY_H = 1100, 600
     canvas = pygame.Surface((DISPLAY_W, DISPLAY_H))
     screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
