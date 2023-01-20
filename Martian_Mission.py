@@ -80,6 +80,7 @@ while True:
             while not flags.next_lvl_5.get_flag():
                 data.LEVEL_5.MartianMission.main()
             flags.next_lvl_5.set_flag(False)
+            main_menu.end_screen()
         #### LEVEL 6 #####
 
         #### LEVEL BONUS #####

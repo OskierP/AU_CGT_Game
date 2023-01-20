@@ -214,3 +214,38 @@ def choose_level():
             level.update()
 
         pygame.display.update()
+
+def end_screen():
+    pygame.init()
+    pygame.mixer.stop()
+
+    running = True
+
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+
+    x = 1100
+    y = 600
+
+    display_surface = pygame.display.set_mode((x, y))
+    background = sprite.Sprite(f'data/story/win_screen.png').load_image()
+
+    pygame.display.set_caption('YOU WIN!!')
+
+
+
+    while running:
+
+        display_surface.blit(background, (0, 0))
+
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                # if event.key == pygame.K_SPACE:
+                running = False
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        pygame.display.update()
