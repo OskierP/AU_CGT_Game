@@ -48,7 +48,6 @@ def menu():
                 if exit_button.flag:
                     running = False
                     pygame.quit()
-                    
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
@@ -92,7 +91,7 @@ def splash_screen(path: str):
     pygame.display.set_caption('MARTIAN MISSION')
 
     font = pygame.font.SysFont('arial', 32)
-        # Font('freesansbold.ttf', 32)
+    # Font('freesansbold.ttf', 32)
 
     text = font.render('Press any key', True, white)
     text2 = font.render('to continue', True, white)
@@ -215,10 +214,13 @@ def choose_level():
 
         pygame.display.update()
 
+
 def end_screen():
     pygame.init()
     pygame.mixer.stop()
-
+    pygame.mixer.music.load('data/story/Win.mp3')
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play()
     running = True
 
     white = (255, 255, 255)
@@ -232,17 +234,17 @@ def end_screen():
 
     pygame.display.set_caption('YOU WIN!!')
 
-
+    # https://www.youtube.com/watch?v=vX1xq4Ud2z8 - music
 
     while running:
 
-        display_surface.blit(background, (0, 0))
-
+        display_surface.blit(background, (0, -100))
 
         for event in pygame.event.get():
 
             if event.type == pygame.KEYDOWN:
                 # if event.key == pygame.K_SPACE:
+                pygame.mixer.stop()
                 running = False
 
             if event.type == pygame.QUIT:
