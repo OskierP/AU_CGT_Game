@@ -47,7 +47,7 @@ class Player ():
 
         # get keypresses
         key = pygame.key.get_pressed ()
-        if key[pygame.K_SPACE] and self.jumped == False:
+        if key[pygame.K_UP] and self.jumped == False:
             self.vel_y = -15
             self.jumped = True
         if self.vel_y < 300:

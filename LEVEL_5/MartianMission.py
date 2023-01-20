@@ -32,8 +32,8 @@ def main():
     screen_scroll = 0
     bg_scroll = 0
     level = 0
-    start_game = False
-    start_intro = False
+    start_game = True
+    start_intro = True
 
     #player action variables
     movl = False
@@ -812,11 +812,11 @@ def main():
                     movl = True
                 if event.key == pygame.K_RIGHT:
                     movr = True
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_SPACE:
                     shoot = True
-                if event.key == pygame.K_z:
+                if event.key == pygame.K_g:
                     laser = True
-                if event.key == pygame.K_SPACE and player.alive:
+                if event.key == pygame.K_UP and player.alive:
                     player.jump = True
                     #stop sound from playing when player is in air
                     if player.in_air == False:
@@ -831,12 +831,12 @@ def main():
                     movl = False
                 if event.key == pygame.K_RIGHT:
                     movr = False
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_SPACE:
                     shoot = False
-                if event.key == pygame.K_z:
+                if event.key == pygame.K_g:
                     laser = False
                     laser_thrown = False
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_UP:
                     player.jump = False
 
         pygame.display.update()
