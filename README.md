@@ -10,3 +10,4 @@ There is loot in the game and objects that can temporarily upgrade X’s abiliti
 Players should become more hopeful throughout the game as they look at the map and see they are getting closer and closer to Cosmo on Mars. There will be a few cutscenes between completing levels to help tell the story and keep players engaged. At the end of the game, there will be colourful theatrics symbolizing victory to make the player feel more rewarded for beating the game. 
 
 
+P.S. If you want to explore all levels change progress_file.csv to have 6x True
