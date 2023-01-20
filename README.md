@@ -10,4 +10,9 @@ There is loot in the game and objects that can temporarily upgrade X’s abiliti
 Players should become more hopeful throughout the game as they look at the map and see they are getting closer and closer to Cosmo on Mars. There will be a few cutscenes between completing levels to help tell the story and keep players engaged. At the end of the game, there will be colourful theatrics symbolizing victory to make the player feel more rewarded for beating the game. 
 
 
+SAVING PROGRESS:
+There's a file 'progress_file.csv' for kepping track of what levels has player passed.
+You can see how the saving process looks like in the 'progress' folder (file is also there)
+For full immersion please set 'progress_file.csv' to have his: True,False,False,False,False,False
+
 P.S. If you want to explore all levels change progress_file.csv to have 6x True
