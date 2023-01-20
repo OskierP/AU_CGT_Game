@@ -89,7 +89,7 @@ def splash_screen(path: str):
     display_surface = pygame.display.set_mode((x, y))
     background = sprite.Sprite(f'data/story/{path}.png').load_image()
 
-    pygame.display.set_caption('Show Text')
+    pygame.display.set_caption('MARTIAN MISSION')
 
     font = pygame.font.SysFont('arial', 32)
         # Font('freesansbold.ttf', 32)
