@@ -400,6 +400,10 @@ def main():
                         elif tile == 10:#change level
                             exit = Exit(img, x * TILE_SIZE, y * TILE_SIZE)
                             exit_group.add(exit)
+                        elif tile == 12:#end game
+                            img = pygame.transform.scale(img, (100, 120))
+                            exit = Exit(img, x * TILE_SIZE, y * TILE_SIZE)
+                            exit_group.add(exit)
                         elif tile == 4:#players
                             player = Dog('dog', x * TILE_SIZE, y * TILE_SIZE, 1, 5, 20, 4)
                             health_bar = HealthBar(10, 10, player.health, player.health)
