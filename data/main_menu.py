@@ -219,7 +219,7 @@ def end_screen():
     pygame.init()
     pygame.mixer.stop()
     pygame.mixer.music.load('data/story/Win.mp3')
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play()
     running = True
 
@@ -228,6 +228,18 @@ def end_screen():
 
     x = 1100
     y = 600
+
+    font = pygame.font.SysFont('arial', 20)
+    # Font('freesansbold.ttf', 32)
+
+    text = font.render('Press SPACEBAR key', True, white)
+    text2 = font.render('to go back to menu', True, white)
+
+    text_rect = text.get_rect()
+    text_rect2 = text2.get_rect()
+
+    text_rect.center = (x // 2 + 300, y // 2 + 200)
+    text_rect2.center = (x // 2 + 300, y // 2 + 230)
 
     display_surface = pygame.display.set_mode((x, y))
     background = sprite.Sprite(f'data/story/win_screen.png').load_image()
@@ -240,12 +252,15 @@ def end_screen():
 
         display_surface.blit(background, (0, -100))
 
+        display_surface.blit(text, text_rect)
+        display_surface.blit(text2, text_rect2)
+
         for event in pygame.event.get():
 
             if event.type == pygame.KEYDOWN:
-                # if event.key == pygame.K_SPACE:
-                pygame.mixer.stop()
-                running = False
+                if event.key == pygame.K_SPACE:
+                    pygame.mixer.stop()
+                    running = False
 
             if event.type == pygame.QUIT:
                 pygame.quit()
